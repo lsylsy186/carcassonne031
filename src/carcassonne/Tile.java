@@ -77,7 +77,7 @@ public class Tile {
 		 _tile.put(new Point(2,2), position8);
 	}
 	public void CreateAllTile(){
-		CreateTile(_tileA,  'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F');
+		CreateTile(_tileA,  'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F'); 
 		CreateTile(_tileB,  'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F');
 		CreateTile(_tileC,  'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F');
 		CreateTile(_tileD,  'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F');
@@ -137,5 +137,13 @@ public class Tile {
 				tile.get(new Point(2,0)) + tile.get(new Point(2,1)) +
 				tile.get(new Point(2,2));
 		return result;
+	}
+	
+	public char getPositionAtPoint(HashMap<Point,Object> tile, int x, int y){
+		char result = (char) tile.get(new Point(x,y));
+		System.out.println("char returned is"+result);
+	 	return result;
+	 	
+	 	
 	}
 }
