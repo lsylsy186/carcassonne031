@@ -15,7 +15,7 @@ public class Game {
 	
 	public void newGame(){
 		Tile tile = new Tile();
-		HashMap<Point,Object> tD = tile.getTile('d');
+		HashMap<Point,Object> tD = tile.getTile('D');
 		
 		_gameBoard = new HashMap<>(100);
 		_gameBoard.put(new Point(50,50), tD );
@@ -29,29 +29,38 @@ public class Game {
 		emptySlot.add(new Point(51,51));
 	}
 	
-	public void putTile(int x, int y, HashMap<Point, Object> tile){  //when calling putTile, must use int x and y for Point, and specify which tile you want to place.
+	public boolean putTile(int x, int y, HashMap<Point, Object> tile){  //when calling putTile, must use int x and y for Point, and specify which tile you want to place.
 		if(emptySlot.contains(new Point(x,y))&& checkPlacement(x,y, tile) ){
 			_gameBoard.put(new Point(x,y), tile);
 			emptySlot.remove(new Point(x,y));
 			
 			for(int i = x-1; i<x+2; i++){ //goes through all spaces next to the placed tile and checks which ones are empty.
 				for(int q = y-1; q<y+2; q++){
-			if(!_gameBoard.containsKey(new Point(i,q))) emptySlot.add(new Point(i,y-1)); //if an empty slot is found, adds it to emptySlot
+			if(!_gameBoard.containsKey(new Point(i,q))) {
+				emptySlot.add(new Point(i,y-1)); //if an empty slot is found, adds it to emptySlot
+				
+		    }
 			}
+				return true;
 			}
-		}
-		
-		else{ //else catchall. should never be encountered
 			
+			
+		}
+		
+		/*else{ //else catchall. should never be encountered
+		
 			System.out.println("error, cannot place tile at:"+ x+ "and "+ y); // feel free to change this to an exception handler 
+		
+		}*/
+		return false;
 		}
 		
 		
 		
 		
-	}
+	
 
-	private boolean checkPlacement(int x, int y, HashMap<Point, Object> pTile) { //checks placement availability of adjacent tiles
+	public boolean checkPlacement(int x, int y, HashMap<Point, Object> pTile) { //checks placement availability of adjacent tiles
 		//pTile is placement tile. the tile you are trying to place.
 		//first should check to see which _gameBoard Points are next to it.
 		
