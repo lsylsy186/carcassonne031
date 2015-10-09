@@ -11,47 +11,41 @@ public class Game {
 	//in as more occur.
 	
 	// emptySlot will be very useful once we build the view.
-	Tile tile = new Tile();  
+	Tile tile; 
 	
 	public void newGame(){
-		Tile tile = new Tile();
+		tile = new Tile();
 		HashMap<Point,Object> tD = tile.getTile('D');
 		
 		_gameBoard = new HashMap<>(100);
-		_gameBoard.put(new Point(50,50), tD );
-		emptySlot.add(new Point(49,49));
+		_gameBoard.put(new Point(50,50), tD );		
 		emptySlot.add(new Point(49,50));
-		emptySlot.add(new Point(49,51));
 		emptySlot.add(new Point(50,49));
-		emptySlot.add(new Point(50,51));
-		emptySlot.add(new Point(51,49));
+		emptySlot.add(new Point(50,51));	
 		emptySlot.add(new Point(51,50));
-		emptySlot.add(new Point(51,51));
+		
 	}
-	
+	private void tryAddEmptySlot(int x, int y){
+		if(!_gameBoard.containsKey(new Point(x,y)))emptySlot.add(new Point(x,y)); //if an empty slot is found, adds it to emptySlot
+				
+	}
+		
 	public boolean putTile(int x, int y, HashMap<Point, Object> tile){  //when calling putTile, must use int x and y for Point, and specify which tile you want to place.
 		if(emptySlot.contains(new Point(x,y))&& checkPlacement(x,y, tile) ){
 			_gameBoard.put(new Point(x,y), tile);
 			emptySlot.remove(new Point(x,y));
-			
-			for(int i = x-1; i<x+2; i++){ //goes through all spaces next to the placed tile and checks which ones are empty.
-				for(int q = y-1; q<y+2; q++){
-			if(!_gameBoard.containsKey(new Point(i,q))) {
-				emptySlot.add(new Point(i,y-1)); //if an empty slot is found, adds it to emptySlot
-				
-		    }
-			}
+			 //goes through all spaces next to the placed tile and checks which ones are empty.
+			tryAddEmptySlot(x+1,y);
+			tryAddEmptySlot(x,y+1);
+			tryAddEmptySlot(x,y-1);
+			tryAddEmptySlot(x-1,y);
 				return true;
 			}
-			
-			
-		}
-		
-		/*else{ //else catchall. should never be encountered
+		else{ //else catchall. should never be encountered
 		
 			System.out.println("error, cannot place tile at:"+ x+ "and "+ y); // feel free to change this to an exception handler 
 		
-		}*/
+		}
 		return false;
 		}
 		
@@ -60,7 +54,7 @@ public class Game {
 		
 	
 
-	public boolean checkPlacement(int x, int y, HashMap<Point, Object> pTile) { //checks placement availability of adjacent tiles
+	private boolean checkPlacement(int x, int y, HashMap<Point, Object> pTile) { //checks placement availability of adjacent tiles
 		//pTile is placement tile. the tile you are trying to place.
 		//first should check to see which _gameBoard Points are next to it.
 		
@@ -72,14 +66,14 @@ public class Game {
 	}
 
 	private boolean checkDown(int x, int y, HashMap<Point, Object> pTile) { 
-		Object pLeft = pTile.get(new Point(0,2));
-		Object pMiddle = pTile.get(new Point (1,2));
+		Object pLeft = pTile.get(new Point(2,0));
+		Object pMiddle = pTile.get(new Point (2,1));
 		Object pRight = pTile.get(new Point(2,2));
 		if(_gameBoard.containsKey(new Point(x, y-1))){
 		 HashMap<Point,Object> dTile =_gameBoard.get(new Point(x, y-1));
-		 Object left = dTile.get(new Point(2,0));
-		 Object middle = dTile.get(new Point(1,2));
-		 Object right = dTile.get(new Point(2,2));
+		 Object left = dTile.get(new Point(0,0));
+		 Object middle = dTile.get(new Point(0,1));
+		 Object right = dTile.get(new Point(0,2));
 		 boolean checkLeft = checkIndividual(left, pLeft);
 		 boolean checkMiddle = checkIndividual(middle, pMiddle);
 		 boolean checkRight = checkIndividual(right, pRight);
@@ -99,12 +93,12 @@ public class Game {
 
 	private boolean checkUp(int x, int y, HashMap<Point, Object> pTile) {
 		Object pLeft = pTile.get(new Point(0,0));
-		Object pMiddle = pTile.get(new Point (1,0));
-		Object pRight = pTile.get(new Point(2,2));
+		Object pMiddle = pTile.get(new Point (0,1));
+		Object pRight = pTile.get(new Point(0,2));
 		if(_gameBoard.containsKey(new Point(x,y+1))){
 		 HashMap<Point,Object> uTile =_gameBoard.get(new Point(x, y+1));
 		 Object left = uTile.get(new Point(2,0));
-		 Object middle = uTile.get(new Point(1,2));
+		 Object middle = uTile.get(new Point(2,1));
 		 Object right = uTile.get(new Point(2,2));
 		 boolean checkLeft = checkIndividual(left, pLeft);
 		 boolean checkMiddle = checkIndividual(middle, pMiddle);
@@ -124,14 +118,14 @@ public class Game {
 	}
 
 	private boolean checkRight(int x, int y, HashMap<Point, Object> pTile) {
-		Object pTop = pTile.get(new Point(2,0));
-		Object pMiddle = pTile.get(new Point (2,1));
+		Object pTop = pTile.get(new Point(0,2));
+		Object pMiddle = pTile.get(new Point (1,2));
 		Object pBottom = pTile.get(new Point(2,2));
 		if(_gameBoard.containsKey(new Point(x+1, y))){
 		 HashMap<Point,Object> rTile =_gameBoard.get(new Point(x+1, y));
-		 Object top = rTile.get(new Point(2,0));
-		 Object middle = rTile.get(new Point(2,1));
-		 Object bottom = rTile.get(new Point(2,2));
+		 Object top = rTile.get(new Point(0,0));
+		 Object middle = rTile.get(new Point(1,0));
+		 Object bottom = rTile.get(new Point(2,0));
 		 boolean checkTop = checkIndividual(top, pTop);
 		 boolean checkMiddle = checkIndividual(middle, pMiddle);
 		 boolean checkBottom = checkIndividual(bottom, pBottom);
@@ -150,12 +144,12 @@ public class Game {
 
 	private boolean checkLeft(int x, int y, HashMap<Point, Object> pTile) {
 		Object pTop = pTile.get(new Point(0,0));
-		Object pMiddle = pTile.get(new Point (0,1));
-		Object pBottom = pTile.get(new Point(0,2));
+		Object pMiddle = pTile.get(new Point (1,0));
+		Object pBottom = pTile.get(new Point(2,0));
 		if(_gameBoard.containsKey(new Point(x-1, y))){
 		 HashMap<Point,Object> lTile =_gameBoard.get(new Point(x-1, y));
-		 Object top = lTile.get(new Point(2,0));
-		 Object middle = lTile.get(new Point(2,1));
+		 Object top = lTile.get(new Point(0,2));
+		 Object middle = lTile.get(new Point(1,2));
 		 Object bottom = lTile.get(new Point(2,2));
 		 
 		 boolean checkTop = checkIndividual(top, pTop);

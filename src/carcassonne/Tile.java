@@ -77,30 +77,52 @@ public class Tile {
 		 _tile.put(new Point(2,2), position8);
 	}
 	public void CreateAllTile(){
-		CreateTile(_tileA,  'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F'); 
-		CreateTile(_tileB,  'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F');
-		CreateTile(_tileC,  'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F');
-		CreateTile(_tileD,  'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F');
-		CreateTile(_tileE,  'C', 'C', 'C', 'C', 'C', 'C', 'W', 'F', 'W');
-		CreateTile(_tileF,  'C', 'C', 'C', 'C', 'C', 'C', 'W', 'F', 'W');
-		CreateTile(_tileG,  'C', 'C', 'C', 'C', 'C', 'C', 'W', 'R', 'W');
-		CreateTile(_tileH,  'C', 'C', 'C', 'C', 'C', 'C', 'W', 'R', 'W');
-		CreateTile(_tileI,  'F', 'F', 'F', 'R', 'R', 'R', 'F', 'F', 'F');
-		CreateTile(_tileJ, 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F');
-		CreateTile(_tileK, 'F', 'F', 'F', 'R', 'R', 'R', 'F', 'R', 'F');
-		CreateTile(_tileL, 'F', 'R', 'F', 'R', 'R', 'R', 'F', 'R', 'F');
-		CreateTile(_tileM, 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'R', 'F');
-		CreateTile(_tileN, 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'F', 'F');
-		CreateTile(_tileO, 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C');
-		CreateTile(_tileP, 'F', 'R', 'W', 'F', 'R', 'C', 'F', 'R', 'W');
-		CreateTile(_tileQ, 'W', 'C', 'W', 'F', 'F', 'F', 'F', 'F', 'F');
-		CreateTile(_tileR, 'W', 'F', 'W', 'C', 'C', 'C', 'W', 'F', 'W');
-		CreateTile(_tileS, 'W', 'C', 'W', 'F', 'C', 'F', 'W', 'C', 'W');
-		CreateTile(_tileT, 'W', 'F', 'W', 'C', 'F', 'C', 'W', 'F', 'W');
-		CreateTile(_tileU, 'F', 'F', 'W', 'F', 'F', 'C', 'W', 'C', 'W');
-		CreateTile(_tileV, 'W', 'C', 'W', 'F', 'R', 'R', 'F', 'R', 'F');
-		CreateTile(_tileW, 'F', 'R', 'W', 'R', 'R', 'C', 'F', 'F', 'W');
-		CreateTile(_tileX, 'F', 'R', 'W', 'R', 'R', 'C', 'F', 'R', 'W');
+		CreateTile(_tileA, 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'R', 'F');
+		CreateTile(_tileB, 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'F', 'F');
+		CreateTile(_tileC, 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C');
+		CreateTile(_tileD, 'W', 'C', 'W', 'R', 'R', 'R', 'F', 'F', 'F');
+		CreateTile(_tileE, 'W', 'C', 'W', 'F', 'F', 'F', 'F', 'F', 'F');
+		
+		CreateTile(_tileF, 'W', 'F', 'W', 'C', 'C', 'C', 'W', 'F', 'W');
+		
+		CreateTile(_tileG, 'W', 'F', 'W', 'C', 'C', 'C', 'W', 'F', 'W');
+		
+		CreateTile(_tileH, 'W', 'F', 'W', 'C', 'F', 'C', 'W', 'F', 'W');
+		
+		CreateTile(_tileI, 'W', 'C', 'W', 'C', 'F', 'F', 'W', 'F', 'F');
+		
+		CreateTile(_tileJ, 'W', 'C', 'W', 'F', 'R', 'R', 'F', 'R', 'F');
+		
+		CreateTile(_tileK, 'W', 'C', 'W', 'R', 'R', 'F', 'F', 'R', 'F');
+		
+		CreateTile(_tileL, 'W', 'C', 'W', 'R', 'R', 'R', 'F', 'R', 'F');
+				
+		CreateTile(_tileM,  'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F'); 
+		
+		CreateTile(_tileN,  'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F');
+		
+		CreateTile(_tileO,  'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F');
+		
+		CreateTile(_tileP,  'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F');
+		
+		CreateTile(_tileQ,  'C', 'C', 'C', 'C', 'C', 'C', 'W', 'F', 'W');
+		
+		CreateTile(_tileR,  'C', 'C', 'C', 'C', 'C', 'C', 'W', 'F', 'W');
+		
+		CreateTile(_tileS,  'C', 'C', 'C', 'C', 'C', 'C', 'W', 'R', 'W');
+		
+		CreateTile(_tileT,  'C', 'C', 'C', 'C', 'C', 'C', 'W', 'R', 'W');
+		
+		CreateTile(_tileU,  'F', 'F', 'F', 'R', 'R', 'R', 'F', 'F', 'F');
+		
+		CreateTile(_tileV, 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F');
+		
+		CreateTile(_tileW, 'F', 'F', 'F', 'R', 'R', 'R', 'F', 'R', 'F');
+		
+		CreateTile(_tileX, 'F', 'R', 'F', 'R', 'R', 'R', 'F', 'R', 'F');
+		
+		
+		
 	}
 	
 	public void rotate(HashMap<Point, Object> tile){
