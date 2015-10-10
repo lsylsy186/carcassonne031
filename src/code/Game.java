@@ -1,4 +1,4 @@
-package carcassonne;
+package code;
 
 import java.awt.Point;
 import java.util.HashMap;

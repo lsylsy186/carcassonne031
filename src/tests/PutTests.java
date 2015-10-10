@@ -1,4 +1,4 @@
-package test;
+package tests;
 
 import static org.junit.Assert.*;
 
@@ -7,10 +7,10 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
-import carcassonne.Game;
-import carcassonne.Tile;
+import code.Game;
+import code.Tile;
 
-public class CompatileTest {
+public class PutTests {
 
 	@Test
 	public void test() {
@@ -18,7 +18,6 @@ public class CompatileTest {
 		g.newGame();
 		Tile t = new Tile();
 		HashMap<Point,Object> target = t.getTile('J');
-		//g.putTile(51,50, target);
 		boolean actual =g.putTile(30,30, target);
 		boolean expected = false;
 		assertTrue("expected:" +expected+ ", actual" + actual,expected==actual);
@@ -31,7 +30,6 @@ public class CompatileTest {
 		g.newGame();
 		Tile t = new Tile();
 		HashMap<Point,Object> target = t.getTile('G');
-		//g.putTile(51,50, target);
 		boolean actual =g.putTile(51,50, target);
 		boolean expected = false;
 		assertTrue("expected:" +expected+ ", actual" + actual,expected==actual);
@@ -44,7 +42,6 @@ public class CompatileTest {
 		g.newGame();
 		Tile t = new Tile();
 		HashMap<Point,Object> target = t.getTile('V');
-		//g.putTile(51,50, target);
 		boolean actual =g.putTile(51,50, target);
 		boolean expected = true;
 		assertTrue("expected:" +expected+ ", actual" + actual,expected==actual);
@@ -56,7 +53,6 @@ public class CompatileTest {
 		g.newGame();
 		Tile t = new Tile();
 		HashMap<Point,Object> target = t.getTile('B');
-		//g.putTile(51,50, target);
 		boolean actual =g.putTile(50,49, target);
 		boolean expected = true;
 		assertTrue("expected:" +expected+ ", actual" + actual,expected==actual);

@@ -1,4 +1,4 @@
-package carcassonne;
+package code;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -78,9 +78,13 @@ public class Tile {
 	}
 	public void CreateAllTile(){
 		CreateTile(_tileA, 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'R', 'F');
+		
 		CreateTile(_tileB, 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'F', 'F');
+		
 		CreateTile(_tileC, 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C');
+		
 		CreateTile(_tileD, 'W', 'C', 'W', 'R', 'R', 'R', 'F', 'F', 'F');
+		
 		CreateTile(_tileE, 'W', 'C', 'W', 'F', 'F', 'F', 'F', 'F', 'F');
 		
 		CreateTile(_tileF, 'W', 'F', 'W', 'C', 'C', 'C', 'W', 'F', 'W');
@@ -120,9 +124,6 @@ public class Tile {
 		CreateTile(_tileW, 'F', 'F', 'F', 'R', 'R', 'R', 'F', 'R', 'F');
 		
 		CreateTile(_tileX, 'F', 'R', 'F', 'R', 'R', 'R', 'F', 'R', 'F');
-		
-		
-		
 	}
 	
 	public void rotate(HashMap<Point, Object> tile){
