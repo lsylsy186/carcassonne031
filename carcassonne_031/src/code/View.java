@@ -35,7 +35,7 @@ public class View {
 		_jArray[3] = new JButton(player4);
 		_jArray[4] = new JButton(player5);
 		for(int i = 0; i < g.get_playerList().length; i++){
-			String playerName = g.getPlayerNumber(i+1);
+			String playerName = g.getPlayer(i+1);
 			addPlayerList(i, playerName);	
 		}
 		

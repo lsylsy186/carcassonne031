@@ -6,54 +6,55 @@ import java.util.HashSet;
 
 
 public class Game {
+	private int _playerNumber;
+	private int _player1Supply = 7;
+	private int _player2Supply = 7;
+	private int _player3Supply = 7;
+	private int _player4Supply = 7;
+	private int _player5Supply = 7;
 	private String[] _playerList;
 	private View _view;
 	private HashMap<Point, HashMap<Point,Object>> _gameBoard;
-	HashSet<Point> emptySlot = new HashSet<Point>(100);//a hashset of all available empty slots.  putTile will check and add
+	private HashSet<Point> _emptySlot = new HashSet<Point>(100);//a hashset of all available empty slots.  putTile will check and add
 	//in as more occur.
 	
 	// emptySlot will be very useful once we build the view.
-	Tile tile; 
+	private Tile _tile; 
+	
 	
 	public void setUp(String[] list){
-		set_playerList(new String[list.length]);
+		_playerList = new String[list.length];
 		for(int i = 0; i < list.length; i++){
-
-			
-			
-			get_playerList()[i] = list[i];	
+			_playerList[i] = list[i];
+			if(!(list[i] == null)) _playerNumber++;
 		}
 	}	
-	public String getPlayerNumber(int num){
-			
+	
+	public String getPlayer(int num){	
 		return get_playerList()[num-1];
-		
 	}
 		
-		
-	
+
 	
 	public void newGame(){
-		tile = new Tile();
-		HashMap<Point,Object> tD = tile.getTile('D');
+		_tile = new Tile();
+		HashMap<Point,Object> tD = _tile.getTile('D');
 		
 		_gameBoard = new HashMap<>(100);
 		_gameBoard.put(new Point(50,50), tD );		
-		emptySlot.add(new Point(49,50));
-		emptySlot.add(new Point(50,49));
-		emptySlot.add(new Point(50,51));	
-		emptySlot.add(new Point(51,50));
-		
+		_emptySlot.add(new Point(49,50));
+		_emptySlot.add(new Point(50,49));
+		_emptySlot.add(new Point(50,51));	
+		_emptySlot.add(new Point(51,50));
 	}
-	private void tryAddEmptySlot(int x, int y){
-		if(!_gameBoard.containsKey(new Point(x,y)))emptySlot.add(new Point(x,y)); //if an empty slot is found, adds it to emptySlot
-				
-	}
-		
-	public boolean putTile(int x, int y, HashMap<Point, Object> tile){  //when calling putTile, must use int x and y for Point, and specify which tile you want to place.
-		if(emptySlot.contains(new Point(x,y))&& checkPlacement(x,y, tile) ){
+	
+	
+	
+	public boolean putTile(int x, int y, HashMap<Point, Object> tile){  
+		//when calling putTile, must use int x and y for Point, and specify which tile you want to place.
+		if(_emptySlot.contains(new Point(x,y))&& checkPlacement(x,y, tile) ){
 			_gameBoard.put(new Point(x,y), tile);
-			emptySlot.remove(new Point(x,y));
+			_emptySlot.remove(new Point(x,y));
 			 //goes through all spaces next to the placed tile and checks which ones are empty.
 			tryAddEmptySlot(x+1,y);
 			tryAddEmptySlot(x,y+1);
@@ -67,12 +68,37 @@ public class Game {
 		
 		}
 		return false;
+	}
+	
+	public boolean putMeep(int x, int y, HashMap<Point, Object> tile){
+		Object part = tile.get(new Point(x,y));
+		switch((char)part){
+		case 'F':
+			tile.put(new Point(x,y), 'f');
+			break;
+		case 'C':
+			tile.put(new Point(x,y), 'c');
+			break;
+		case 'W':
+			tile.put(new Point(x,y), 'w');
+			break;
+		case 'R':
+			tile.put(new Point(x,y), 'r');
+			break;
+		case 'M':
+			tile.put(new Point(x,y), 'm');
+			break;
+		default: 
+			return false; //default catch all that should never be called.
 		}
 		
+
+		return true;
+	}
 		
-		
-		
-	
+	private void tryAddEmptySlot(int x, int y){
+		if(!_gameBoard.containsKey(new Point(x,y)))_emptySlot.add(new Point(x,y)); //if an empty slot is found, adds it to emptySlot
+	}
 
 	private boolean checkPlacement(int x, int y, HashMap<Point, Object> pTile) { //checks placement availability of adjacent tiles
 		//pTile is placement tile. the tile you are trying to place.
@@ -216,6 +242,8 @@ public class Game {
 		
 		
 	}
+	
+	
 		public void addView(View v){
 		_view = v;
 	}
@@ -226,7 +254,12 @@ public class Game {
 			this._playerList = _playerList;
 		}
 
-	
-	
+		public int get_playerNumber() {
+			return _playerNumber;
+		}
+
+		public void set_playerNumber(int _playerNumber) {
+			this._playerNumber = _playerNumber;
+		}
 
 }

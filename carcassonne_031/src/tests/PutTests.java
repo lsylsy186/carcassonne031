@@ -72,4 +72,30 @@ public class PutTests {
 		assertTrue("expected:" +expected+ ", actual" + actual,expected==actual);
 		
 	}
+	
+	@Test
+	public void test05() {
+		Game g = new Game();
+		g.newGame();
+		Tile t = new Tile();
+		HashMap<Point,Object> target1 = t.getTile('V');
+		g.putTile(51,50, target1);
+		g.putMeep(0, 0, target1);
+		char expected = 'f';
+		char actual = (char) target1.get(new Point(0,0));
+		assertTrue("expected:" +expected+ ", actual" + actual,expected==actual);
+	}
+	
+	@Test
+	public void test06() {
+		Game g = new Game();
+		g.newGame();
+		Tile t = new Tile();
+		HashMap<Point,Object> target1 = t.getTile('E');
+		g.putTile(51,50, target1);
+		g.putMeep(0,0 , target1);
+		char expected = 'w';
+		char actual = (char) target1.get(new Point(0,0));
+		assertTrue("expected:" +expected+ ", actual" + actual,expected==actual);
+	}
 }
