@@ -1,9 +1,12 @@
 package code;
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.Point;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
 
@@ -15,7 +18,7 @@ public class Game {
 	private int _player4Supply = 7;
 	private int _player5Supply = 7;
 	private String[] _playerList;
-	private View _view;
+	private PlayerButtonView _view;
 	private HashMap<Point, HashMap<Point,Object>> _gameBoard;
 	private HashSet<Point> _emptySlot = new HashSet<Point>(100);//a hashset of all available empty slots.  putTile will check and add
 	//in as more occur.
@@ -26,13 +29,16 @@ public class Game {
 	public static void main(String[] args) {
 		Game g = new Game();
 		g.setUp(args);
-		View v = new View(g);
+		PlayerButtonView v = new PlayerButtonView(g);
 		JFrame f=new JFrame("Carcassonne Team_31");
+		f.setLayout(new BorderLayout());
 	    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    Interface ui=new Interface();
-	    f.add(ui);
-	    f.setSize(500, 500);
+	    f.add(ui,BorderLayout.CENTER);
+	    f.setSize(600, 500);
 	    f.setVisible(true);
+	    f.add(v.getPanel(),BorderLayout.SOUTH);
+	    
 	}
 	
 
@@ -258,7 +264,7 @@ public class Game {
 	}
 	
 	
-		public void addView(View v){
+		public void addView(PlayerButtonView v){
 		_view = v;
 	}
 		public String[] get_playerList() {

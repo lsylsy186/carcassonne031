@@ -25,8 +25,8 @@ public class Interface extends JPanel implements MouseListener, MouseMotionListe
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		x = e.getX();
-		y = e.getY();
+		x = e.getX() - 40;
+		y = e.getY() - 40;
 		repaint();
 		// TODO Auto-generated method stub
 		
@@ -65,7 +65,9 @@ public class Interface extends JPanel implements MouseListener, MouseMotionListe
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		x = (e.getX()/(squareSize+1))*(squareSize+1)+1;
+		y = (e.getY()/(squareSize+1))*(squareSize+1)+1;
+		repaint();// TODO Auto-generated method stub
 		
 	}
 }
