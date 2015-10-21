@@ -1,13 +1,14 @@
 package code;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import java.awt.Dimension;
 import java.awt.Point;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import javax.swing.BoxLayout;
+
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 
 public class Game {
@@ -19,7 +20,7 @@ public class Game {
 	private int _player5Supply = 7;
 	private String[] _playerList;
 	private PlayerButtonView _view;
-	private HashMap<Point, HashMap<Point,Object>> _gameBoard;
+	static HashMap<Point, HashMap<Point,Object>> _gameBoard;
 	private HashSet<Point> _emptySlot = new HashSet<Point>(100);//a hashset of all available empty slots.  putTile will check and add
 	//in as more occur.
 	
@@ -28,18 +29,31 @@ public class Game {
 	
 	public static void main(String[] args) {
 		Game g = new Game();
+		g.newGame();
+		
+		Tile t = new Tile();
+		HashMap<Point,Object> target1 = t.getTile('V');
+		HashMap<Point,Object> target2 = t.getTile('U');
+		t.rotate(target2);
+		g.putTile(51,50, target1);
+		g.putTile(51, 49,target2);
+		
 		g.setUp(args);
 		PlayerButtonView v = new PlayerButtonView(g);
 		JFrame f=new JFrame("Carcassonne Team_31");
 		f.setLayout(new BorderLayout());
 	    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    Interface ui=new Interface();
-	    f.add(ui,BorderLayout.CENTER);
+	    ui.setPreferredSize(new Dimension(8101,8101));
+	    JScrollPane scrPane = new JScrollPane(ui);
+	    f.add(scrPane,BorderLayout.CENTER);
+	    f.add(v.getPanel(),BorderLayout.SOUTH);
 	    f.setSize(600, 500);
 	    f.setVisible(true);
-	    f.add(v.getPanel(),BorderLayout.SOUTH);
+	   
 	    
 	}
+	
 	
 
 	public void setUp(String[] list){
@@ -60,7 +74,7 @@ public class Game {
 		_tile = new Tile();
 		HashMap<Point,Object> tD = _tile.getTile('D');
 		
-		_gameBoard = new HashMap<>(100);
+		_gameBoard = new HashMap<>();
 		_gameBoard.put(new Point(50,50), tD );		
 		_emptySlot.add(new Point(49,50));
 		_emptySlot.add(new Point(50,49));
@@ -82,7 +96,7 @@ public class Game {
 			tryAddEmptySlot(x-1,y);
 				return true;
 			}
-		else{ //else catchall. should never be encountered
+		else{ //else catch all. should never be encountered
 		
 			System.out.println("error, cannot place tile at:"+ x+ "and "+ y); // feel free to change this to an exception handler 
 		
