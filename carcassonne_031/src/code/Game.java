@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import javax.swing.JFrame;
+
 
 public class Game {
 	private int _playerNumber;
@@ -21,7 +23,19 @@ public class Game {
 	// emptySlot will be very useful once we build the view.
 	private Tile _tile; 
 	
+	public static void main(String[] args) {
+		Game g = new Game();
+		g.setUp(args);
+		View v = new View(g);
+		JFrame f=new JFrame("Carcassonne Team_31");
+	    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    Interface ui=new Interface();
+	    f.add(ui);
+	    f.setSize(500, 500);
+	    f.setVisible(true);
+	}
 	
+
 	public void setUp(String[] list){
 		_playerList = new String[list.length];
 		for(int i = 0; i < list.length; i++){
