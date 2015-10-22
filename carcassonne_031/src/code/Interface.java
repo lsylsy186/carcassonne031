@@ -59,64 +59,81 @@ public class Interface extends JPanel implements MouseListener, MouseMotionListe
 					k = 1;
 					break;
 				case 'G':
-					j = 3;
-					k = 4;
+					j = 1;
+					k = 0;
 					break;
 				case 'H':
-					
+					j = 0;
+					k = 2;
 					break;
 				case 'I':
-					
+					j = 0;
+					k = 1;
 					break;
 				case 'J':
-					
+					j = 2;
+					k = 2;
 					break;
 				case 'K':
-					
+					j = 2;
+					k = 1;
 					break;
 				case 'L':
-					
+					j = 3;
+					k = 2;
 					break;
 				case 'M':
-					
+					j = 0;
+					k = 4;
 					break;
 				case 'N':
-					
+					j = 0;
+					k = 3;
 					break;
 				case 'O':
-					
+					j = 2;
+					k = 4;
 					break;
 				case 'P':
-					
+					j = 2;
+					k = 3;
 					break;
 				case 'Q':
-					
+					j = 1;
+					k = 4;
 					break;
 				case 'R':
-					
+					j = 1;
+					k = 3;
 					break;
 				case 'S':
-					
+					j = 3;
+					k = 1;
 					break;
 				case 'T':
-					
+					j = 3;
+					k = 0;
 					break;
 				case 'U':
-					
+					j = 4;
+					k = 0;
 					break;
 				case 'V':
-					
+					j = 4;
+					k = 1;
 					break;
 				case 'W':
-					
+					j = 4;
+					k = 2;
 					break;
 				case 'X':
-					
+					j = 4;
+					k = 3;
 					break;
 					
 			}
 			
-		g.drawImage(tilePiece,xp*(squareSize + 1) + 1, yp*(squareSize + 1) + 1,xp*(squareSize + 1) + 81,yp*(squareSize + 1) + 81,42,341,122,421,this);
+		g.drawImage(tilePiece,xp*(squareSize + 1) + 1, yp*(squareSize + 1) + 1,xp*(squareSize + 1) + 81,yp*(squareSize + 1) + 81,42+120*k,341+160*j,122+120*k,421+160*j,this);
 		}
 	}
 	@Override

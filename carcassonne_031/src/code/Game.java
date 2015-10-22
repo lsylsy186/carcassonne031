@@ -37,8 +37,8 @@ public class Game {
 		HashMap<Point,Object> target1 = t.getTile('V');
 		HashMap<Point,Object> target2 = t.getTile('U');
 		t.rotate(target2);
-		g.putTile(51,50, target1);
-		g.putTile(51, 49,target2);
+		g.putTile(51, 50, target1);
+		g.putTile(51, 49, target2);
 		
 		g.setUp(args);
 		PlayerButtonView v = new PlayerButtonView(g);
@@ -49,7 +49,7 @@ public class Game {
 	    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    Interface ui=new Interface();
 	    ui.setPreferredSize(new Dimension(8101,8101));
-	    JScrollPane scrPane = new JScrollPane(ui);
+	    JScrollPane scrPane = new JScrollPane(ui, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	   
 	    JScrollBar horizontal = scrPane.getHorizontalScrollBar();
         horizontal.setValue(48*81+40);
