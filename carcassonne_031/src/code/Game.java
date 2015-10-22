@@ -24,13 +24,15 @@ public class Game {
 	private int _player5Supply = 7;
 	private String[] _playerList;
 	private PlayerButtonView _view;
-	private ArrayList _tileList;
+	private ArrayList<HashMap<Point, Object>> _tileList;
 	static HashMap<Point, HashMap<Point,Object>> _gameBoard;
 	private HashSet<Point> _emptySlot = new HashSet<Point>(100);//a hashset of all available empty slots.  putTile will check and add
 	//in as more occur.
 	
 	// emptySlot will be very useful once we build the view.
 	private Tile _tile; 
+	private int _tileDeckIndex = 0;
+	
 	
 	public static void main(String[] args) {
 		Game g = new Game();
@@ -68,11 +70,8 @@ public class Game {
 	    f.add(v.getPanel(),BorderLayout.SOUTH);
 	    f.setSize(500, 600);
 	    f.setVisible(true);
-	   
-	    
 	}
-	
-	
+
 
 	public void setUp(String[] list){
 		_playerList = new String[list.length];
@@ -102,20 +101,24 @@ public class Game {
 		setupDeck();
 		
 	}
+	
+	//each time topTile is called it returns the tile at the index and then increments the index.
+	// this method will be used for the draw phase of the turn. 
+	public HashMap<Point, Object> topTile(){
+		HashMap<Point, Object> topTile = _tileList.get(_tileDeckIndex);
+		_tileDeckIndex++;
+		return topTile;
+	}
+	
 
-
-
-
+	//Initializes _tileList as a list of all the tiles except the starting tile (essentially the deck or stack the player draws from)
+	//and then randomizes them using Collections.shuffle
 	private void setupDeck(){
 		Tile t = new Tile();
 		_tileList = t.get_tiles();
 		Collections.shuffle(_tileList);
 	}
-	
-	
-	
-	
-	
+
 	public boolean putTile(int x, int y, HashMap<Point, Object> tile){  
 		//when calling putTile, must use int x and y for Point, and specify which tile you want to place.
 		if(_emptySlot.contains(new Point(x,y))&& checkPlacement(x,y, tile) ){

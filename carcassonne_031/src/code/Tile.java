@@ -81,7 +81,8 @@ public class Tile {
 	private ArrayList<HashMap<Point, Object>> _tiles = new ArrayList<HashMap<Point, Object>>();
 	
 	public Tile(){
-		CreateAllTile();
+		CreateAllTile(); 
+		//has to be kept in this order so getTile will still work for testing.
 		get_tiles().add(_tileA1);
 		get_tiles().add(_tileB1);
 		get_tiles().add(_tileC1);
@@ -107,6 +108,54 @@ public class Tile {
 		get_tiles().add(_tileW1);
 		get_tiles().add(_tileX1);
 		
+		get_tiles().add(_tileA2);
+		get_tiles().add(_tileB2);
+		get_tiles().add(_tileB3);
+		get_tiles().add(_tileB4);
+		get_tiles().add(_tileD2);
+		get_tiles().add(_tileD3);
+		get_tiles().add(_tileE2);
+		get_tiles().add(_tileE3);
+		get_tiles().add(_tileE4);
+		get_tiles().add(_tileE5);
+		get_tiles().add(_tileF2);
+		get_tiles().add(_tileH2);
+		get_tiles().add(_tileH3);
+		get_tiles().add(_tileI2);
+		get_tiles().add(_tileJ2);
+		get_tiles().add(_tileJ3);
+		get_tiles().add(_tileK2);
+		get_tiles().add(_tileK3);
+		get_tiles().add(_tileL2);
+		get_tiles().add(_tileL3);
+		get_tiles().add(_tileM2);
+		get_tiles().add(_tileN2);
+		get_tiles().add(_tileN3);
+		get_tiles().add(_tileO2);
+		get_tiles().add(_tileP2);
+		get_tiles().add(_tileP3);
+		get_tiles().add(_tileR2);
+		get_tiles().add(_tileR3);
+		get_tiles().add(_tileS2);
+		get_tiles().add(_tileU2);
+		get_tiles().add(_tileU3);
+		get_tiles().add(_tileU4);
+		get_tiles().add(_tileU5);
+		get_tiles().add(_tileU6);
+		get_tiles().add(_tileU7);
+		get_tiles().add(_tileU8);
+		get_tiles().add(_tileV2);
+		get_tiles().add(_tileV3);
+		get_tiles().add(_tileV4);
+		get_tiles().add(_tileV5);
+		get_tiles().add(_tileV6);
+		get_tiles().add(_tileV7);
+		get_tiles().add(_tileV8);
+		get_tiles().add(_tileV8);
+		get_tiles().add(_tileW2);
+		get_tiles().add(_tileW3);
+		get_tiles().add(_tileW4);
+		
 		
 		
 	}
@@ -127,54 +176,77 @@ public class Tile {
 	}
 	public void CreateAllTile(){
 		CreateTile(_tileA1, 'A', 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'R', 'F');
-		
 		CreateTile(_tileA2, 'A', 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'R', 'F');
-		
-		CreateTile(_tileB, 'B', 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'F', 'F');
-		
-		CreateTile(_tileC, 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C');
-		
-		CreateTile(_tileD, 'D', 'W', 'C', 'W', 'R', 'R', 'R', 'F', 'F', 'F');
-		
-		CreateTile(_tileE, 'E', 'W', 'C', 'W', 'F', 'F', 'F', 'F', 'F', 'F');
-		
-		CreateTile(_tileF, 'F', 'W', 'F', 'W', 'C', 'C', 'C', 'W', 'F', 'W');
-		
-		CreateTile(_tileG, 'G', 'W', 'F', 'W', 'C', 'C', 'C', 'W', 'F', 'W');
-		
-		CreateTile(_tileH, 'H', 'W', 'F', 'W', 'C', 'F', 'C', 'W', 'F', 'W');
-		
-		CreateTile(_tileI, 'I', 'W', 'C', 'W', 'C', 'F', 'F', 'W', 'F', 'F');
-		
-		CreateTile(_tileJ, 'J', 'W', 'C', 'W', 'F', 'R', 'R', 'F', 'R', 'F');
-		
-		CreateTile(_tileK, 'K', 'W', 'C', 'W', 'R', 'R', 'F', 'F', 'R', 'F');
-		
-		CreateTile(_tileL, 'L', 'W', 'C', 'W', 'R', 'R', 'R', 'F', 'R', 'F');
-				
-		CreateTile(_tileM, 'M', 'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F'); 
-		
-		CreateTile(_tileN, 'N', 'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F');
-		
-		CreateTile(_tileO, 'O', 'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F');
-		
-		CreateTile(_tileP, 'P', 'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F');
-		
-		CreateTile(_tileQ, 'Q', 'C', 'C', 'C', 'C', 'C', 'C', 'W', 'F', 'W');
-		
-		CreateTile(_tileR, 'R', 'C', 'C', 'C', 'C', 'C', 'C', 'W', 'F', 'W');
-		
-		CreateTile(_tileS, 'S', 'C', 'C', 'C', 'C', 'C', 'C', 'W', 'R', 'W');
-		
-		CreateTile(_tileT, 'T', 'C', 'C', 'C', 'C', 'C', 'C', 'W', 'R', 'W');
-		
-		CreateTile(_tileU, 'U', 'F', 'F', 'F', 'R', 'R', 'R', 'F', 'F', 'F');
-		
-		CreateTile(_tileV, 'V', 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F');
-		
-		CreateTile(_tileW, 'W', 'F', 'F', 'F', 'R', 'R', 'R', 'F', 'R', 'F');
-		
-		CreateTile(_tileX, 'X', 'F', 'R', 'F', 'R', 'R', 'R', 'F', 'R', 'F');
+		CreateTile(_tileB1, 'B', 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'F', 'F');
+		CreateTile(_tileB2, 'B', 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'F', 'F');
+		CreateTile(_tileB3, 'B', 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'F', 'F');
+		CreateTile(_tileB4, 'B', 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'F', 'F');
+		CreateTile(_tileC1, 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C');	
+		CreateTile(_tileDS, 'D', 'W', 'C', 'W', 'R', 'R', 'R', 'F', 'F', 'F');
+		CreateTile(_tileD1, 'D', 'W', 'C', 'W', 'R', 'R', 'R', 'F', 'F', 'F');
+		CreateTile(_tileD2, 'D', 'W', 'C', 'W', 'R', 'R', 'R', 'F', 'F', 'F');
+		CreateTile(_tileD3, 'D', 'W', 'C', 'W', 'R', 'R', 'R', 'F', 'F', 'F');
+		CreateTile(_tileE1, 'E', 'W', 'C', 'W', 'F', 'F', 'F', 'F', 'F', 'F');
+		CreateTile(_tileE2, 'E', 'W', 'C', 'W', 'F', 'F', 'F', 'F', 'F', 'F');
+		CreateTile(_tileE3, 'E', 'W', 'C', 'W', 'F', 'F', 'F', 'F', 'F', 'F');
+		CreateTile(_tileE4, 'E', 'W', 'C', 'W', 'F', 'F', 'F', 'F', 'F', 'F');
+		CreateTile(_tileE5, 'E', 'W', 'C', 'W', 'F', 'F', 'F', 'F', 'F', 'F');
+		CreateTile(_tileF1, 'F', 'W', 'F', 'W', 'C', 'C', 'C', 'W', 'F', 'W');
+		CreateTile(_tileF2, 'F', 'W', 'F', 'W', 'C', 'C', 'C', 'W', 'F', 'W');
+		CreateTile(_tileG1, 'G', 'W', 'F', 'W', 'C', 'C', 'C', 'W', 'F', 'W');
+		CreateTile(_tileH1, 'H', 'W', 'F', 'W', 'C', 'F', 'C', 'W', 'F', 'W');
+		CreateTile(_tileH2, 'H', 'W', 'F', 'W', 'C', 'F', 'C', 'W', 'F', 'W');
+		CreateTile(_tileH3, 'H', 'W', 'F', 'W', 'C', 'F', 'C', 'W', 'F', 'W');
+		CreateTile(_tileI1, 'I', 'W', 'C', 'W', 'C', 'F', 'F', 'W', 'F', 'F');
+		CreateTile(_tileI2, 'I', 'W', 'C', 'W', 'C', 'F', 'F', 'W', 'F', 'F');
+		CreateTile(_tileJ1, 'J', 'W', 'C', 'W', 'F', 'R', 'R', 'F', 'R', 'F');
+		CreateTile(_tileJ2, 'J', 'W', 'C', 'W', 'F', 'R', 'R', 'F', 'R', 'F');
+		CreateTile(_tileJ3, 'J', 'W', 'C', 'W', 'F', 'R', 'R', 'F', 'R', 'F');
+		CreateTile(_tileK1, 'K', 'W', 'C', 'W', 'R', 'R', 'F', 'F', 'R', 'F');
+		CreateTile(_tileK2, 'K', 'W', 'C', 'W', 'R', 'R', 'F', 'F', 'R', 'F');
+		CreateTile(_tileK3, 'K', 'W', 'C', 'W', 'R', 'R', 'F', 'F', 'R', 'F');
+		CreateTile(_tileL1, 'L', 'W', 'C', 'W', 'R', 'R', 'R', 'F', 'R', 'F');
+		CreateTile(_tileL2, 'L', 'W', 'C', 'W', 'R', 'R', 'R', 'F', 'R', 'F');
+		CreateTile(_tileL3, 'L', 'W', 'C', 'W', 'R', 'R', 'R', 'F', 'R', 'F');	
+		CreateTile(_tileM1, 'M', 'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F'); 
+		CreateTile(_tileM2, 'M', 'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F'); 
+		CreateTile(_tileN1, 'N', 'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F');
+		CreateTile(_tileN2, 'N', 'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F');
+		CreateTile(_tileN3, 'N', 'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F');
+		CreateTile(_tileO1, 'O', 'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F');
+		CreateTile(_tileO2, 'O', 'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F');
+		CreateTile(_tileP1, 'P', 'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F');
+		CreateTile(_tileP2, 'P', 'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F');
+		CreateTile(_tileP3, 'P', 'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F');
+		CreateTile(_tileQ1, 'Q', 'C', 'C', 'C', 'C', 'C', 'C', 'W', 'F', 'W');
+		CreateTile(_tileR1, 'R', 'C', 'C', 'C', 'C', 'C', 'C', 'W', 'F', 'W');
+		CreateTile(_tileR2, 'R', 'C', 'C', 'C', 'C', 'C', 'C', 'W', 'F', 'W');
+		CreateTile(_tileR3, 'R', 'C', 'C', 'C', 'C', 'C', 'C', 'W', 'F', 'W');
+		CreateTile(_tileS1, 'S', 'C', 'C', 'C', 'C', 'C', 'C', 'W', 'R', 'W');
+		CreateTile(_tileS2, 'S', 'C', 'C', 'C', 'C', 'C', 'C', 'W', 'R', 'W');
+		CreateTile(_tileT1, 'T', 'C', 'C', 'C', 'C', 'C', 'C', 'W', 'R', 'W');
+		CreateTile(_tileU1, 'U', 'F', 'F', 'F', 'R', 'R', 'R', 'F', 'F', 'F');
+		CreateTile(_tileU2, 'U', 'F', 'F', 'F', 'R', 'R', 'R', 'F', 'F', 'F');
+		CreateTile(_tileU3, 'U', 'F', 'F', 'F', 'R', 'R', 'R', 'F', 'F', 'F');
+		CreateTile(_tileU4, 'U', 'F', 'F', 'F', 'R', 'R', 'R', 'F', 'F', 'F');
+		CreateTile(_tileU5, 'U', 'F', 'F', 'F', 'R', 'R', 'R', 'F', 'F', 'F');
+		CreateTile(_tileU6, 'U', 'F', 'F', 'F', 'R', 'R', 'R', 'F', 'F', 'F');
+		CreateTile(_tileU7, 'U', 'F', 'F', 'F', 'R', 'R', 'R', 'F', 'F', 'F');
+		CreateTile(_tileU8, 'U', 'F', 'F', 'F', 'R', 'R', 'R', 'F', 'F', 'F');
+		CreateTile(_tileV1, 'V', 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F');
+		CreateTile(_tileV2, 'V', 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F');
+		CreateTile(_tileV3, 'V', 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F');
+		CreateTile(_tileV4, 'V', 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F');
+		CreateTile(_tileV5, 'V', 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F');
+		CreateTile(_tileV6, 'V', 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F');
+		CreateTile(_tileV7, 'V', 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F');
+		CreateTile(_tileV8, 'V', 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F');
+		CreateTile(_tileV9, 'V', 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F');
+		CreateTile(_tileW1, 'W', 'F', 'F', 'F', 'R', 'R', 'R', 'F', 'R', 'F');
+		CreateTile(_tileW2, 'W', 'F', 'F', 'F', 'R', 'R', 'R', 'F', 'R', 'F');
+		CreateTile(_tileW3, 'W', 'F', 'F', 'F', 'R', 'R', 'R', 'F', 'R', 'F');
+		CreateTile(_tileW4, 'W', 'F', 'F', 'F', 'R', 'R', 'R', 'F', 'R', 'F');
+		CreateTile(_tileX1, 'X', 'F', 'R', 'F', 'R', 'R', 'R', 'F', 'R', 'F');
 	}
 	
 	public  char getName(HashMap<Point,Object> tile){
@@ -205,7 +277,7 @@ public class Tile {
 		 tile.put(new Point(2,2), temp2);
 	}
 	
-	public HashMap<Point, Object> getTile(char c){
+	public HashMap<Point, Object> getTile(char c){ // this still holds with the addition of the tiles,  will only return A1 through X1, however.
 		return get_tiles().get(c - 'A');
 	}
 	
@@ -231,5 +303,8 @@ public class Tile {
 	}
 	public void set_tiles(ArrayList<HashMap<Point, Object>> _tiles) {
 		this._tiles = _tiles;
+	}
+	public HashMap<Point, Object> getStartTile(){
+		return _tileDS;
 	}
 }
