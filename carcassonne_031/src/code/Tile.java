@@ -6,58 +6,106 @@ import java.util.HashMap;
 
 public class Tile {
 	
-	private HashMap<Point, Object> _tileA = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileB = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileC = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileD = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileE = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileF = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileG = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileH = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileI = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileJ = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileK = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileL = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileM = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileN = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileO = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileP = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileQ = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileR = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileS = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileT = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileU = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileV = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileW = new HashMap<Point, Object>(); 
-	private HashMap<Point, Object> _tileX = new HashMap<Point, Object>();
-	private ArrayList<HashMap<Point, Object>> tiles = new ArrayList<HashMap<Point, Object>>();
+	private HashMap<Point, Object> _tileA1 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileA2 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileB1 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileB2 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileB3 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileB4 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileC1 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileDS = new HashMap<Point, Object>(); //DS for D starting tile
+	private HashMap<Point, Object> _tileD1 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileD2= new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileD3 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileE1 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileE2 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileE3 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileE4 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileE5 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileF1 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileF2 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileG1 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileH1 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileH2 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileH3 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileI1 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileI2 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileJ1 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileJ2 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileJ3 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileK1 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileK2 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileK3 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileL1 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileL2 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileL3 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileM1 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileM2 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileN3 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileN1 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileN2 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileO1 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileO2 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileP1 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileP2 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileP3 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileQ1 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileR1 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileR2 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileR3 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileS1 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileS2 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileT1 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileU1 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileU2 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileU3 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileU4 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileU5 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileU6 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileU7 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileU8 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileV1 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileV2 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileV3 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileV4 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileV5 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileV6 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileV7 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileV8 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileV9 = new HashMap<Point, Object>();
+	private HashMap<Point, Object> _tileW1 = new HashMap<Point, Object>(); 
+	private HashMap<Point, Object> _tileW2 = new HashMap<Point, Object>(); 
+	private HashMap<Point, Object> _tileW3 = new HashMap<Point, Object>(); 
+	private HashMap<Point, Object> _tileW4 = new HashMap<Point, Object>(); 
+	private HashMap<Point, Object> _tileX1 = new HashMap<Point, Object>();
+	private ArrayList<HashMap<Point, Object>> _tiles = new ArrayList<HashMap<Point, Object>>();
 	
 	public Tile(){
 		CreateAllTile();
-		tiles.add(_tileA);
-		tiles.add(_tileB);
-		tiles.add(_tileC);
-		tiles.add(_tileD);
-		tiles.add(_tileE);
-		tiles.add(_tileF);
-		tiles.add(_tileG);
-		tiles.add(_tileH);
-		tiles.add(_tileI);
-		tiles.add(_tileJ);
-		tiles.add(_tileK);
-		tiles.add(_tileL);
-		tiles.add(_tileM);
-		tiles.add(_tileN);
-		tiles.add(_tileO);
-		tiles.add(_tileP);
-		tiles.add(_tileQ);
-		tiles.add(_tileR);
-		tiles.add(_tileS);
-		tiles.add(_tileT);
-		tiles.add(_tileU);
-		tiles.add(_tileV);
-		tiles.add(_tileW);
-		tiles.add(_tileX);
+		get_tiles().add(_tileA1);
+		get_tiles().add(_tileB1);
+		get_tiles().add(_tileC1);
+		get_tiles().add(_tileD1);
+		get_tiles().add(_tileE1);
+		get_tiles().add(_tileF1);
+		get_tiles().add(_tileG1);
+		get_tiles().add(_tileH1);
+		get_tiles().add(_tileI1);
+		get_tiles().add(_tileJ1);
+		get_tiles().add(_tileK1);
+		get_tiles().add(_tileL1);
+		get_tiles().add(_tileM1);
+		get_tiles().add(_tileN1);
+		get_tiles().add(_tileO1);
+		get_tiles().add(_tileP1);
+		get_tiles().add(_tileQ1);
+		get_tiles().add(_tileR1);
+		get_tiles().add(_tileS1);
+		get_tiles().add(_tileT1);
+		get_tiles().add(_tileU1);
+		get_tiles().add(_tileV1);
+		get_tiles().add(_tileW1);
+		get_tiles().add(_tileX1);
 		
 		
 		
@@ -78,7 +126,9 @@ public class Tile {
 		 _tile.put(new Point(3,3), name);
 	}
 	public void CreateAllTile(){
-		CreateTile(_tileA, 'A', 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'R', 'F');
+		CreateTile(_tileA1, 'A', 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'R', 'F');
+		
+		CreateTile(_tileA2, 'A', 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'R', 'F');
 		
 		CreateTile(_tileB, 'B', 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'F', 'F');
 		
@@ -156,7 +206,7 @@ public class Tile {
 	}
 	
 	public HashMap<Point, Object> getTile(char c){
-		return tiles.get(c - 'A');
+		return get_tiles().get(c - 'A');
 	}
 	
 	public String toString(HashMap<Point, Object> tile){
@@ -175,5 +225,11 @@ public class Tile {
 	 	return result;
 	 	
 	 	
+	}
+	public ArrayList<HashMap<Point, Object>> get_tiles() {
+		return _tiles;
+	}
+	public void set_tiles(ArrayList<HashMap<Point, Object>> _tiles) {
+		this._tiles = _tiles;
 	}
 }

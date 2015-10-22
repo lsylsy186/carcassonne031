@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -22,6 +24,7 @@ public class Game {
 	private int _player5Supply = 7;
 	private String[] _playerList;
 	private PlayerButtonView _view;
+	private ArrayList _tileList;
 	static HashMap<Point, HashMap<Point,Object>> _gameBoard;
 	private HashSet<Point> _emptySlot = new HashSet<Point>(100);//a hashset of all available empty slots.  putTile will check and add
 	//in as more occur.
@@ -82,6 +85,7 @@ public class Game {
 	public String getPlayer(int num){	
 		return get_playerList()[num-1];
 	}
+	
 		
 
 	
@@ -95,7 +99,20 @@ public class Game {
 		_emptySlot.add(new Point(50,49));
 		_emptySlot.add(new Point(50,51));	
 		_emptySlot.add(new Point(51,50));
+		setupDeck();
+		
 	}
+
+
+
+
+	private void setupDeck(){
+		Tile t = new Tile();
+		_tileList = t.get_tiles();
+		Collections.shuffle(_tileList);
+	}
+	
+	
 	
 	
 	
