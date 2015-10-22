@@ -3,11 +3,13 @@ package code;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.HashMap;
 import java.util.HashSet;
 
 
 import javax.swing.JFrame;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
 
@@ -40,15 +42,28 @@ public class Game {
 		
 		g.setUp(args);
 		PlayerButtonView v = new PlayerButtonView(g);
+		
+		
 		JFrame f=new JFrame("Carcassonne Team_31");
 		f.setLayout(new BorderLayout());
 	    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    Interface ui=new Interface();
 	    ui.setPreferredSize(new Dimension(8101,8101));
 	    JScrollPane scrPane = new JScrollPane(ui);
+	   
+	    JScrollBar horizontal = scrPane.getHorizontalScrollBar();
+        horizontal.setValue(48*81+40);
+
+        JScrollBar vertical = scrPane.getVerticalScrollBar();
+        vertical.setValue(48*81-40);
+	    
 	    f.add(scrPane,BorderLayout.CENTER);
+	    
+	   
+	    
+	    
 	    f.add(v.getPanel(),BorderLayout.SOUTH);
-	    f.setSize(600, 500);
+	    f.setSize(500, 600);
 	    f.setVisible(true);
 	   
 	    
