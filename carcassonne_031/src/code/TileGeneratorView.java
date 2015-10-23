@@ -19,10 +19,13 @@ public class TileGeneratorView extends JPanel implements MouseListener{
 		_ran = new Random();
 		this.addMouseListener(this);
 	}
+	public void ranNumGenerator(){
+		randomNumber = _ran.nextInt(24);
+	}
 	public void paintComponent(Graphics g){
 		Image tilePiece;
 		tilePiece = new ImageIcon("TileSet.jpg").getImage();
-		randomNumber = _ran.nextInt(24);
+		
 		
 		char tile = (char)('A' + randomNumber);
 		switch(tile){
@@ -129,6 +132,7 @@ public class TileGeneratorView extends JPanel implements MouseListener{
 
 	}
 	public void refreshTile(){
+		ranNumGenerator();
 		repaint();
 	}
 	@Override
