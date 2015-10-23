@@ -8,21 +8,21 @@ import java.util.Random;
 
 import javax.swing.*;
 
-public class TileGenerator extends JPanel implements MouseListener{
+public class TileGeneratorView extends JPanel implements MouseListener{
 	
 	
 	int k = 0, j = 0;
-	static int randomNumber;
-	Interface _iF;
-	public TileGenerator(Interface a){
-		_iF = a;
+    int randomNumber;
+    Random _ran;
+	
+	public TileGeneratorView(){
+		_ran = new Random();
 		this.addMouseListener(this);
 	}
 	public void paintComponent(Graphics g){
 		Image tilePiece;
 		tilePiece = new ImageIcon("TileSet.jpg").getImage();
-		
-		
+		randomNumber = _ran.nextInt(24);
 		
 		char tile = (char)('A' + randomNumber);
 		switch(tile){

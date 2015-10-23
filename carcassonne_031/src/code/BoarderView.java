@@ -9,16 +9,16 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 import java.util.Map.Entry;
-public class Interface extends JPanel implements MouseListener, MouseMotionListener {
+public class BoarderView extends JPanel implements MouseListener, MouseMotionListener {
 	static int x,y;
 	static int squareSize = 80;
 	Random _ran = new Random();
-	//TileGenerator _tG;
-	public Interface(){
+	TileGeneratorView _tG;
+	public BoarderView(TileGeneratorView a ){
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 		this.setBackground(Color.red);
-		_tG = new TileGenerator();
+		_tG = a;
 	}
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -189,8 +189,9 @@ public class Interface extends JPanel implements MouseListener, MouseMotionListe
 	public void mouseReleased(MouseEvent e) {
 		x = (e.getX()/(squareSize+1))*(squareSize+1)+1;
 		y = (e.getY()/(squareSize+1))*(squareSize+1)+1;
-		TileGenerator.randomNumber = _ran.nextInt(24);
+		
 		repaint();
+		_tG.refreshTile();
 		//TileGenerator().refreshTile();
 			// TODO Auto-generated method s
 		

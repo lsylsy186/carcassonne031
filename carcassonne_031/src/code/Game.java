@@ -50,9 +50,14 @@ public class Game {
 		
 		
 		JFrame f=new JFrame("Carcassonne Team_31");
+		
+	    
 		f.setLayout(new BorderLayout());
 	    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    Interface ui=new Interface();
+	    TileGeneratorView tileGenerator = new TileGeneratorView();
+	    tileGenerator.setPreferredSize(new Dimension(80,80));
+	    f.add(tileGenerator, BorderLayout.WEST);
+	    BoarderView ui=new BoarderView(tileGenerator);
 	    ui.setPreferredSize(new Dimension(8101,8101));
 	    JScrollPane scrPane = new JScrollPane(ui, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	   
@@ -63,9 +68,7 @@ public class Game {
         vertical.setValue(48*81-40);
 	    
 	    f.add(scrPane,BorderLayout.CENTER);
-	    TileGenerator tileGenerator = new TileGenerator();
-	    tileGenerator.setPreferredSize(new Dimension(80,80));
-	    f.add(tileGenerator, BorderLayout.WEST);
+	    
 	   
 	    
 	    
