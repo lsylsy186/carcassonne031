@@ -33,7 +33,8 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 		}
 		Image tilePiece ;
 		tilePiece = new ImageIcon("TileSet.jpg").getImage();
-		g.drawImage(tilePiece,x, y,x+80,y+80,42,341,122,421,this);
+		g.drawImage(tilePiece,x, y ,x + 80 ,y + 80 ,42+120*TileGeneratorView.k,341+160*TileGeneratorView.j,122+120*TileGeneratorView.k,421+160*TileGeneratorView.j,this);
+
 		 
 		HashMap<Point,HashMap<Point,Object>> gameBoard = Game._gameBoard;
 		for(HashMap.Entry<Point,HashMap<Point,Object>> entry : gameBoard.entrySet()){
@@ -162,6 +163,7 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		
 //		x = e.getX();
 //		y = e.getY();// TODO Auto-generated method stub
 		
@@ -191,7 +193,7 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 		y = (e.getY()/(squareSize+1))*(squareSize+1)+1;
 		
 		repaint();
-		_tG.refreshTile();
+		
 		//TileGenerator().refreshTile();
 			// TODO Auto-generated method s
 		

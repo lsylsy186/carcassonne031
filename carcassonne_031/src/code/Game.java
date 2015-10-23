@@ -4,12 +4,18 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 
 
+
+
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -47,6 +53,10 @@ public class Game {
 		
 		g.setUp(args);
 		PlayerButtonView v = new PlayerButtonView(g);
+		JButton _nextPlayer; 
+		_nextPlayer = new JButton("OK!");
+		
+		
 		
 		
 		JFrame f=new JFrame("Carcassonne Team_31");
@@ -54,18 +64,26 @@ public class Game {
 	    
 		f.setLayout(new BorderLayout());
 	    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    
 	    TileGeneratorView tileGenerator = new TileGeneratorView();
 	    tileGenerator.setPreferredSize(new Dimension(80,80));
 	    f.add(tileGenerator, BorderLayout.WEST);
+	    f.add(_nextPlayer,BorderLayout.EAST);
+	    
+	   
+		_nextPlayer.addActionListener(new ActionListener(){
+			@Override public void actionPerformed(ActionEvent e){
+				HashMap<Point, Object> target = t.getTile(TileGeneratorView.tile);
+				g.putTile(BoarderView.x /(BoarderView.squareSize + 1),BoarderView.y / (BoarderView.squareSize + 1),target);
+				tileGenerator.refreshTile();
+			}
+		});
+	    
 	    BoarderView ui=new BoarderView(tileGenerator);
 	    ui.setPreferredSize(new Dimension(8101,8101));
 	    JScrollPane scrPane = new JScrollPane(ui, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	   
-	    JScrollBar horizontal = scrPane.getHorizontalScrollBar();
-        horizontal.setValue(48*81+40);
-
-        JScrollBar vertical = scrPane.getVerticalScrollBar();
-        vertical.setValue(48*81-40);
+	    Rectangle rct = new Rectangle(48*81+40, 48*81-40, 200, 200);
+	    ui.scrollRectToVisible(rct);
 	    
 	    f.add(scrPane,BorderLayout.CENTER);
 	    
@@ -126,7 +144,7 @@ public class Game {
 
 	public boolean putTile(int x, int y, HashMap<Point, Object> tile){  
 		//when calling putTile, must use int x and y for Point, and specify which tile you want to place.
-		if(_emptySlot.contains(new Point(x,y))&& checkPlacement(x,y, tile) ){
+		//if(_emptySlot.contains(new Point(x,y))&& checkPlacement(x,y, tile) ){
 			_gameBoard.put(new Point(x,y), tile);
 			_emptySlot.remove(new Point(x,y));
 			 //goes through all spaces next to the placed tile and checks which ones are empty.
@@ -135,13 +153,13 @@ public class Game {
 			tryAddEmptySlot(x,y-1);
 			tryAddEmptySlot(x-1,y);
 				return true;
-			}
-		else{ //else catch all. should never be encountered
+	    //}
+		//else{ //else catch all. should never be encountered
 		
-			System.out.println("error, cannot place tile at:"+ x+ "and "+ y); // feel free to change this to an exception handler 
+	    //System.out.println("error, cannot place tile at:"+ x+ "and "+ y); // feel free to change this to an exception handler 
 		
-		}
-		return false;
+		//}
+		//return false;
 	}
 	
 	public boolean putMeep(int x, int y, HashMap<Point, Object> tile){

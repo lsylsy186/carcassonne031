@@ -8,12 +8,13 @@ import java.util.Random;
 
 import javax.swing.*;
 
-public class TileGeneratorView extends JPanel implements MouseListener{
+public class TileGeneratorView extends JPanel implements MouseListener {
 	
 	
-	int k = 0, j = 0;
-    int randomNumber;
+	static int k = 0, j = 0;
+    static int randomNumber;
     Random _ran;
+    static char tile;
 	
 	public TileGeneratorView(){
 		_ran = new Random();
@@ -25,9 +26,12 @@ public class TileGeneratorView extends JPanel implements MouseListener{
 	public void paintComponent(Graphics g){
 		Image tilePiece;
 		tilePiece = new ImageIcon("TileSet.jpg").getImage();
-		
-		
-		char tile = (char)('A' + randomNumber);
+		readTile(randomNumber);
+		g.drawImage(tilePiece,0, 0 ,80 ,80 ,42+120*k,341+160*j,122+120*k,421+160*j,this);
+
+	}
+	public void readTile(int random){
+		tile = (char)('A' + random);
 		switch(tile){
 		case 'A':
 			j = 3;
@@ -127,9 +131,6 @@ public class TileGeneratorView extends JPanel implements MouseListener{
 			break;
 			
 		}
-	
-		g.drawImage(tilePiece,0, 0 ,80 ,80 ,42+120*k,341+160*j,122+120*k,421+160*j,this);
-
 	}
 	public void refreshTile(){
 		ranNumGenerator();
