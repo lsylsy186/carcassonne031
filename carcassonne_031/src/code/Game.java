@@ -63,7 +63,9 @@ public class Game {
         vertical.setValue(48*81-40);
 	    
 	    f.add(scrPane,BorderLayout.CENTER);
-	    
+	    TileGenerator tileGenerator = new TileGenerator();
+	    tileGenerator.setPreferredSize(new Dimension(80,80));
+	    f.add(tileGenerator, BorderLayout.WEST);
 	   
 	    
 	    

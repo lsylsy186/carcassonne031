@@ -1,20 +1,29 @@
 package code;
 import java.awt.*;
+
 import javax.swing.*; 
+
 import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 import java.util.Map.Entry;
 public class Interface extends JPanel implements MouseListener, MouseMotionListener {
 	static int x,y;
 	static int squareSize = 80;
-	
-	public void paintComponent(Graphics g){
-		super.paintComponent(g);
-		this.setBackground(Color.red);
+	Random _ran = new Random();
+	//TileGenerator _tG;
+	public Interface(){
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
+		this.setBackground(Color.red);
+		_tG = new TileGenerator();
+	}
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		
+		
 		
 		
 		for(int i = 0; i < 10000; i++ ){
@@ -180,7 +189,10 @@ public class Interface extends JPanel implements MouseListener, MouseMotionListe
 	public void mouseReleased(MouseEvent e) {
 		x = (e.getX()/(squareSize+1))*(squareSize+1)+1;
 		y = (e.getY()/(squareSize+1))*(squareSize+1)+1;
-		repaint();// TODO Auto-generated method stub
+		TileGenerator.randomNumber = _ran.nextInt(24);
+		repaint();
+		//TileGenerator().refreshTile();
+			// TODO Auto-generated method s
 		
 	}
 }
