@@ -49,6 +49,7 @@ public class Driver {
 				HashMap<Point, Object> target = t.getTile(TileGeneratorView.tile);
 				g.putTile(BoarderView.x /(BoarderView.squareSize + 1),BoarderView.y / (BoarderView.squareSize + 1),target);
 				tileGenerator.refreshTile();
+				f.repaint();
 			}
 		});
 	    
