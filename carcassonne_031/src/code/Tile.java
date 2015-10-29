@@ -78,7 +78,7 @@ public class Tile {
 	private HashMap<Point, Object> _tileW3 = new HashMap<Point, Object>(); 
 	private HashMap<Point, Object> _tileW4 = new HashMap<Point, Object>(); 
 	private HashMap<Point, Object> _tileX1 = new HashMap<Point, Object>();
-	static ArrayList<HashMap<Point, Object>> _tiles = new ArrayList<HashMap<Point, Object>>();
+	private ArrayList<HashMap<Point, Object>> _tiles = new ArrayList<HashMap<Point, Object>>();
 	
 	public Tile(){
 		CreateAllTile(); 
