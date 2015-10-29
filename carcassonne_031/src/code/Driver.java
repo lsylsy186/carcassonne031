@@ -45,6 +45,7 @@ public class Driver {
 				g.putTile(BoarderView.x /(BoarderView.squareSize + 1),BoarderView.y / (BoarderView.squareSize + 1),target);
 				tileGenerator.repaint();
 				g.nextTile();
+				g.refreshSlot();
 				f.repaint();
 			}
 		});

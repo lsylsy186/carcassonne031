@@ -125,7 +125,7 @@ public class Game {
 			tryAddEmptySlot(x, y + 1);
 			tryAddEmptySlot(x, y - 1);
 			tryAddEmptySlot(x - 1, y);
-			refreshSlot();
+			
 		return true;
 		 }
 		 else{ //else catch all. should never be encountered
@@ -136,7 +136,7 @@ public class Game {
 		 return false;
 	}
 
-	private void refreshSlot() {
+public void refreshSlot() {
 		for(Point p : _emptySlot){
 			if(checkPlacement(p.x, p.y, currentTile)){
 				_legalSlot.add(p);
