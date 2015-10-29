@@ -197,8 +197,8 @@ public class Tile {
 		CreateTile(_tileH1, 'H', 'W', 'F', 'W', 'C', 'F', 'C', 'W', 'F', 'W');
 		CreateTile(_tileH2, 'H', 'W', 'F', 'W', 'C', 'F', 'C', 'W', 'F', 'W');
 		CreateTile(_tileH3, 'H', 'W', 'F', 'W', 'C', 'F', 'C', 'W', 'F', 'W');
-		CreateTile(_tileI1, 'I', 'W', 'C', 'W', 'C', 'F', 'F', 'W', 'F', 'F');
-		CreateTile(_tileI2, 'I', 'W', 'C', 'W', 'C', 'F', 'F', 'W', 'F', 'F');
+		CreateTile(_tileI1, 'I', 'W', 'C', 'W', 'F', 'W', 'C', 'W', 'F', 'F');
+		CreateTile(_tileI2, 'I', 'W', 'C', 'W', 'F', 'W', 'C', 'W', 'F', 'F');
 		CreateTile(_tileJ1, 'J', 'W', 'C', 'W', 'F', 'R', 'R', 'F', 'R', 'F');
 		CreateTile(_tileJ2, 'J', 'W', 'C', 'W', 'F', 'R', 'R', 'F', 'R', 'F');
 		CreateTile(_tileJ3, 'J', 'W', 'C', 'W', 'F', 'R', 'R', 'F', 'R', 'F');
@@ -208,16 +208,16 @@ public class Tile {
 		CreateTile(_tileL1, 'L', 'W', 'C', 'W', 'R', 'R', 'R', 'F', 'R', 'F');
 		CreateTile(_tileL2, 'L', 'W', 'C', 'W', 'R', 'R', 'R', 'F', 'R', 'F');
 		CreateTile(_tileL3, 'L', 'W', 'C', 'W', 'R', 'R', 'R', 'F', 'R', 'F');	
-		CreateTile(_tileM1, 'M', 'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F'); 
-		CreateTile(_tileM2, 'M', 'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F'); 
-		CreateTile(_tileN1, 'N', 'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F');
-		CreateTile(_tileN2, 'N', 'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F');
-		CreateTile(_tileN3, 'N', 'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F');
-		CreateTile(_tileO1, 'O', 'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F');
-		CreateTile(_tileO2, 'O', 'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F');
-		CreateTile(_tileP1, 'P', 'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F');
-		CreateTile(_tileP2, 'P', 'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F');
-		CreateTile(_tileP3, 'P', 'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F');
+		CreateTile(_tileM1, 'M', 'W', 'C', 'C', 'F', 'W', 'C', 'F', 'F', 'W'); 
+		CreateTile(_tileM2, 'M', 'W', 'C', 'C', 'F', 'W', 'C', 'F', 'F', 'W'); 
+		CreateTile(_tileN1, 'N', 'W', 'C', 'C', 'F', 'W', 'C', 'F', 'F', 'W');
+		CreateTile(_tileN2, 'N', 'W', 'C', 'C', 'F', 'W', 'C', 'F', 'F', 'W');
+		CreateTile(_tileN3, 'N', 'W', 'C', 'C', 'F', 'W', 'C', 'F', 'F', 'W');
+		CreateTile(_tileO1, 'O', 'W', 'C', 'C', 'R', 'W', 'C', 'F', 'R', 'W');
+		CreateTile(_tileO2, 'O', 'W', 'C', 'C', 'R', 'W', 'C', 'F', 'R', 'W');
+		CreateTile(_tileP1, 'P', 'W', 'C', 'C', 'R', 'W', 'C', 'F', 'R', 'W');
+		CreateTile(_tileP2, 'P', 'W', 'C', 'C', 'R', 'W', 'C', 'F', 'R', 'W');
+		CreateTile(_tileP3, 'P', 'W', 'C', 'C', 'R', 'W', 'C', 'F', 'R', 'W');
 		CreateTile(_tileQ1, 'Q', 'C', 'C', 'C', 'C', 'C', 'C', 'W', 'F', 'W');
 		CreateTile(_tileR1, 'R', 'C', 'C', 'C', 'C', 'C', 'C', 'W', 'F', 'W');
 		CreateTile(_tileR2, 'R', 'C', 'C', 'C', 'C', 'C', 'C', 'W', 'F', 'W');
@@ -287,7 +287,7 @@ public class Tile {
 				tile.get(new Point(0,2)) + tile.get(new Point(1,0)) +
 				tile.get(new Point(1,1)) + tile.get(new Point(1,2)) +
 				tile.get(new Point(2,0)) + tile.get(new Point(2,1)) +
-				tile.get(new Point(2,2));
+				tile.get(new Point(2,2)) + " " + tile.get(new Point(3,3));
 		return result;
 	}
 	

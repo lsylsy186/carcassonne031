@@ -15,7 +15,7 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 	static int squareSize = 80;
 	Random _ran = new Random();
 	TileGeneratorView _tG;
-	HashSet<Point> _emptySlot= Game._emptySlot;
+	HashSet<Point> _emptySlot= Game._legalSlot;
 	public BoarderView(TileGeneratorView a ){
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
