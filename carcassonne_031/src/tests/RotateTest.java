@@ -55,9 +55,20 @@ public class RotateTest {
 	public void getPositionAtPointTest() {
 		Tile t = new Tile();
 		HashMap<Point,Object> target = t.getTile('Q');
-		char expected = 'C';
+		char expected = 'W';
 		char actual = t.getPositionAtPoint(target, 0, 2);
 		assertTrue("expected:" +expected+ ", actual" + actual + actual,expected == actual);
+	}
+	
+	
+	@Test
+	public void testU() {
+		Tile t = new Tile();
+		HashMap<Point,Object> target = t.getTile('U');
+		String expected = "FFFRRRFFF";
+		t.rotate(target);
+		String actual =t.toString(target);
+		assertTrue("the tile rotated is" + actual,expected.equals(actual));
 	}
 	
 

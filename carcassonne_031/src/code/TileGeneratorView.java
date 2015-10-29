@@ -13,14 +13,15 @@ public class TileGeneratorView extends JPanel  {
 	
 	
 	static int k = 0, j = 0;
-    
+    private Game _game;
     
 
 	
 	public void paintComponent(Graphics g){
 		Image tilePiece;
 		tilePiece = new ImageIcon("TileSet.jpg").getImage();
-		readTile((char)Game.currentTile.get(new Point(3,3)));
+		
+		readTile((char)_game.topTile().get(new Point(3,3)));
 		g.drawImage(tilePiece,0, 0 ,80 ,80 ,42+120*k,341+160*j,122+120*k,421+160*j,this);
 
 	}
@@ -124,6 +125,10 @@ public class TileGeneratorView extends JPanel  {
 			break;
 			
 		}
+	}
+	public void addGame(Game g) {
+		_game = g;
+		
 	}
 	
 	

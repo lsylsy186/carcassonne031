@@ -13,18 +13,22 @@ import java.util.Map.Entry;
 public class BoarderView extends JPanel implements MouseListener, MouseMotionListener {
 	static int x,y;
 	static int squareSize = 80;
-	Random _ran = new Random();
-	TileGeneratorView _tG;
-	HashSet<Point> _emptySlot= Game._legalSlot;
+	private TileGeneratorView _tG;
+	private HashSet<Point> _emptySlot;
+	private Game _game;
+	private Random _ran = new Random();
+	
 	public BoarderView(TileGeneratorView a ){
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 		this.setBackground(Color.red);
 		_tG = a;
+		
+
 	}
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		
+		_emptySlot = _game.get_emptySlot();
 		
 		
 		
@@ -42,7 +46,7 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 		g.drawImage(tilePiece,x, y ,x + 80 ,y + 80 ,42+120*TileGeneratorView.k,341+160*TileGeneratorView.j,122+120*TileGeneratorView.k,421+160*TileGeneratorView.j,this);
 
 		
-		HashMap<Point,HashMap<Point,Object>> gameBoard = Game._gameBoard;
+		HashMap<Point,HashMap<Point,Object>> gameBoard = _game.get_gameBoard();
 		for(HashMap.Entry<Point,HashMap<Point,Object>> entry : gameBoard.entrySet()){
 			int j = -1, k = -1; // using j,k to indicate where are the tiles locate in our picture.
 			Point position = entry.getKey();
@@ -200,6 +204,10 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 		
 		//TileGenerator().refreshTile();
 			// TODO Auto-generated method s
+		
+	}
+	public void addGame(Game g) {
+		_game = g;
 		
 	}
 }
