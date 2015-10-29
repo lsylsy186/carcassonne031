@@ -46,6 +46,7 @@ public class Game {
 	public void nextTile(){
 		if(_tileList.size() != 0 || _tileList != null){
 		currentTile = _tileList.remove(0);
+		System.out.print("\n"+new Tile().toString(currentTile));//print out the currentTile to debug
 		}
 	}
 
