@@ -14,15 +14,10 @@ import javax.swing.JScrollPane;
 
 public class Driver {
 	public static void main(String args[]){
-		Game g = new Game();
-		g.newGame();
-		
+		Game g = new Game();	
 		Tile t = new Tile();
-		HashMap<Point,Object> target1 = t.getTile('V');
-		HashMap<Point,Object> target2 = t.getTile('U');
-		t.rotate(target2);
-		g.putTile(51, 50, target1);
-		g.putTile(51, 49, target2);
+		
+		
 		
 		g.setUp(args);
 		PlayerButtonView v = new PlayerButtonView(g);
@@ -43,17 +38,18 @@ public class Driver {
 	    f.add(tileGenerator, BorderLayout.WEST);
 	    f.add(_nextPlayer,BorderLayout.EAST);
 	    
-	   
+	   BoarderView ui=new BoarderView(tileGenerator);
 		_nextPlayer.addActionListener(new ActionListener(){
 			@Override public void actionPerformed(ActionEvent e){
-				HashMap<Point, Object> target = t.getTile(TileGeneratorView.tile);
+				HashMap<Point, Object> target = Game.currentTile;
 				g.putTile(BoarderView.x /(BoarderView.squareSize + 1),BoarderView.y / (BoarderView.squareSize + 1),target);
-				tileGenerator.refreshTile();
+				tileGenerator.repaint();
+				g.nextTile();
 				f.repaint();
 			}
 		});
 	    
-	    BoarderView ui=new BoarderView(tileGenerator);
+	    
 	    ui.setPreferredSize(new Dimension(8101,8101));
 	    JScrollPane scrPane = new JScrollPane(ui, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	    Rectangle rct = new Rectangle(48*81+40, 48*81-40, 200, 200);

@@ -10,10 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-
-
-
-
+import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,15 +29,25 @@ public class Game {
 	private PlayerButtonView _view;
 	private ArrayList<HashMap<Point, Object>> _tileList;
 	static HashMap<Point, HashMap<Point,Object>> _gameBoard;
-	private HashSet<Point> _emptySlot = new HashSet<Point>(100);//a hashset of all available empty slots.  putTile will check and add
+	static HashSet<Point> _emptySlot = new HashSet<Point>(100);//a hashset of all available empty slots.  putTile will check and add
 	//in as more occur.
 	
 	// emptySlot will be very useful once we build the view.
 	private Tile _tile; 
+	static HashMap<Point, Object> currentTile;
 	private int _tileDeckIndex = 0;
 	
-//	public Game(){
-//			}
+	public Game(){
+		setupDeck();
+		newGame();
+		
+	}
+	
+	public void nextTile(){
+		if(_tileList.size() != 0 || _tileList != null){
+		currentTile = _tileList.remove(0);
+		}
+	}
 
 	public void setUp(String[] list){
 		_playerList = new String[list.length];
@@ -62,12 +69,21 @@ public class Game {
 		HashMap<Point,Object> tD = _tile.getTile('D');
 		
 		_gameBoard = new HashMap<>();
-		_gameBoard.put(new Point(50,50), tD );		
+		_gameBoard.put(new Point(50,50), tD );
+		nextTile();
+		if(checkPlacement(49,50,currentTile)){
 		_emptySlot.add(new Point(49,50));
+		}
+		if(checkPlacement(50,49,currentTile)){
 		_emptySlot.add(new Point(50,49));
-		_emptySlot.add(new Point(50,51));	
+		}
+		if(checkPlacement(50,51,currentTile)){
+		_emptySlot.add(new Point(50,51));
+		}
+		if(checkPlacement(51,50,currentTile)){
 		_emptySlot.add(new Point(51,50));
-		setupDeck();
+		}
+	
 		
 	}
 	
@@ -94,10 +110,18 @@ public class Game {
 			_gameBoard.put(new Point(x,y), tile);
 			_emptySlot.remove(new Point(x,y));
 			 //goes through all spaces next to the placed tile and checks which ones are empty.
-			tryAddEmptySlot(x+1,y);
-			tryAddEmptySlot(x,y+1);
-			tryAddEmptySlot(x,y-1);
-			tryAddEmptySlot(x-1,y);
+			if(checkPlacement(x+1,y,currentTile)){
+				tryAddEmptySlot(x+1,y);
+			}
+			if(checkPlacement(x,y+1,currentTile)){
+				tryAddEmptySlot(x,y+1);
+			}
+			if(checkPlacement(x,y-1,currentTile)){
+				tryAddEmptySlot(x,y-1);
+			}
+			if(checkPlacement(x-1,y,currentTile)){
+				tryAddEmptySlot(x-1,y);
+			}
 				return true;
 	    //}
 		//else{ //else catch all. should never be encountered
@@ -107,6 +131,8 @@ public class Game {
 		//}
 		//return false;
 	}
+	
+	
 	
 	public boolean putMeep(int x, int y, HashMap<Point, Object> tile){
 		Object part = tile.get(new Point(x,y));

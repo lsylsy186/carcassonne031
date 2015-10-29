@@ -5,6 +5,7 @@ import javax.swing.*;
 
 import java.awt.event.*;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
@@ -14,6 +15,7 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 	static int squareSize = 80;
 	Random _ran = new Random();
 	TileGeneratorView _tG;
+	HashSet<Point> _emptySlot= Game._emptySlot;
 	public BoarderView(TileGeneratorView a ){
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
@@ -31,11 +33,15 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 			g.fillRect((i%100)* squareSize+ (i%100+1) *1,(i/100) * squareSize +(i/100 + 1), 
 					squareSize, squareSize);
 		}
+		for(Point p : _emptySlot){
+			g.setColor(Color.green);
+			g.fillRect(p.x*(squareSize + 1) + 1, p.y*(squareSize + 1) + 1, 80, 80);
+		}
 		Image tilePiece ;
 		tilePiece = new ImageIcon("TileSet.jpg").getImage();
 		g.drawImage(tilePiece,x, y ,x + 80 ,y + 80 ,42+120*TileGeneratorView.k,341+160*TileGeneratorView.j,122+120*TileGeneratorView.k,421+160*TileGeneratorView.j,this);
 
-		 
+		
 		HashMap<Point,HashMap<Point,Object>> gameBoard = Game._gameBoard;
 		for(HashMap.Entry<Point,HashMap<Point,Object>> entry : gameBoard.entrySet()){
 			int j = -1, k = -1; // using j,k to indicate where are the tiles locate in our picture.
@@ -148,9 +154,7 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 	}
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		x = e.getX() - 40;
-		y = e.getY() - 40;
-		repaint();
+		
 		// TODO Auto-generated method stub
 		
 	}
@@ -163,7 +167,10 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		x = (e.getX()/(squareSize+1))*(squareSize+1)+1;
+		y = (e.getY()/(squareSize+1))*(squareSize+1)+1;
 		
+		repaint();
 //		x = e.getX();
 //		y = e.getY();// TODO Auto-generated method stub
 		
@@ -189,10 +196,7 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		x = (e.getX()/(squareSize+1))*(squareSize+1)+1;
-		y = (e.getY()/(squareSize+1))*(squareSize+1)+1;
 		
-		repaint();
 		
 		//TileGenerator().refreshTile();
 			// TODO Auto-generated method s

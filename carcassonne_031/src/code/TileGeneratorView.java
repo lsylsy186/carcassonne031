@@ -2,36 +2,29 @@ package code;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Random;
 
 import javax.swing.*;
 
-public class TileGeneratorView extends JPanel implements MouseListener {
+public class TileGeneratorView extends JPanel  {
 	
 	
 	static int k = 0, j = 0;
-    static int randomNumber;
-    Random _ran;
-    static char tile;
+    
+    
+
 	
-	public TileGeneratorView(){
-		_ran = new Random();
-		this.addMouseListener(this);
-	}
-	public void ranNumGenerator(){
-		randomNumber = _ran.nextInt(24);
-	}
 	public void paintComponent(Graphics g){
 		Image tilePiece;
 		tilePiece = new ImageIcon("TileSet.jpg").getImage();
-		readTile(randomNumber);
+		readTile((char)Game.currentTile.get(new Point(3,3)));
 		g.drawImage(tilePiece,0, 0 ,80 ,80 ,42+120*k,341+160*j,122+120*k,421+160*j,this);
 
 	}
-	public void readTile(int random){
-		tile = (char)('A' + random);
+	public void readTile(char tile){
 		switch(tile){
 		case 'A':
 			j = 3;
@@ -132,34 +125,7 @@ public class TileGeneratorView extends JPanel implements MouseListener {
 			
 		}
 	}
-	public void refreshTile(){
-		ranNumGenerator();
-		repaint();
-	}
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		
-		
-	}
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	
 	
 }
