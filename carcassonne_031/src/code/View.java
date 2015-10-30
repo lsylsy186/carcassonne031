@@ -19,6 +19,7 @@ public class View {
 //	PlayerButtonView v = new PlayerButtonView(g);
 	JButton _nextPlayer; 
 	_nextPlayer = new JButton("OK!");
+	TestRotatedView testRotatedView = new TestRotatedView();
 	
 	
 	
@@ -49,12 +50,12 @@ public class View {
 		}
 	});
     
-    
+    testRotatedView.setPreferredSize(new Dimension(80,80));
     ui.setPreferredSize(new Dimension(8101,8101));
     JScrollPane scrPane = new JScrollPane(ui, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     Rectangle rct = new Rectangle(48*81+40, 48*81-40, 200, 200);
     ui.scrollRectToVisible(rct);
-    
+    f.add(testRotatedView,BorderLayout.NORTH);
     f.add(scrPane,BorderLayout.CENTER);
 //    f.add(v.getPanel(),BorderLayout.SOUTH);
     f.setSize(500, 600);
