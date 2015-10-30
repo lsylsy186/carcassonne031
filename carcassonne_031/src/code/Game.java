@@ -1,6 +1,7 @@
 package code;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -29,13 +30,14 @@ public class Game {
 	private PlayerButtonView _view;
 	private ArrayList<HashMap<Point, Object>> _tileList;
 	private HashMap<Point, HashMap<Point,Object>> _gameBoard;
-	private HashSet<Point> _emptySlot = new HashSet<Point>(100);//a hashset of all available empty slots.  putTile will check and add
+	private HashSet<Point> _emptySlot = new HashSet<Point>(100);
+	private HashSet<Point> _legalSlot = new HashSet<Point>(100);//a hashset of all available empty slots.  putTile will check and add
 	//in as more occur.
 	
 	// emptySlot will be very useful once we build the view.
 	private Tile _tile; 
 	private HashMap<Point, Object> currentTile;
-	private int _tileDeckIndex = 0;
+	
 	
 	public Game(){
 		setupDeck();
@@ -46,7 +48,19 @@ public class Game {
 	public void nextTile(){
 		if(_tileList.size() != 0 || _tileList != null){
 		currentTile = _tileList.remove(0);
+		System.out.println("the tile is " +  currentTile.get(new Point(3,3)));
+		refreshSlot();
 		}
+	}
+
+	private void refreshSlot() {
+		_legalSlot = new HashSet<Point>(100);
+		for(Point p : _emptySlot){
+			if(checkPlacement(p.x,p.y,currentTile)){
+				_legalSlot.add(p);
+			}
+		}
+		
 	}
 
 	public void setUp(String[] list){
@@ -75,6 +89,7 @@ public class Game {
 		_emptySlot.add(new Point(50,49));
 		_emptySlot.add(new Point(50,51));
 		_emptySlot.add(new Point(51,50));
+		refreshSlot();
 	
 		
 	}
@@ -82,8 +97,8 @@ public class Game {
 	//each time topTile is called it returns the tile at the index and then increments the index.
 	// this method will be used for the draw phase of the turn. 
 	public HashMap<Point, Object> topTile(){
-		HashMap<Point, Object> topTile = _tileList.get(_tileDeckIndex);
-		return topTile;
+		
+		return currentTile;
 	}
 	
 
@@ -159,15 +174,15 @@ public class Game {
 	}
 
 	private boolean checkDown(int x, int y, HashMap<Point, Object> pTile) { 
-		Object pLeft = pTile.get(new Point(0,2));
-		Object pMiddle = pTile.get(new Point (1,2));
+		Object pLeft = pTile.get(new Point(2,0));
+		Object pMiddle = pTile.get(new Point (2,1));
 		Object pRight = pTile.get(new Point(2,2));
 		if(_gameBoard.containsKey(new Point(x, y+1))){
 			System.out.println("check down is called");
 		 HashMap<Point,Object> dTile =_gameBoard.get(new Point(x, y+1));
 		 Object left = dTile.get(new Point(0,0));
-		 Object middle = dTile.get(new Point(1,0));
-		 Object right = dTile.get(new Point(2,0));
+		 Object middle = dTile.get(new Point(0,1));
+		 Object right = dTile.get(new Point(0,2));
 		 boolean checkLeft = checkIndividual(left, pLeft);
 		 boolean checkMiddle = checkIndividual(middle, pMiddle);
 		 boolean checkRight = checkIndividual(right, pRight);
@@ -187,12 +202,12 @@ public class Game {
 
 	private boolean checkUp(int x, int y, HashMap<Point, Object> pTile) {
 		Object pLeft = pTile.get(new Point(0,0));
-		Object pMiddle = pTile.get(new Point (1,0));
-		Object pRight = pTile.get(new Point(2,0));
+		Object pMiddle = pTile.get(new Point (0,1));
+		Object pRight = pTile.get(new Point(0,2));
 		if(_gameBoard.containsKey(new Point(x,y-1))){
 			System.out.println("check up is called");
 		 HashMap<Point,Object> uTile =_gameBoard.get(new Point(x, y-1));
-		 Object left = uTile.get(new Point(0,2));
+		 Object left = uTile.get(new Point(2,0));
 		 Object middle = uTile.get(new Point(2,1));
 		 Object right = uTile.get(new Point(2,2));
 		 boolean checkLeft = checkIndividual(left, pLeft);
@@ -213,15 +228,15 @@ public class Game {
 	}
 
 	private boolean checkRight(int x, int y, HashMap<Point, Object> pTile) {
-		Object pTop = pTile.get(new Point(2,0));
-		Object pMiddle = pTile.get(new Point (2,1));
+		Object pTop = pTile.get(new Point(0,2));
+		Object pMiddle = pTile.get(new Point (1,2));
 		Object pBottom = pTile.get(new Point(2,2));
 		if(_gameBoard.containsKey(new Point(x+1, y))){
 			System.out.println("check right is called");
 		 HashMap<Point,Object> rTile =_gameBoard.get(new Point(x+1, y));
 		 Object top = rTile.get(new Point(0,0));
-		 Object middle = rTile.get(new Point(0,1));
-		 Object bottom = rTile.get(new Point(0,2));
+		 Object middle = rTile.get(new Point(1,0));
+		 Object bottom = rTile.get(new Point(2,0));
 		 boolean checkTop = checkIndividual(top, pTop);
 		 boolean checkMiddle = checkIndividual(middle, pMiddle);
 		 boolean checkBottom = checkIndividual(bottom, pBottom);
@@ -240,13 +255,13 @@ public class Game {
 
 	private boolean checkLeft(int x, int y, HashMap<Point, Object> pTile) {
 		Object pTop = pTile.get(new Point(0,0));
-		Object pMiddle = pTile.get(new Point (0,1));
-		Object pBottom = pTile.get(new Point(0,2));
+		Object pMiddle = pTile.get(new Point (1,0));
+		Object pBottom = pTile.get(new Point(2,0));
 		if(_gameBoard.containsKey(new Point(x-1, y))){
 			System.out.println("check left is called");
 		 HashMap<Point,Object> lTile =_gameBoard.get(new Point(x-1, y));
-		 Object top = lTile.get(new Point(2,0));
-		 Object middle = lTile.get(new Point(2,1));
+		 Object top = lTile.get(new Point(0,2));
+		 Object middle = lTile.get(new Point(1,2));
 		 Object bottom = lTile.get(new Point(2,2));
 		 
 		 boolean checkTop = checkIndividual(top, pTop);
@@ -314,8 +329,8 @@ public class Game {
 			this._playerNumber = _playerNumber;
 		}
 		
-		public HashSet<Point> get_emptySlot(){
-			return _emptySlot;
+		public HashSet<Point> get_Slot(){
+			return _legalSlot;
 			
 		}
 		

@@ -28,7 +28,7 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 	}
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		_emptySlot = _game.get_emptySlot();
+		_emptySlot = _game.get_Slot();
 		
 		
 		
