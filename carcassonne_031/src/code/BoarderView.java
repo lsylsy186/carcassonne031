@@ -14,11 +14,13 @@ import java.util.Map.Entry;
 public class BoarderView extends JPanel implements MouseListener, MouseMotionListener {
 	static int x,y;
 	static int squareSize = 80;
-	
+	static int currentX,currentY;
+	static  Image _tilePiece;
 	private TileGeneratorView _tG;
 	private HashSet<Point> _emptySlot;
 	private Game _game;
 	private Random _ran = new Random();
+	
 	
 	
 	public BoarderView(TileGeneratorView a ){
@@ -26,10 +28,30 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 		this.addMouseMotionListener(this);
 		this.setBackground(Color.red);
 		_tG = a;
+		currentX = TileGeneratorView.k;
+		currentY = TileGeneratorView.j;
+		_tilePiece =  new ImageIcon("TileSet.jpg").getImage();
 		
 
 	}
-	
+	public Image cutImage(int row, int column){
+		Image tilePiece;
+		tilePiece = new ImageIcon("TileSet.jpg").getImage();
+		Image icon = tilePiece;
+		BufferedImage blankCanvas = new BufferedImage(80,80,BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2 = (Graphics2D)blankCanvas.getGraphics();
+
+		g2.drawImage(tilePiece, 0, 0, 80, 80, 42+120*row,341+160*column,122+120*row,421+160*column, this);
+		return blankCanvas;
+	}
+	public void rotateImage(){
+		ImageIcon icon = new ImageIcon(_tilePiece);
+		BufferedImage blankCanvas = new BufferedImage(80,80,BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2 = (Graphics2D)blankCanvas.getGraphics();
+		g2.rotate(Math.toRadians(90),40,40);
+		g2.drawImage(_tilePiece,0,0,this);
+		_tilePiece = blankCanvas;
+	}
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		_emptySlot = _game.get_Slot();
@@ -45,10 +67,11 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 			g.setColor(Color.green);
 			g.fillRect(p.x*(squareSize + 1) + 1, p.y*(squareSize + 1) + 1, 80, 80);
 		}
-		Image tilePiece ;
-		tilePiece = _tG.tilePiece;
+//		Image tilePiece ;
+		_tilePiece = cutImage(TileGeneratorView.k,TileGeneratorView.j);
 		
-		g.drawImage(tilePiece,x, y ,80 ,80 ,this);
+		//tilePiece = rotateImage(tilePiece);
+		g.drawImage(_tilePiece,x, y ,80 ,80 ,this);
 
 		
 		HashMap<Point,HashMap<Point,Object>> gameBoard = _game.get_gameBoard();
@@ -158,7 +181,7 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 					
 			}
 			Image tempTile;
-			tempTile = tilePiece;
+			tempTile = cutImage(k,j);
 			
 			g.drawImage(tempTile,xp*(squareSize + 1) + 1, yp*(squareSize + 1) + 1,80 ,80 ,this);	
 		//g.drawImage(tilePiece,xp*(squareSize + 1) + 1, yp*(squareSize + 1) + 1,xp*(squareSize + 1) + 81,yp*(squareSize + 1) + 81,42+120*k,341+160*j,122+120*k,421+160*j,this);
@@ -218,7 +241,7 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 		_game = g;
 		
 	}
-//	public Image getCurrentTileImage(){
-//		return currentTileImage;
-//	}
+	public Image getCurrentTilePiece(){
+		return _tilePiece;
+	}
 }

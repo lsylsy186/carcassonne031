@@ -1,12 +1,10 @@
 package code;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import javax.swing.*;
@@ -16,19 +14,25 @@ public class TileGeneratorView extends JPanel  {
 	
 	static int k = 0, j = 0;
     private Game _game;
-    static Image tilePiece;
+//    public TileGeneratorView(){
+//    	
+//		readTile((char)_game.topTile().get(new Point(3,3)));
+//		g.drawImage(BoarderView._tilePiece,0, 0 ,80 ,80 ,42+120*k,341+160*j,122+120*k,421+160*j,this);
+//    }
     
 	
 	public void paintComponent(Graphics g){
-		
-		
+		Image tilePiece;
+		tilePiece = new ImageIcon("TileSet.jpg").getImage();
 		
 		readTile((char)_game.topTile().get(new Point(3,3)));
-		tilePiece = cutImage(j, k);
-		g.drawImage(tilePiece,0,0,80,80,this);
-		
+		g.drawImage(tilePiece,0, 0 ,80 ,80 ,42+120*k,341+160*j,122+120*k,421+160*j,this);
+		//rotateTile();
 	}
-
+//	private void rotateTile() {
+//		// TODO Auto-generated method stub
+//		g.drawImage()
+//	}
 	public void readTile(char tile){
 		switch(tile){
 		case 'A':
@@ -134,24 +138,7 @@ public class TileGeneratorView extends JPanel  {
 		_game = g;
 		
 	}
-	public Image cutImage(int row, int column){
-		Image tilePiece;
-		tilePiece = new ImageIcon("TileSet.jpg").getImage();
-		Image icon = tilePiece;
-		BufferedImage blankCanvas = new BufferedImage(80,80,BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g2 = (Graphics2D)blankCanvas.getGraphics();
-
-		g2.drawImage(tilePiece, 0, 0, 80, 80, 42+120*row,341+160*column,122+120*row,421+160*column, this);
-		return blankCanvas;
-	}
-	public Image rotateImage(Image img){
-		ImageIcon icon = new ImageIcon(img);
-		BufferedImage blankCanvas = new BufferedImage(80,80,BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g2 = (Graphics2D)blankCanvas.getGraphics();
-		g2.rotate(Math.toRadians(90),40,40);
-		g2.drawImage(img,0,0,this);
-		return blankCanvas;
-	}
+	
 	
 	
 }

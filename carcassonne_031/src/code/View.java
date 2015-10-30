@@ -15,7 +15,7 @@ import javax.swing.JScrollPane;
 
 public class View {
 	
-	static Image currentTileImage;
+	private Image currentTileImage;
 	public View(Game g){
 	
 //	PlayerButtonView v = new PlayerButtonView(g);
@@ -59,8 +59,10 @@ public class View {
    // f.add(_rotate,BorderLayout.NORTH);
 	_rotate.addActionListener(new ActionListener(){
 		@Override public void actionPerformed(ActionEvent e){
-			currentTileImage = tileGenerator.tilePiece;
-			currentTileImage = tileGenerator.rotateImage(currentTileImage);
+			currentTileImage = ui.cutImage(ui.currentX,ui.currentY);
+			
+			ui.rotateImage();
+			
 			tileGenerator.repaint();
 			f.repaint();
 			}
@@ -75,9 +77,7 @@ public class View {
 //    f.add(v.getPanel(),BorderLayout.SOUTH);
     f.setSize(500, 600);
     f.setVisible(true);
-    
+
 }
-//	public Image getCurrentTileImage(){
-//		return currentTileImage;
-//	}
+
 }
