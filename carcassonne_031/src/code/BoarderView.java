@@ -14,8 +14,13 @@ import java.util.Map.Entry;
 public class BoarderView extends JPanel implements MouseListener, MouseMotionListener {
 	static int x,y;
 	static int squareSize = 80;
-	static int currentX,currentY;
+	static int initialX,initialY;
 	static  Image _tilePiece;
+	static int _imageState = 0;
+	static int _rotateNum = 0;
+	static Image _tempTile;
+	static int _confirmTileState = 0;
+	private Image _record;
 	private TileGeneratorView _tG;
 	private HashSet<Point> _emptySlot;
 	private Game _game;
@@ -28,11 +33,10 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 		this.addMouseMotionListener(this);
 		this.setBackground(Color.red);
 		_tG = a;
-		currentX = TileGeneratorView.k;
-		currentY = TileGeneratorView.j;
 		_tilePiece =  new ImageIcon("TileSet.jpg").getImage();
-		
-
+		initialX = _ran.nextInt(4);
+		initialY = _ran.nextInt(4);
+		_record = cutImage(initialX,initialY);
 	}
 	public Image cutImage(int row, int column){
 		Image tilePiece;
@@ -44,20 +48,20 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 		g2.drawImage(tilePiece, 0, 0, 80, 80, 42+120*row,341+160*column,122+120*row,421+160*column, this);
 		return blankCanvas;
 	}
-	public void rotateImage(){
-		ImageIcon icon = new ImageIcon(_tilePiece);
+	public Image rotateImage(Image tilePiece, int degree){
+		
+		ImageIcon icon = new ImageIcon(tilePiece);
 		BufferedImage blankCanvas = new BufferedImage(80,80,BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2 = (Graphics2D)blankCanvas.getGraphics();
-		g2.rotate(Math.toRadians(90),40,40);
-		g2.drawImage(_tilePiece,0,0,this);
-		_tilePiece = blankCanvas;
+		g2.rotate(Math.toRadians(degree),40,40);
+		g2.drawImage(tilePiece,0,0,this);
+		return  blankCanvas;
 	}
+	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		_emptySlot = _game.get_Slot();
-		
-		
-		
+
 		for(int i = 0; i < 10000; i++ ){
 			g.setColor(Color.black);
 			g.fillRect((i%100)* squareSize+ (i%100+1) *1,(i/100) * squareSize +(i/100 + 1), 
@@ -67,11 +71,16 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 			g.setColor(Color.green);
 			g.fillRect(p.x*(squareSize + 1) + 1, p.y*(squareSize + 1) + 1, 80, 80);
 		}
-//		Image tilePiece ;
-		_tilePiece = cutImage(TileGeneratorView.k,TileGeneratorView.j);
-		
-		//tilePiece = rotateImage(tilePiece);
-		g.drawImage(_tilePiece,x, y ,80 ,80 ,this);
+		if(_imageState == 0){	
+			_tilePiece = cutImage(TileGeneratorView.k,TileGeneratorView.j);	
+		}
+		else {
+			_tilePiece = rotateImage(_tilePiece, 90);
+		}
+			
+		Image tilePiece ;
+		tilePiece = _tilePiece;
+		g.drawImage(tilePiece,x, y ,80 ,80 ,this);
 
 		
 		HashMap<Point,HashMap<Point,Object>> gameBoard = _game.get_gameBoard();
@@ -182,9 +191,26 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 			}
 			Image tempTile;
 			tempTile = cutImage(k,j);
+			int rotateNumber = 0;
+			char rotateNum = (char) entry.getValue().get(new Point(3,4));
+			switch(rotateNum){
+			case '0':
+				rotateNumber = 0;
+				break;
+			case '1':
+				rotateNumber = 1;
+				break;
+			case '2':
+				rotateNumber = 2;
+				break;
+			case '3':
+				rotateNumber = 3;
+				break;
+			}
 			
-			g.drawImage(tempTile,xp*(squareSize + 1) + 1, yp*(squareSize + 1) + 1,80 ,80 ,this);	
-		//g.drawImage(tilePiece,xp*(squareSize + 1) + 1, yp*(squareSize + 1) + 1,xp*(squareSize + 1) + 81,yp*(squareSize + 1) + 81,42+120*k,341+160*j,122+120*k,421+160*j,this);
+			tempTile = rotateImage(tempTile,rotateNumber * 90);
+			g.drawImage(tempTile,xp*(squareSize + 1) + 1, yp*(squareSize + 1) + 1,80 ,80 ,this);
+			
 		}
 	}
 	@Override
@@ -204,7 +230,8 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 	public void mouseClicked(MouseEvent e) {
 		x = (e.getX()/(squareSize+1))*(squareSize+1)+1;
 		y = (e.getY()/(squareSize+1))*(squareSize+1)+1;
-		
+		_rotateNum = 0;
+		_imageState = 0;
 		repaint();
 //		x = e.getX();
 //		y = e.getY();// TODO Auto-generated method stub
@@ -243,5 +270,8 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 	}
 	public Image getCurrentTilePiece(){
 		return _tilePiece;
+	}
+	public void setRecord(Image img){
+		_record = img;
 	}
 }

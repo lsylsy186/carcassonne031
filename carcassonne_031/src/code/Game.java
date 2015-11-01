@@ -168,6 +168,9 @@ public class Game {
 		
 		//checkUp and check down checks the tiles directly above and below pTile
 		if(checkLeft(x,y, pTile)&& checkRight(x,y, pTile) && checkUp(x,y, pTile) && checkDown(x,y, pTile)){
+			//put the rotate flag to the current tile
+			_tile.setRotateFlag(topTile(), (char)(BoarderView._rotateNum+'0'));
+			BoarderView._rotateNum = 0;
 			return true;
 		}
 		return false;
@@ -308,6 +311,27 @@ public class Game {
 		}
 		
 		
+	}
+	public void rotate(HashMap<Point, Object> tile){
+		Object temp0,temp1,temp2,temp3,temp5,temp6,temp7,temp8;
+		//temp0 - temp8 means the value of nine positions
+		temp0 = tile.get(new Point(0,0));
+		temp1 = tile.get(new Point(1,0));
+		temp2 = tile.get(new Point(2,0));
+		temp3 = tile.get(new Point(0,1));
+		temp5 = tile.get(new Point(2,1));
+		temp6 = tile.get(new Point(0,2));
+		temp7 = tile.get(new Point(1,2));
+		temp8 = tile.get(new Point(2,2));
+		//rotate, position4 never changed
+		 tile.put(new Point(2,2), temp6);
+		 tile.put(new Point(1,2), temp3);
+		 tile.put(new Point(0,2), temp0);
+		 tile.put(new Point(2,1), temp7);		
+		 tile.put(new Point(0,1), temp1);
+		 tile.put(new Point(2,0), temp8);
+		 tile.put(new Point(1,0), temp5);
+		 tile.put(new Point(2,0), temp2);
 	}
 	
 	

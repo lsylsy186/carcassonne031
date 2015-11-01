@@ -15,7 +15,7 @@ import javax.swing.JScrollPane;
 
 public class View {
 	
-	private Image currentTileImage;
+	private Image _currentTileImage;
 	public View(Game g){
 	
 //	PlayerButtonView v = new PlayerButtonView(g);
@@ -49,24 +49,26 @@ public class View {
 			HashMap<Point, Object> target = g.topTile();
 			boolean placement = g.putTile(BoarderView.x /(BoarderView.squareSize + 1),BoarderView.y / (BoarderView.squareSize + 1),target);
 			if(placement){
+				
 			tileGenerator.repaint();
 			g.nextTile();
+			
 			f.repaint();
 			}
 		}
 	});
-    
-   // f.add(_rotate,BorderLayout.NORTH);
+
 	_rotate.addActionListener(new ActionListener(){
 		@Override public void actionPerformed(ActionEvent e){
-			currentTileImage = ui.cutImage(ui.currentX,ui.currentY);
-			
-			ui.rotateImage();
-			
+			//currentTileImage = ui.cutImage(ui.currentX,ui.currentY);
+			//ui._tilePiece = ui.cutImage(TileGeneratorView.k,TileGeneratorView.j);
+			ui._imageState = 1;
+			ui._rotateNum++;
+			if(ui._rotateNum == 4) ui._rotateNum = 0;
+			g.rotate(g.topTile());
 			tileGenerator.repaint();
 			f.repaint();
 			}
-		
 	});
     ui.setPreferredSize(new Dimension(8101,8101));
     JScrollPane scrPane = new JScrollPane(ui, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
