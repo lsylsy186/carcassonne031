@@ -16,6 +16,7 @@ import javax.swing.JScrollPane;
 public class View {
 	
 	private Image _currentTileImage;
+	private  int _rotateNum;
 	public View(Game g){
 	
 //	PlayerButtonView v = new PlayerButtonView(g);
@@ -49,11 +50,13 @@ public class View {
 			HashMap<Point, Object> target = g.topTile();
 			boolean placement = g.putTile(BoarderView.x /(BoarderView.squareSize + 1),BoarderView.y / (BoarderView.squareSize + 1),target);
 			if(placement){
-				
-			tileGenerator.repaint();
-			g.nextTile();
 			
+			
+			g.nextTile();
+			ui.repaint();
+			tileGenerator.repaint();
 			f.repaint();
+			_rotateNum = 0;
 			}
 		}
 	});
@@ -62,11 +65,15 @@ public class View {
 		@Override public void actionPerformed(ActionEvent e){
 			//currentTileImage = ui.cutImage(ui.currentX,ui.currentY);
 			//ui._tilePiece = ui.cutImage(TileGeneratorView.k,TileGeneratorView.j);
-			ui._imageState = 1;
-			ui._rotateNum++;
-			if(ui._rotateNum == 4) ui._rotateNum = 0;
-			g.rotate(g.topTile());
+//			ui._imageState = 1;
+			 
+			_rotateNum++;
+			if(_rotateNum == 4) _rotateNum = 0;
+			
+			g.topTile().put(new Point(3,4),(char)( _rotateNum + '0'));
+			g.refreshSlot();
 			tileGenerator.repaint();
+			
 			f.repaint();
 			}
 	});

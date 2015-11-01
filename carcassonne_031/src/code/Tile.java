@@ -187,7 +187,7 @@ public class Tile {
 		
 		CreateTile(_tileC1, 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C','0');
 		
-		CreateTile(_tileDS, 'D', 'F', 'R', 'W', 'F', 'R', 'C', 'F', 'R', 'W','0');
+		CreateTile(_tileDS, 'D', 'F', 'R', 'W', 'F', 'R', 'C', 'F', 'R', 'W','1');
 		CreateTile(_tileD1, 'D', 'F', 'R', 'W', 'F', 'R', 'C', 'F', 'R', 'W','0');
 		CreateTile(_tileD2, 'D', 'F', 'R', 'W', 'F', 'R', 'C', 'F', 'R', 'W','0');
 		CreateTile(_tileD3, 'D', 'F', 'R', 'W', 'F', 'R', 'C', 'F', 'R', 'W','0');
@@ -284,10 +284,10 @@ public class Tile {
 	public String toString(HashMap<Point, Object> tile){
 		String result = "";
 		//goes from left to right, top to bottom.
-		result =result + tile.get(new Point(0,0)) + tile.get(new Point(1,0)) + 
-				tile.get(new Point(2,0)) + tile.get(new Point(0,1)) +
-				tile.get(new Point(1,1)) + tile.get(new Point(2,1)) +
-				tile.get(new Point(0,2)) + tile.get(new Point(1,2)) +
+		result =result + tile.get(new Point(0,0)) + tile.get(new Point(0,1)) + 
+				tile.get(new Point(0,2)) +"\n"+ tile.get(new Point(1,0)) +
+				tile.get(new Point(1,1)) + tile.get(new Point(1,2)) +"\n"+
+				tile.get(new Point(2,0)) + tile.get(new Point(2,1)) +
 				tile.get(new Point(2,2));
 		return result;
 	}

@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import javax.naming.TimeLimitExceededException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JScrollBar;
@@ -53,13 +54,24 @@ public class Game {
 		}
 	}
 
-	private void refreshSlot() {
+	public void refreshSlot() {
 		_legalSlot = new HashSet<Point>(100);
+		int rotateNum =(char)(currentTile.get(new Point(3,4))) - '0';
+		HashMap<Point, Object> rotatedTile = new HashMap(currentTile);
+		System.out.println(rotateNum);
+		for(int i = 0; i < rotateNum; i++){
+			rotatedTile=rotate(rotatedTile);
+		}
+		System.out.println(_tile.toString(rotatedTile));
+		
 		for(Point p : _emptySlot){
-			if(checkPlacement(p.x,p.y,currentTile)){
+//			int rotateNum =(char)(currentTile.get(new Point(3,4))) - '0';
+//			System.out.println(rotateNum);
+			if(checkPlacement(p.x,p.y,rotatedTile)){
 				_legalSlot.add(p);
 			}
 		}
+		
 		
 	}
 
@@ -81,14 +93,11 @@ public class Game {
 	public void newGame(){
 		_tile = new Tile();
 		HashMap<Point,Object> startingTile = _tile.getStartTile();
-		
+		_emptySlot.add(new Point(50,50));
 		_gameBoard = new HashMap<>();
-		_gameBoard.put(new Point(50,50), startingTile );
+		putTile(50,50, startingTile );
 		nextTile();
-		_emptySlot.add(new Point(49,50));
-		_emptySlot.add(new Point(50,49));
-		_emptySlot.add(new Point(50,51));
-		_emptySlot.add(new Point(51,50));
+		
 		refreshSlot();
 	
 		
@@ -111,9 +120,17 @@ public class Game {
 	}
 
 	public boolean putTile(int x, int y, HashMap<Point, Object> tile){  
+		int rotateNum =(char)(tile.get(new Point(3,4))) - '0';
+		HashMap<Point, Object> rotatedTile = new HashMap(tile);
+		System.out.println(rotateNum);
+		for(int i = 0; i < rotateNum; i++){
+			rotatedTile=rotate(rotatedTile);
+		}
+		
+		System.out.println(_tile.toString(rotatedTile));
 		//when calling putTile, must use int x and y for Point, and specify which tile you want to place.
-		if(_emptySlot.contains(new Point(x,y)) && checkPlacement(x,y, tile) ){
-			_gameBoard.put(new Point(x,y), tile);
+		if(_emptySlot.contains(new Point(x,y)) && checkPlacement(x,y, rotatedTile) ){
+			_gameBoard.put(new Point(x,y), rotatedTile);
 			_emptySlot.remove(new Point(x,y));
 			 //goes through all spaces next to the placed tile and checks which ones are empty.
 				tryAddEmptySlot(x+1,y);
@@ -127,6 +144,7 @@ public class Game {
 	    System.out.println("error, cannot place tile at:"+ x+ "and "+ y); // feel free to change this to an exception handler 
 		
 		}
+	
 		return false;
 	}
 	
@@ -169,8 +187,8 @@ public class Game {
 		//checkUp and check down checks the tiles directly above and below pTile
 		if(checkLeft(x,y, pTile)&& checkRight(x,y, pTile) && checkUp(x,y, pTile) && checkDown(x,y, pTile)){
 			//put the rotate flag to the current tile
-			_tile.setRotateFlag(topTile(), (char)(BoarderView._rotateNum+'0'));
-			BoarderView._rotateNum = 0;
+//			_tile.setRotateFlag(topTile(), (char)(BoarderView._rotateNum+'0'));
+//			BoarderView._rotateNum = 0;
 			return true;
 		}
 		return false;
@@ -181,7 +199,7 @@ public class Game {
 		Object pMiddle = pTile.get(new Point (2,1));
 		Object pRight = pTile.get(new Point(2,2));
 		if(_gameBoard.containsKey(new Point(x, y+1))){
-			System.out.println("check down is called");
+//			System.out.println("check down is called");
 		 HashMap<Point,Object> dTile =_gameBoard.get(new Point(x, y+1));
 		 Object left = dTile.get(new Point(0,0));
 		 Object middle = dTile.get(new Point(0,1));
@@ -208,7 +226,7 @@ public class Game {
 		Object pMiddle = pTile.get(new Point (0,1));
 		Object pRight = pTile.get(new Point(0,2));
 		if(_gameBoard.containsKey(new Point(x,y-1))){
-			System.out.println("check up is called");
+//			System.out.println("check up is called");
 		 HashMap<Point,Object> uTile =_gameBoard.get(new Point(x, y-1));
 		 Object left = uTile.get(new Point(2,0));
 		 Object middle = uTile.get(new Point(2,1));
@@ -235,7 +253,7 @@ public class Game {
 		Object pMiddle = pTile.get(new Point (1,2));
 		Object pBottom = pTile.get(new Point(2,2));
 		if(_gameBoard.containsKey(new Point(x+1, y))){
-			System.out.println("check right is called");
+//			System.out.println("check right is called");
 		 HashMap<Point,Object> rTile =_gameBoard.get(new Point(x+1, y));
 		 Object top = rTile.get(new Point(0,0));
 		 Object middle = rTile.get(new Point(1,0));
@@ -261,7 +279,7 @@ public class Game {
 		Object pMiddle = pTile.get(new Point (1,0));
 		Object pBottom = pTile.get(new Point(2,0));
 		if(_gameBoard.containsKey(new Point(x-1, y))){
-			System.out.println("check left is called");
+//			System.out.println("check left is called");
 		 HashMap<Point,Object> lTile =_gameBoard.get(new Point(x-1, y));
 		 Object top = lTile.get(new Point(0,2));
 		 Object middle = lTile.get(new Point(1,2));
@@ -293,7 +311,7 @@ public class Game {
 	private boolean checkIndividual(Object a, Object b) {  //checks individual positions in a single tile against each other
 		char cA= (char) a;
 		char cB= (char) b;
-		System.out.println("placed tile is"+ cB+  "  checked against"+ cA);
+//		System.out.println("placed tile is"+ cB+  "  checked against"+ cA);
 		switch(cA){
 		
 		case 'F': if(b.equals('F')|| b.equals('W')) return true;  //Field can be placed to Field and Wall
@@ -312,8 +330,10 @@ public class Game {
 		
 		
 	}
-	public void rotate(HashMap<Point, Object> tile){
-		Object temp0,temp1,temp2,temp3,temp5,temp6,temp7,temp8;
+	public static HashMap<Point,Object> rotate(HashMap<Point, Object> tile){
+		Object temp0,temp1,temp2,temp3,temp5,temp6,temp7,temp8,temp9;
+		HashMap<Point, Object> result = new HashMap<Point, Object>();
+		result = tile;
 		//temp0 - temp8 means the value of nine positions
 		temp0 = tile.get(new Point(0,0));
 		temp1 = tile.get(new Point(1,0));
@@ -323,15 +343,18 @@ public class Game {
 		temp6 = tile.get(new Point(0,2));
 		temp7 = tile.get(new Point(1,2));
 		temp8 = tile.get(new Point(2,2));
+		temp9 = tile.get(new Point(1,1));
 		//rotate, position4 never changed
-		 tile.put(new Point(2,2), temp6);
-		 tile.put(new Point(1,2), temp3);
-		 tile.put(new Point(0,2), temp0);
-		 tile.put(new Point(2,1), temp7);		
-		 tile.put(new Point(0,1), temp1);
-		 tile.put(new Point(2,0), temp8);
-		 tile.put(new Point(1,0), temp5);
-		 tile.put(new Point(2,0), temp2);
+		result.put(new Point(2,2), temp6);
+		 result.put(new Point(1,2), temp3);
+		 result.put(new Point(0,2), temp0);
+		 result.put(new Point(2,1), temp7);		
+		 result.put(new Point(0,1), temp1);
+		 result.put(new Point(2,0), temp8);
+		 result.put(new Point(1,0), temp5);
+		 result.put(new Point(0,0), temp2);
+		 result.put(new Point(1,1), temp9);
+		 return result;
 	}
 	
 	

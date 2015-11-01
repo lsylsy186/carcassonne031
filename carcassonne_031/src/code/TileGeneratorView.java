@@ -16,12 +16,13 @@ public class TileGeneratorView extends JPanel  {
     private Game _game;
 
 	public void paintComponent(Graphics g){
-		Image tilePiece;
-		tilePiece = new ImageIcon("TileSet.jpg").getImage();
+//		Image tilePiece;
+//		tilePiece = new ImageIcon("TileSet.jpg").getImage();
+//		
 		
-		readTile((char)_game.topTile().get(new Point(3,3)));
-		BoarderView._imageState = 0;
-		g.drawImage(tilePiece,0, 0 ,80 ,80 ,42+120*k,341+160*j,122+120*k,421+160*j,this);
+//		BoarderView._imageState = 0;
+//		g.drawImage(tilePiece,0, 0 ,80 ,80 ,42+120*k,341+160*j,122+120*k,421+160*j,this);
+		g.drawImage(BoarderView.tilePiece, 0, 0, this);
 		//rotateTile();
 		 
 	}

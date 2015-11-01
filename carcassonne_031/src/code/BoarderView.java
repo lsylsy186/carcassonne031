@@ -17,7 +17,7 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 	static int initialX,initialY;
 	static  Image _tilePiece;
 	static int _imageState = 0;
-	static int _rotateNum = 0;
+	private int _rotateNum ;
 	static Image _tempTile;
 	static int _confirmTileState = 0;
 	private Image _record;
@@ -25,7 +25,7 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 	private HashSet<Point> _emptySlot;
 	private Game _game;
 	private Random _ran = new Random();
-	
+	static Image tilePiece ;
 	
 	
 	public BoarderView(TileGeneratorView a ){
@@ -60,6 +60,8 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
+		_tG.readTile((char)_game.topTile().get(new Point(3,3)));
+		_rotateNum = (char)(_game.topTile().get(new Point(3,4))) - '0';
 		_emptySlot = _game.get_Slot();
 
 		for(int i = 0; i < 10000; i++ ){
@@ -71,14 +73,12 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 			g.setColor(Color.green);
 			g.fillRect(p.x*(squareSize + 1) + 1, p.y*(squareSize + 1) + 1, 80, 80);
 		}
-		if(_imageState == 0){	
-			_tilePiece = cutImage(TileGeneratorView.k,TileGeneratorView.j);	
-		}
-		else {
+		_tilePiece = cutImage(TileGeneratorView.k,TileGeneratorView.j);
+		for(int i = 0; i < _rotateNum; i ++ ){
 			_tilePiece = rotateImage(_tilePiece, 90);
 		}
 			
-		Image tilePiece ;
+		
 		tilePiece = _tilePiece;
 		g.drawImage(tilePiece,x, y ,80 ,80 ,this);
 
@@ -230,7 +230,7 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 	public void mouseClicked(MouseEvent e) {
 		x = (e.getX()/(squareSize+1))*(squareSize+1)+1;
 		y = (e.getY()/(squareSize+1))*(squareSize+1)+1;
-		_rotateNum = 0;
+//		_rotateNum = 0;
 		_imageState = 0;
 		repaint();
 //		x = e.getX();
