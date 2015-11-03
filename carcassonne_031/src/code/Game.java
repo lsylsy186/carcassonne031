@@ -141,7 +141,7 @@ public class Game {
 	    }
 		else{ //else catch all. 
 		
-	    System.out.println("error, cannot place tile at:"+ x+ "and "+ y); // feel free to change this to an exception handler 
+	    System.out.println("error, cannot place tile at:"+ x+ "and "+ y); //TODO feel free to change this to an exception handler 
 		
 		}
 	
