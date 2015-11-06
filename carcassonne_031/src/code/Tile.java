@@ -78,83 +78,86 @@ public class Tile {
 	private HashMap<Point, Object> _tileW3 = new HashMap<Point, Object>(); 
 	private HashMap<Point, Object> _tileW4 = new HashMap<Point, Object>(); 
 	private HashMap<Point, Object> _tileX1 = new HashMap<Point, Object>();
+	
+	
 	ArrayList<HashMap<Point, Object>> _tiles = new ArrayList<HashMap<Point, Object>>();
+	
 	
 	public Tile(){
 		CreateAllTile(); 
 		//has to be kept in this order so getTile will still work for testing.
-		get_tiles().add(_tileA1);
-		get_tiles().add(_tileB1);
-		get_tiles().add(_tileC1);
-		get_tiles().add(_tileD1);
-		get_tiles().add(_tileE1);
-		get_tiles().add(_tileF1);
-		get_tiles().add(_tileG1);
-		get_tiles().add(_tileH1);
-		get_tiles().add(_tileI1);
-		get_tiles().add(_tileJ1);
-		get_tiles().add(_tileK1);
-		get_tiles().add(_tileL1);
-		get_tiles().add(_tileM1);
-		get_tiles().add(_tileN1);
-		get_tiles().add(_tileO1);
-		get_tiles().add(_tileP1);
-		get_tiles().add(_tileQ1);
-		get_tiles().add(_tileR1);
-		get_tiles().add(_tileS1);
-		get_tiles().add(_tileT1);
-		get_tiles().add(_tileU1);
-		get_tiles().add(_tileV1);
-		get_tiles().add(_tileW1);
-		get_tiles().add(_tileX1);
+		_tiles.add(_tileA1);
+		_tiles.add(_tileB1);
+		_tiles.add(_tileC1);
+		_tiles.add(_tileD1);
+		_tiles.add(_tileE1);
+		_tiles.add(_tileF1);
+		_tiles.add(_tileG1);
+		_tiles.add(_tileH1);
+		_tiles.add(_tileI1);
+		_tiles.add(_tileJ1);
+		_tiles.add(_tileK1);
+		_tiles.add(_tileL1);
+		_tiles.add(_tileM1);
+		_tiles.add(_tileN1);
+		_tiles.add(_tileO1);
+		_tiles.add(_tileP1);
+		_tiles.add(_tileQ1);
+		_tiles.add(_tileR1);
+		_tiles.add(_tileS1);
+		_tiles.add(_tileT1);
+		_tiles.add(_tileU1);
+		_tiles.add(_tileV1);
+		_tiles.add(_tileW1);
+		_tiles.add(_tileX1);
 		
-		get_tiles().add(_tileA2);
-		get_tiles().add(_tileB2);
-		get_tiles().add(_tileB3);
-		get_tiles().add(_tileB4);
-		get_tiles().add(_tileD2);
-		get_tiles().add(_tileD3);
-		get_tiles().add(_tileE2);
-		get_tiles().add(_tileE3);
-		get_tiles().add(_tileE4);
-		get_tiles().add(_tileE5);
-		get_tiles().add(_tileF2);
-		get_tiles().add(_tileH2);
-		get_tiles().add(_tileH3);
-		get_tiles().add(_tileI2);
-		get_tiles().add(_tileJ2);
-		get_tiles().add(_tileJ3);
-		get_tiles().add(_tileK2);
-		get_tiles().add(_tileK3);
-		get_tiles().add(_tileL2);
-		get_tiles().add(_tileL3);
-		get_tiles().add(_tileM2);
-		get_tiles().add(_tileN2);
-		get_tiles().add(_tileN3);
-		get_tiles().add(_tileO2);
-		get_tiles().add(_tileP2);
-		get_tiles().add(_tileP3);
-		get_tiles().add(_tileR2);
-		get_tiles().add(_tileR3);
-		get_tiles().add(_tileS2);
-		get_tiles().add(_tileU2);
-		get_tiles().add(_tileU3);
-		get_tiles().add(_tileU4);
-		get_tiles().add(_tileU5);
-		get_tiles().add(_tileU6);
-		get_tiles().add(_tileU7);
-		get_tiles().add(_tileU8);
-		get_tiles().add(_tileV2);
-		get_tiles().add(_tileV3);
-		get_tiles().add(_tileV4);
-		get_tiles().add(_tileV5);
-		get_tiles().add(_tileV6);
-		get_tiles().add(_tileV7);
-		get_tiles().add(_tileV8);
-		get_tiles().add(_tileV8);
-		get_tiles().add(_tileW2);
-		get_tiles().add(_tileW3);
-		get_tiles().add(_tileW4);
+//		get_tiles().add(_tileA2);
+//		get_tiles().add(_tileB2);
+//		get_tiles().add(_tileB3);
+//		get_tiles().add(_tileB4);
+//		get_tiles().add(_tileD2);
+//		get_tiles().add(_tileD3);
+//		get_tiles().add(_tileE2);
+//		get_tiles().add(_tileE3);
+//		get_tiles().add(_tileE4);
+//		get_tiles().add(_tileE5);
+//		get_tiles().add(_tileF2);
+//		get_tiles().add(_tileH2);
+//		get_tiles().add(_tileH3);
+//		get_tiles().add(_tileI2);
+//		get_tiles().add(_tileJ2);
+//		get_tiles().add(_tileJ3);
+//		get_tiles().add(_tileK2);
+//		get_tiles().add(_tileK3);
+//		get_tiles().add(_tileL2);
+//		get_tiles().add(_tileL3);
+//		get_tiles().add(_tileM2);
+//		get_tiles().add(_tileN2);
+//		get_tiles().add(_tileN3);
+//		get_tiles().add(_tileO2);
+//		get_tiles().add(_tileP2);
+//		get_tiles().add(_tileP3);
+//		get_tiles().add(_tileR2);
+//		get_tiles().add(_tileR3);
+//		get_tiles().add(_tileS2);
+//		get_tiles().add(_tileU2);
+//		get_tiles().add(_tileU3);
+//		get_tiles().add(_tileU4);
+//		get_tiles().add(_tileU5);
+//		get_tiles().add(_tileU6);
+//		get_tiles().add(_tileU7);
+//		get_tiles().add(_tileU8);
+//		get_tiles().add(_tileV2);
+//		get_tiles().add(_tileV3);
+//		get_tiles().add(_tileV4);
+//		get_tiles().add(_tileV5);
+//		get_tiles().add(_tileV6);
+//		get_tiles().add(_tileV7);
+//		get_tiles().add(_tileV8);
+//		get_tiles().add(_tileV8);
+//		get_tiles().add(_tileW2);
+//		get_tiles().add(_tileW3);
+//		get_tiles().add(_tileW4);
 		
 		
 		
@@ -163,19 +166,22 @@ public class Tile {
 			char position2, char position3, char position4, char position5, char position6, 
 			char position7, char position8,char rotateFlag){
 		
+		//remember people, points are (x,y)  not (y,x)  
+		
 		_tile.put(new Point(0,0), position0);
-		 _tile.put(new Point(0,1), position1);
-		 _tile.put(new Point(0,2), position2);
-		 _tile.put(new Point(1,0), position3);
+		 _tile.put(new Point(1,0), position1);
+		 _tile.put(new Point(2,0), position2);
+		 _tile.put(new Point(0,1), position3);
 		 _tile.put(new Point(1,1), position4);
-		 _tile.put(new Point(1,2), position5);
-		 _tile.put(new Point(2,0), position6);
-		 _tile.put(new Point(2,1), position7);
+		 _tile.put(new Point(2,1), position5);
+		 _tile.put(new Point(0,2), position6);
+		 _tile.put(new Point(1,2), position7);
 		 _tile.put(new Point(2,2), position8);
 		 _tile.put(new Point(3,3), name);
 		 _tile.put(new Point(3,4), rotateFlag);
 	}
 	// goes from left to right and top to bottom.  (top left, top middle, top right,  middle left,... and so on) 
+	//Naming convention is F - Field, M - monastery, R - Road, C - City, W - Wall, T - Cross-road
 	public void CreateAllTile(){
 		CreateTile(_tileA1, 'A', 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'R', 'F', '0');
 		CreateTile(_tileA2, 'A', 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'R', 'F', '0');
@@ -187,7 +193,7 @@ public class Tile {
 		
 		CreateTile(_tileC1, 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C','0');
 		
-		CreateTile(_tileDS, 'D', 'F', 'R', 'W', 'F', 'R', 'C', 'F', 'R', 'W','1');
+		CreateTile(_tileDS, 'D', 'F', 'R', 'W', 'F', 'R', 'C', 'F', 'R', 'W','0');
 		CreateTile(_tileD1, 'D', 'F', 'R', 'W', 'F', 'R', 'C', 'F', 'R', 'W','0');
 		CreateTile(_tileD2, 'D', 'F', 'R', 'W', 'F', 'R', 'C', 'F', 'R', 'W','0');
 		CreateTile(_tileD3, 'D', 'F', 'R', 'W', 'F', 'R', 'C', 'F', 'R', 'W','0');
@@ -218,9 +224,9 @@ public class Tile {
 		CreateTile(_tileK2, 'K', 'F', 'R', 'W', 'R', 'R', 'C', 'F', 'F', 'W','0');
 		CreateTile(_tileK3, 'K', 'F', 'R', 'W', 'R', 'R', 'C', 'F', 'F', 'W','0');
 		
-		CreateTile(_tileL1, 'L', 'F', 'R', 'W', 'R', 'R', 'C', 'F', 'R', 'W','0');
-		CreateTile(_tileL2, 'L', 'F', 'R', 'W', 'R', 'R', 'C', 'F', 'R', 'W','0');
-		CreateTile(_tileL3, 'L', 'F', 'R', 'W', 'R', 'R', 'C', 'F', 'R', 'W','0');
+		CreateTile(_tileL1, 'L', 'F', 'R', 'W', 'R', 'T', 'C', 'F', 'R', 'W','0');
+		CreateTile(_tileL2, 'L', 'F', 'R', 'W', 'R', 'T', 'C', 'F', 'R', 'W','0');
+		CreateTile(_tileL3, 'L', 'F', 'R', 'W', 'R', 'T', 'C', 'F', 'R', 'W','0');
 		//do we want the middle of M to be field or wall
 		CreateTile(_tileM1, 'M', 'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F','0'); 
 		CreateTile(_tileM2, 'M', 'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F','0'); 
@@ -259,11 +265,11 @@ public class Tile {
 		CreateTile(_tileV7, 'V', 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F','0');
 		CreateTile(_tileV8, 'V', 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F','0');
 		CreateTile(_tileV9, 'V', 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F','0');
-		CreateTile(_tileW1, 'W', 'F', 'F', 'F', 'R', 'R', 'R', 'F', 'R', 'F','0');
-		CreateTile(_tileW2, 'W', 'F', 'F', 'F', 'R', 'R', 'R', 'F', 'R', 'F','0');
-		CreateTile(_tileW3, 'W', 'F', 'F', 'F', 'R', 'R', 'R', 'F', 'R', 'F','0');
-		CreateTile(_tileW4, 'W', 'F', 'F', 'F', 'R', 'R', 'R', 'F', 'R', 'F','0');
-		CreateTile(_tileX1, 'X', 'F', 'R', 'F', 'R', 'R', 'R', 'F', 'R', 'F','0');
+		CreateTile(_tileW1, 'W', 'F', 'F', 'F', 'R', 'T', 'R', 'F', 'R', 'F','0');
+		CreateTile(_tileW2, 'W', 'F', 'F', 'F', 'R', 'T', 'R', 'F', 'R', 'F','0');
+		CreateTile(_tileW3, 'W', 'F', 'F', 'F', 'R', 'T', 'R', 'F', 'R', 'F','0');
+		CreateTile(_tileW4, 'W', 'F', 'F', 'F', 'R', 'T', 'R', 'F', 'R', 'F','0');
+		CreateTile(_tileX1, 'X', 'F', 'R', 'F', 'R', 'T', 'R', 'F', 'R', 'F','0');
 	}
 	
 	public  char getName(HashMap<Point,Object> tile){
@@ -278,23 +284,25 @@ public class Tile {
 	
 	
 	public HashMap<Point, Object> getTile(char c){ // this still holds with the addition of the tiles,  will only return A1 through X1, however.
-		return get_tiles().get(c - 'A');
+		HashMap<Point,Object> tile = _tiles.get(c-'A');
+		System.out.println(tile.get(new Point(3,3)) + " is the name of the tile that getTile returns"); 
+		return tile;
 	}
 	
 	public String toString(HashMap<Point, Object> tile){
 		String result = "";
 		//goes from left to right, top to bottom.
-		result =result + tile.get(new Point(0,0)) + tile.get(new Point(0,1)) + 
-				tile.get(new Point(0,2)) +"\n"+ tile.get(new Point(1,0)) +
-				tile.get(new Point(1,1)) + tile.get(new Point(1,2)) +"\n"+
-				tile.get(new Point(2,0)) + tile.get(new Point(2,1)) +
+		result =result + tile.get(new Point(0,0)) + tile.get(new Point(1,0)) + 
+				tile.get(new Point(2,0)) + tile.get(new Point(0,1)) +
+				tile.get(new Point(1,1)) + tile.get(new Point(2,1)) +
+				tile.get(new Point(0,2)) + tile.get(new Point(1,2)) +
 				tile.get(new Point(2,2));
 		return result;
 	}
 	
 	public char getPositionAtPoint(HashMap<Point,Object> tile, int x, int y){
 		char result = (char) tile.get(new Point(x,y));
-		System.out.println("char returned is"+result);
+	//	System.out.println("char returned is"+result);
 	 	return result;
 	 	
 	 	

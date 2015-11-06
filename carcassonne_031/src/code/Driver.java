@@ -14,10 +14,11 @@ import javax.swing.JScrollPane;
 
 public class Driver {
 	public static void main(String args[]){
-		Game g = new Game();	
+		Game g = new Game();
+		g.setUp(args);
 //		Tile t = new Tile();
 		View v = new View(g);
-		g.setUp(args);
+		
 		
 }
 

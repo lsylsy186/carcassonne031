@@ -39,7 +39,7 @@ public class View {
 	_putMeeple.setPreferredSize(new Dimension(240,50));
 	_nputMeeple.setPreferredSize(new Dimension(240,50));
 	_start.setPreferredSize(new Dimension(250,100));
-	
+	PlayerButtonView pV = new PlayerButtonView(g);
 	
 	Font f1=new Font("Verdana",Font.BOLD,18);
 	Font f2=new Font("Verdana",Font.BOLD,22);
@@ -184,6 +184,7 @@ public class View {
     ui.scrollRectToVisible(rct);
    
     f.add(scrPane,BorderLayout.CENTER);
+    f.add(pV.getPanel(),BorderLayout.SOUTH);
     f.setSize(800, 800);
     f.setVisible(false);
     f.setLocation(500, 80);
