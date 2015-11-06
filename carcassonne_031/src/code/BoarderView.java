@@ -26,7 +26,7 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 	private Game _game;
 	private Random _ran = new Random();
 	static Image tilePiece ;
-	
+	private Image _meeple;
 	
 	public BoarderView(TileGeneratorView a ){
 		this.addMouseListener(this);
@@ -89,6 +89,20 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 			Point position = entry.getKey();
 			int xp = (int) position.getX();
 			int yp = (int) position.getY();
+			HashMap<Point, Object> tileMap = entry.getValue();
+			int xMeeple = 10,yMeeple = 10;
+			
+			for(HashMap.Entry<Point,Object> entry1 : tileMap.entrySet()){
+				Point meeplePosition = entry1.getKey();
+				char parts = (char)entry1.getValue();
+				//System.out.println(parts);
+				
+				if(parts >= 'a' && parts <= 'z'){
+					xMeeple = (int) meeplePosition.getX();
+					yMeeple = (int) meeplePosition.getY();
+				}
+				
+			}
 			char tile = (char) entry.getValue().get(new Point(3,3));
 			switch(tile){
 				case 'A':
@@ -210,8 +224,29 @@ public class BoarderView extends JPanel implements MouseListener, MouseMotionLis
 			
 			tempTile = rotateImage(tempTile,rotateNumber * 90);
 			g.drawImage(tempTile,xp*(squareSize + 1) + 1, yp*(squareSize + 1) + 1,80 ,80 ,this);
+			Image meeple;
+			meeple = cutMeeple();
 			
+			meeple = PutMeepleView.makeColorTransparent((BufferedImage)meeple, Color.white);
+			//if((char)tileMap.get(new Point(3,5)) = 'a'){
+				
+//				System.out.println(xMeeple);
+//				System.out.println(yMeeple);
+				if(xMeeple < 10 && yMeeple < 10){
+					g.drawImage(meeple, xp*(squareSize + 1) + 1 + 27*xMeeple, yp*(squareSize + 1) + 1 + 27 * yMeeple, 27, 27, this);
+				}
+				
+			//}
 		}
+	}
+	
+	public Image cutMeeple(){
+		_meeple = new ImageIcon("meeple.gif").getImage();
+		BufferedImage blankCanvas = new BufferedImage(80,80,BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2 = (Graphics2D)blankCanvas.getGraphics();
+		
+		g2.drawImage(_meeple, 0, 0, 80, 80, 130 ,5,174,52, this);
+		return blankCanvas;
 	}
 	@Override
 	public void mouseDragged(MouseEvent e) {

@@ -131,5 +131,8 @@ public class PutMeepleView extends JPanel implements MouseListener, MouseMotionL
 	      final ImageProducer ip = new FilteredImageSource(im.getSource(), filter);  
 	      return Toolkit.getDefaultToolkit().createImage(ip);  
 	   }  
+	 public void reset(){
+		 _meepleColor = new BufferedImage(80,80,BufferedImage.TYPE_INT_ARGB);
+	 }
 	  
 }

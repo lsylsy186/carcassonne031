@@ -137,6 +137,15 @@ public class View {
 	});
 	_putMeeple.addActionListener(new ActionListener(){
 		@Override public void actionPerformed(ActionEvent e){
+			pmv.reset();
+			int xPoint = PutMeepleView.x / 80;
+			int yPoint = PutMeepleView.y / 80;
+//			HashMap<Point,Object> previousTile = g.get_gameBoard().get(new Point(BoarderView.x /(BoarderView.squareSize + 1),BoarderView.y / (BoarderView.squareSize + 1)));
+//			previousTile.put(new Point(xPoint,yPoint),'a');
+//			System.out.println(new Tile().toString(previousTile));
+//			System.out.println(xPoint);
+//			System.out.println(yPoint);
+			g.putMeeple(BoarderView.x /(BoarderView.squareSize + 1),BoarderView.y / (BoarderView.squareSize + 1), xPoint, yPoint);
 			_putMeepleView.setVisible(false);
 			g.nextTile();
 			ui.repaint();
