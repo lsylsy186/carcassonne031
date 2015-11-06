@@ -11,7 +11,7 @@ public class StartView extends JPanel {
 	private Image _startIcon;
 	public StartView(){
 		
-		_startIcon = new ImageIcon("E:\\cass.jpg").getImage();
+		_startIcon = new ImageIcon("cass.jpg").getImage();
 	}
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
