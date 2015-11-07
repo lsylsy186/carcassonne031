@@ -140,12 +140,9 @@ public class View {
 			pmv.reset();
 			int xPoint = PutMeepleView.x / 80;
 			int yPoint = PutMeepleView.y / 80;
-//			HashMap<Point,Object> previousTile = g.get_gameBoard().get(new Point(BoarderView.x /(BoarderView.squareSize + 1),BoarderView.y / (BoarderView.squareSize + 1)));
-//			previousTile.put(new Point(xPoint,yPoint),'a');
-//			System.out.println(new Tile().toString(previousTile));
-//			System.out.println(xPoint);
-//			System.out.println(yPoint);
-			g.putMeeple(BoarderView.x /(BoarderView.squareSize + 1),BoarderView.y / (BoarderView.squareSize + 1), xPoint, yPoint);
+
+			
+			if(g.putMeeple(BoarderView.x /(BoarderView.squareSize + 1),BoarderView.y / (BoarderView.squareSize + 1), xPoint, yPoint)){
 			_putMeepleView.setVisible(false);
 			g.nextTile();
 			ui.repaint();
@@ -154,7 +151,9 @@ public class View {
 			f.repaint();
 			
 			_rotateNum = 0;
-			
+			g.nextTurn();
+			pV.refreshTurnDisplay();
+			}
 		}	
 	});
 	
@@ -165,7 +164,8 @@ public class View {
 			tileGenerator.repaint();
 			_putMeepleView.repaint();
 			f.repaint();
-			
+			g.nextTurn();
+			pV.refreshTurnDisplay();
 			_rotateNum = 0;
 			_putMeepleView.setVisible(false);
 		}	
@@ -173,10 +173,7 @@ public class View {
 	
 	_rotate.addActionListener(new ActionListener(){
 		@Override public void actionPerformed(ActionEvent e){
-			//currentTileImage = ui.cutImage(ui.currentX,ui.currentY);
-			//ui._tilePiece = ui.cutImage(TileGeneratorView.k,TileGeneratorView.j);
-//			ui._imageState = 1;
-			 
+	
 			_rotateNum++;
 			if(_rotateNum == 4) _rotateNum = 0;
 			

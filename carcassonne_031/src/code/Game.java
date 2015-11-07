@@ -375,22 +375,22 @@ public class Game {
 		result = tile;
 		//temp0 - temp8 means the value of nine positions
 		temp0 = tile.get(new Point(0,0));
-		temp1 = tile.get(new Point(1,0));
-		temp2 = tile.get(new Point(2,0));
-		temp3 = tile.get(new Point(0,1));
-		temp5 = tile.get(new Point(2,1));
-		temp6 = tile.get(new Point(0,2));
-		temp7 = tile.get(new Point(1,2));
+		temp1 = tile.get(new Point(0,1));
+		temp2 = tile.get(new Point(0,2));
+		temp3 = tile.get(new Point(1,0));
+		temp5 = tile.get(new Point(1,2));
+		temp6 = tile.get(new Point(2,0));
+		temp7 = tile.get(new Point(2,1));
 		temp8 = tile.get(new Point(2,2));
 		temp9 = tile.get(new Point(1,1));
 		//rotate, position4 never changed
 		result.put(new Point(2,2), temp6);
-		 result.put(new Point(1,2), temp3);
-		 result.put(new Point(0,2), temp0);
-		 result.put(new Point(2,1), temp7);		
-		 result.put(new Point(0,1), temp1);
-		 result.put(new Point(2,0), temp8);
-		 result.put(new Point(1,0), temp5);
+		 result.put(new Point(2,1), temp3);
+		 result.put(new Point(2,0), temp0);
+		 result.put(new Point(1,2), temp7);		
+		 result.put(new Point(1,0), temp1);
+		 result.put(new Point(0,2), temp8);
+		 result.put(new Point(0,1), temp5);
 		 result.put(new Point(0,0), temp2);
 		 result.put(new Point(1,1), temp9);
 		 return result;
@@ -455,6 +455,7 @@ public class Game {
 			else{
 				_meepleChecked.clear();
 				return false;
+				
 			}
 			
 		case 'M':

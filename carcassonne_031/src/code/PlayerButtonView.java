@@ -12,7 +12,7 @@ public class PlayerButtonView {
 	
 	private JButton[] _jArray = new JButton[5];
 	private JPanel _panel;
-
+	private JButton _turnDisplay = new JButton();
 	
 	public PlayerButtonView(Game g){
 		String player1 = "";
@@ -29,16 +29,17 @@ public class PlayerButtonView {
 		
 		
 		_jArray[0] = new JButton(player1);
-		
 		_jArray[1] = new JButton(player2);
 		_jArray[2] = new JButton(player3);
 		_jArray[3] = new JButton(player4);
 		_jArray[4] = new JButton(player5);
+		_panel.add(_turnDisplay);
+		_turnDisplay.setText("Player number:"+ _game.get_playersTurn()+"'s turn");
+		
 		for(int i = 0; i < g.get_playerList().length; i++){
 			String playerName = g.getPlayer(i+1);
 			addPlayerList(i, playerName);
 			_jArray[i].setPreferredSize(new Dimension(100,80));
-			
 		}
 		
 
@@ -47,7 +48,10 @@ public class PlayerButtonView {
 		
 	}
 
-
+	public void refreshTurnDisplay(){
+		_turnDisplay.setText("Player number:"+ _game.get_playersTurn()+"'s turn");
+		
+	}
 
 	private void addPlayerList(int x, String playerName) {
 		if(!playerName.matches("")){
