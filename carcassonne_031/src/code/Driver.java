@@ -1,25 +1,26 @@
 package code;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.HashMap;
+import java.util.ArrayList;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-
+/**
+ * The Driver initiates the program by running the command line inputs and creating the Board class.
+ * 
+ * @author Maggie
+ */
 public class Driver {
-	public static void main(String args[]){
-		Game g = new Game();
-		g.setUp(args);
-//		Tile t = new Tile();
-		View v = new View(g);
-		
-		
-}
 
+	/**
+	 * The main method allows the game code to be run as a Java Application. Holds a for loop which places the player names into the ArrayList,String> named players. Also
+	 * creates the Board for actual gameplay.
+	 * 
+	 * @param args	The player names listed in the command line input
+	 */
+	public static void main(String[] args){
+		ArrayList<String> players = new ArrayList<String>();
+		for (int i=0; i<args.length; i++) {
+			players.add(args[i]);
+		}
+		PlayerTurns pt = new PlayerTurns(players);
+		pt.run();
+	}
 }

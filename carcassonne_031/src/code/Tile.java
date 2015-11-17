@@ -1,320 +1,122 @@
 package code;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.HashMap;
-
+import javax.swing.ImageIcon;
+/**
+ * Tile is an array of size four that holds String arrays of size three. The four String arrays hold the combination of types (city, road, or 
+ * field) on each side of the Tile as well as a series of other properties. A tile can be manipulated by the rotate method.
+ * 
+ * @author knjames
+ *
+ */
 public class Tile {
+	/**
+	 * The place on which a follower is located on a tile
+	 */
+	private int _followerSpot;
+	/**
+	 * The four arrays of three strings that represent the sides
+	 */
+	private String[] _side1;
+	private String[] _side2;
+	private String[] _side3;
+	private String[] _side4;
+	/**
+	 * The feature that is located at the center of the tile, could be "cloister", "road end", "city", "road", or "field" 
+	 */
+	private String _inside;
+	/**
+	 * A boolean that is true if the tile has a shield and is false if it does not
+	 */
+	private boolean _shield;
+	/**
+	 * An array of all of the side arrays
+	 */
+	private String[][] _sides;
+	/**
+	 * The image of the tile
+	 */
+	private ImageIcon _image;
 	
-	private HashMap<Point, Object> _tileA1 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileA2 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileB1 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileB2 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileB3 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileB4 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileC1 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileDS = new HashMap<Point, Object>(); //DS for D starting tile
-	private HashMap<Point, Object> _tileD1 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileD2= new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileD3 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileE1 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileE2 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileE3 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileE4 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileE5 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileF1 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileF2 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileG1 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileH1 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileH2 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileH3 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileI1 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileI2 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileJ1 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileJ2 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileJ3 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileK1 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileK2 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileK3 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileL1 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileL2 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileL3 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileM1 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileM2 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileN3 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileN1 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileN2 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileO1 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileO2 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileP1 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileP2 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileP3 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileQ1 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileR1 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileR2 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileR3 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileS1 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileS2 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileT1 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileU1 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileU2 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileU3 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileU4 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileU5 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileU6 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileU7 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileU8 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileV1 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileV2 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileV3 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileV4 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileV5 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileV6 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileV7 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileV8 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileV9 = new HashMap<Point, Object>();
-	private HashMap<Point, Object> _tileW1 = new HashMap<Point, Object>(); 
-	private HashMap<Point, Object> _tileW2 = new HashMap<Point, Object>(); 
-	private HashMap<Point, Object> _tileW3 = new HashMap<Point, Object>(); 
-	private HashMap<Point, Object> _tileW4 = new HashMap<Point, Object>(); 
-	private HashMap<Point, Object> _tileX1 = new HashMap<Point, Object>();
-	
-	
-	ArrayList<HashMap<Point, Object>> _tiles = new ArrayList<HashMap<Point, Object>>();
-	
-	
-	public Tile(){
-		CreateAllTile(); 
-		//has to be kept in this order so getTile will still work for testing.
-		_tiles.add(_tileA1);
-		_tiles.add(_tileB1);
-		_tiles.add(_tileC1);
-		_tiles.add(_tileD1);
-		_tiles.add(_tileE1);
-		_tiles.add(_tileF1);
-		_tiles.add(_tileG1);
-		_tiles.add(_tileH1);
-		_tiles.add(_tileI1);
-		_tiles.add(_tileJ1);
-		_tiles.add(_tileK1);
-		_tiles.add(_tileL1);
-		_tiles.add(_tileM1);
-		_tiles.add(_tileN1);
-		_tiles.add(_tileO1);
-		_tiles.add(_tileP1);
-		_tiles.add(_tileQ1);
-		_tiles.add(_tileR1);
-		_tiles.add(_tileS1);
-		_tiles.add(_tileT1);
-		_tiles.add(_tileU1);
-		_tiles.add(_tileV1);
-		_tiles.add(_tileW1);
-		_tiles.add(_tileX1);
+	/**
+	 * The constructor initializes all of the instance variables to values that are specified when a tile is created
+	 * 
+	 * @param a		Array of strings that represent the top side of the tile
+	 * @param b		Array of strings that represent the right side of the tile 
+	 * @param c		Array of strings that represent the bottom side of the tile
+	 * @param d		Array of strings that represent the left side of the tile
+	 * @param inside	A String that describes what feature is in the middle of the tile
+	 * @param s		A boolean that is true if the tile has a shield and is false if it does not
+	 * @param img	The ImageIcon of the tile
+	 * @param f		The int that describes the location of a follower. It is initialized to 9 because that is not a valid follower position
+	 */
+	public Tile(String[] a,String[] b,String[] c,String[] d, String inside, boolean s, ImageIcon img, int f) {
 		
-//		get_tiles().add(_tileA2);
-//		get_tiles().add(_tileB2);
-//		get_tiles().add(_tileB3);
-//		get_tiles().add(_tileB4);
-//		get_tiles().add(_tileD2);
-//		get_tiles().add(_tileD3);
-//		get_tiles().add(_tileE2);
-//		get_tiles().add(_tileE3);
-//		get_tiles().add(_tileE4);
-//		get_tiles().add(_tileE5);
-//		get_tiles().add(_tileF2);
-//		get_tiles().add(_tileH2);
-//		get_tiles().add(_tileH3);
-//		get_tiles().add(_tileI2);
-//		get_tiles().add(_tileJ2);
-//		get_tiles().add(_tileJ3);
-//		get_tiles().add(_tileK2);
-//		get_tiles().add(_tileK3);
-//		get_tiles().add(_tileL2);
-//		get_tiles().add(_tileL3);
-//		get_tiles().add(_tileM2);
-//		get_tiles().add(_tileN2);
-//		get_tiles().add(_tileN3);
-//		get_tiles().add(_tileO2);
-//		get_tiles().add(_tileP2);
-//		get_tiles().add(_tileP3);
-//		get_tiles().add(_tileR2);
-//		get_tiles().add(_tileR3);
-//		get_tiles().add(_tileS2);
-//		get_tiles().add(_tileU2);
-//		get_tiles().add(_tileU3);
-//		get_tiles().add(_tileU4);
-//		get_tiles().add(_tileU5);
-//		get_tiles().add(_tileU6);
-//		get_tiles().add(_tileU7);
-//		get_tiles().add(_tileU8);
-//		get_tiles().add(_tileV2);
-//		get_tiles().add(_tileV3);
-//		get_tiles().add(_tileV4);
-//		get_tiles().add(_tileV5);
-//		get_tiles().add(_tileV6);
-//		get_tiles().add(_tileV7);
-//		get_tiles().add(_tileV8);
-//		get_tiles().add(_tileV8);
-//		get_tiles().add(_tileW2);
-//		get_tiles().add(_tileW3);
-//		get_tiles().add(_tileW4);
-		
-		
-		
-	}
-	public void CreateTile(HashMap<Point, Object> _tile, char name ,char position0,char position1,
-			char position2, char position3, char position4, char position5, char position6, 
-			char position7, char position8,char rotateFlag, char meepleColor){
-		
-		//remember people, points are (x,y)  not (y,x)  
-		
-		 _tile.put(new Point(0,0), position0);
-		 _tile.put(new Point(1,0), position1);
-		 _tile.put(new Point(2,0), position2);
-		 _tile.put(new Point(0,1), position3);
-		 _tile.put(new Point(1,1), position4);
-		 _tile.put(new Point(2,1), position5);
-		 _tile.put(new Point(0,2), position6);
-		 _tile.put(new Point(1,2), position7);
-		 _tile.put(new Point(2,2), position8);
-		 _tile.put(new Point(3,3), name);
-		 _tile.put(new Point(3,4), rotateFlag);
-		 _tile.put(new Point(3,5), meepleColor);
-	}
-	// goes from left to right and top to bottom.  (top left, top middle, top right,  middle left,... and so on) 
-	//Naming convention is F - Field, M - monastery, R - Road, C - City, W - Wall, T - Cross-road
-	public void CreateAllTile(){
-		CreateTile(_tileA1, 'A', 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'R', 'F', '0',' ');
-		CreateTile(_tileA2, 'A', 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'R', 'F', '0',' ');
-		
-		CreateTile(_tileB1, 'B', 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'F', 'F', '0',' ');
-		CreateTile(_tileB2, 'B', 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'F', 'F', '0',' ');
-		CreateTile(_tileB3, 'B', 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'F', 'F', '0',' ');
-		CreateTile(_tileB4, 'B', 'F', 'F', 'F', 'F', 'M', 'F', 'F', 'F', 'F', '0',' ');
-		
-		CreateTile(_tileC1, 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C','0',' ');
-		
-		CreateTile(_tileDS, 'D', 'F', 'R', 'W', 'F', 'R', 'C', 'F', 'R', 'W','0',' ');
-		CreateTile(_tileD1, 'D', 'F', 'R', 'W', 'F', 'R', 'C', 'F', 'R', 'W','0',' ');
-		CreateTile(_tileD2, 'D', 'F', 'R', 'W', 'F', 'R', 'C', 'F', 'R', 'W','0',' ');
-		CreateTile(_tileD3, 'D', 'F', 'R', 'W', 'F', 'R', 'C', 'F', 'R', 'W','0',' ');
-		
-		CreateTile(_tileE1, 'E', 'W', 'C', 'W', 'F', 'F', 'F', 'F', 'F', 'F','0',' ');
-		CreateTile(_tileE2, 'E', 'W', 'C', 'W', 'F', 'F', 'F', 'F', 'F', 'F','0',' ');
-		CreateTile(_tileE3, 'E', 'W', 'C', 'W', 'F', 'F', 'F', 'F', 'F', 'F','0',' ');
-		CreateTile(_tileE4, 'E', 'W', 'C', 'W', 'F', 'F', 'F', 'F', 'F', 'F','0',' ');
-		CreateTile(_tileE5, 'E', 'W', 'C', 'W', 'F', 'F', 'F', 'F', 'F', 'F','0',' ');
-		
-		CreateTile(_tileF1, 'F', 'W', 'F', 'W', 'C', 'C', 'C', 'W', 'F', 'W','0',' ');
-		CreateTile(_tileF2, 'F', 'W', 'F', 'W', 'C', 'C', 'C', 'W', 'F', 'W','0',' ');
-		
-		CreateTile(_tileG1, 'G', 'W', 'C', 'W', 'F', 'C', 'F', 'W', 'C', 'W','0',' ');
-		
-		CreateTile(_tileH1, 'H', 'W', 'F', 'W', 'C', 'F', 'C', 'W', 'F', 'W','0',' ');
-		CreateTile(_tileH2, 'H', 'W', 'F', 'W', 'C', 'F', 'C', 'W', 'F', 'W','0',' ');
-		CreateTile(_tileH3, 'H', 'W', 'F', 'W', 'C', 'F', 'C', 'W', 'F', 'W','0',' ');
-		
-		CreateTile(_tileI1, 'I', 'F', 'F', 'W', 'F', 'F', 'C', 'W', 'C', 'W','0',' ');
-		CreateTile(_tileI2, 'I', 'F', 'F', 'W', 'F', 'F', 'C', 'W', 'C', 'W','0',' ');
-		
-		CreateTile(_tileJ1, 'J', 'W', 'C', 'W', 'F', 'R', 'R', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileJ2, 'J', 'W', 'C', 'W', 'F', 'R', 'R', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileJ3, 'J', 'W', 'C', 'W', 'F', 'R', 'R', 'F', 'R', 'F','0',' ');
-		
-		CreateTile(_tileK1, 'K', 'F', 'R', 'W', 'R', 'R', 'C', 'F', 'F', 'W','0',' ');
-		CreateTile(_tileK2, 'K', 'F', 'R', 'W', 'R', 'R', 'C', 'F', 'F', 'W','0',' ');
-		CreateTile(_tileK3, 'K', 'F', 'R', 'W', 'R', 'R', 'C', 'F', 'F', 'W','0',' ');
-		
-		CreateTile(_tileL1, 'L', 'F', 'R', 'W', 'R', 'T', 'C', 'F', 'R', 'W','0',' ');
-		CreateTile(_tileL2, 'L', 'F', 'R', 'W', 'R', 'T', 'C', 'F', 'R', 'W','0',' ');
-		CreateTile(_tileL3, 'L', 'F', 'R', 'W', 'R', 'T', 'C', 'F', 'R', 'W','0',' ');
-		//do we want the middle of M to be field or wall
-		CreateTile(_tileM1, 'M', 'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F','0',' '); 
-		CreateTile(_tileM2, 'M', 'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F','0',' '); 
-		
-		CreateTile(_tileN1, 'N', 'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F','0',' ');
-		CreateTile(_tileN2, 'N', 'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F','0',' ');
-		CreateTile(_tileN3, 'N', 'C', 'C', 'W', 'C', 'W', 'F', 'W', 'F', 'F','0',' ');
-		
-		CreateTile(_tileO1, 'O', 'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F','0',' ');
-		CreateTile(_tileO2, 'O', 'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F','0',' ');
-		CreateTile(_tileP1, 'P', 'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F','0',' ');
-		CreateTile(_tileP2, 'P', 'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F','0',' ');
-		CreateTile(_tileP3, 'P', 'C', 'C', 'W', 'C', 'W', 'R', 'W', 'R', 'F','0',' ');
-		CreateTile(_tileQ1, 'Q', 'C', 'C', 'C', 'C', 'C', 'C', 'W', 'F', 'W','0',' ');
-		CreateTile(_tileR1, 'R', 'C', 'C', 'C', 'C', 'C', 'C', 'W', 'F', 'W','0',' ');
-		CreateTile(_tileR2, 'R', 'C', 'C', 'C', 'C', 'C', 'C', 'W', 'F', 'W','0',' ');
-		CreateTile(_tileR3, 'R', 'C', 'C', 'C', 'C', 'C', 'C', 'W', 'F', 'W','0',' ');
-		CreateTile(_tileS1, 'S', 'C', 'C', 'C', 'C', 'C', 'C', 'W', 'R', 'W','0',' ');
-		CreateTile(_tileS2, 'S', 'C', 'C', 'C', 'C', 'C', 'C', 'W', 'R', 'W','0',' ');
-		CreateTile(_tileT1, 'T', 'C', 'C', 'C', 'C', 'C', 'C', 'W', 'R', 'W','0',' ');
-		
-		CreateTile(_tileU1, 'U', 'F', 'R', 'F', 'F', 'R', 'F', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileU2, 'U', 'F', 'R', 'F', 'F', 'R', 'F', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileU3, 'U', 'F', 'R', 'F', 'F', 'R', 'F', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileU4, 'U', 'F', 'R', 'F', 'F', 'R', 'F', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileU5, 'U', 'F', 'R', 'F', 'F', 'R', 'F', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileU6, 'U', 'F', 'R', 'F', 'F', 'R', 'F', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileU7, 'U', 'F', 'R', 'F', 'F', 'R', 'F', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileU8, 'U', 'F', 'R', 'F', 'F', 'R', 'F', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileV1, 'V', 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileV2, 'V', 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileV3, 'V', 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileV4, 'V', 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileV5, 'V', 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileV6, 'V', 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileV7, 'V', 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileV8, 'V', 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileV9, 'V', 'F', 'F', 'F', 'R', 'R', 'F', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileW1, 'W', 'F', 'F', 'F', 'R', 'T', 'R', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileW2, 'W', 'F', 'F', 'F', 'R', 'T', 'R', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileW3, 'W', 'F', 'F', 'F', 'R', 'T', 'R', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileW4, 'W', 'F', 'F', 'F', 'R', 'T', 'R', 'F', 'R', 'F','0',' ');
-		CreateTile(_tileX1, 'X', 'F', 'R', 'F', 'R', 'T', 'R', 'F', 'R', 'F','0',' ');
+		//this puts the four String arrays in the correct configuration on a Tile
+		//this also puts the String (the extra feature) onto the Tile configuration 
+		_side1 = a;
+		_side2 = b;
+		_side3 = c;
+		_side4 = d;	
+		_inside = inside;
+		_shield = s;
+		_image = img;
+		_sides = new String[][] {_side1, _side2, _side3, _side4};
+		_followerSpot = 9;
 	}
 	
-	public  char getName(HashMap<Point,Object> tile){
-		if(tile == null){
-			return '*';
+	/**
+	 * This method takes in an int i which determines the number of times that a tile is rotated. It maintains the configuration where the top of
+	 * the tile is side 1, the right side is side 2, the bottom is side 3, and the left side is side 4.
+	 * 
+	 * @param i		The number of times the tile should be rotated by 90 degrees
+	 */
+	public void rotate(int i) {
+		
+		String[][] temp = new String[4][3];
+		for(int j=0; j<i%4; j++) {
+			for(int k=0; k<4; k++) {
+				temp[(k+1)%4] = _sides[k];
+			}
+			_sides = temp;
 		}
-		return (char) tile.get(new Point(3,3));
-	}
-	public void setRotateFlag(HashMap<Point,Object> tile, char flag){
-		if(tile != null) tile.put(new Point(3,4), flag);
 	}
 	
-	
-	public HashMap<Point, Object> getTile(char c){ // this still holds with the addition of the tiles,  will only return A1 through X1, however.
-		HashMap<Point,Object> tile = _tiles.get(c-'A');
-		System.out.println(tile.get(new Point(3,3)) + " is the name of the tile that getTile returns"); 
-		return tile;
+	/**
+	 * This method is used in the matchingSide method of the Board. It returns the String array of the side asked for by int i.
+	 * 
+	 * @param i		The side number that is being accessed
+	 * @return		The array of strings of the side being accessed
+	 */
+	public String[] accessSides(int i){
+		return _sides[i-1];
 	}
 	
-	public String toString(HashMap<Point, Object> tile){
-		String result = "";
-		//goes from left to right, top to bottom.
-		result =result + tile.get(new Point(0,0)) + tile.get(new Point(1,0)) + 
-				tile.get(new Point(2,0)) + tile.get(new Point(0,1)) +
-				tile.get(new Point(1,1)) + tile.get(new Point(2,1)) +
-				tile.get(new Point(0,2)) + tile.get(new Point(1,2)) +
-				tile.get(new Point(2,2));
-		return result;
+	/**
+	 * This method accesses the feature at the center of a Tile, which could be "cloister", "road end", "city", "road", or "field".
+	 * 
+	 * @return		The string of the center feature
+	 */
+	public String accessCenter(){
+		return _inside;
 	}
 	
-	public char getPositionAtPoint(HashMap<Point,Object> tile, int x, int y){
-		char result = (char) tile.get(new Point(x,y));
-	//	System.out.println("char returned is"+result);
-	 	return result;
-	 	
-	 	
+	/**
+	 * This method is a getter for the ImageIcon that is a visual representation of the Tile.
+	 * 
+	 * @return		ImageIcon of the tile
+	 */
+	public ImageIcon getImage(){
+		return _image;
 	}
-	public ArrayList<HashMap<Point, Object>> get_tiles() {
-		return _tiles;
-	}
-	public void set_tiles(ArrayList<HashMap<Point, Object>> _tiles) {
-		this._tiles = _tiles;
-	}
-	public HashMap<Point, Object> getStartTile(){
-		return _tileDS;
+	
+	/**
+	 * This method allows a follower to be placed on a tile at the position specific by the int that is passed in.
+	 * 
+	 * @param f		The int representing the position of the follower
+	 * @return		The int representing the position of the follower
+	 */
+	public int getFollower(int f){
+		_followerSpot = f;
+		return _followerSpot;
 	}
 }
