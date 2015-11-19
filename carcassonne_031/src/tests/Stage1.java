@@ -271,7 +271,7 @@ public class Stage1 {
         //and then calling the 'getFollower(int)' on the picked Tile.
         Tile t = _b.pickTile();
         int expected = 8;
-        int actual = t.getFollower(8);
+        int actual = t.putFollower(8);
         assertTrue("expected: "+expected+", actual: "+actual, expected == actual);
     }
    

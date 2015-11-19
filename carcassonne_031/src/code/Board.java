@@ -41,6 +41,15 @@ public class Board {
 	 */
 	private int _temp;
 	private int _placements;
+	
+	// 2 int variables which store the x y location of the most recently placed tile on the board.
+	
+	private int _xplaced;
+	private int _yplaced;
+	
+	
+	private ArrayList<String> _tileChecked = new ArrayList<String>();
+	
 	/**
 	 * Variable of type TileTypes that allows the board to pick a random tile from the ArrayList of tiles
 	 */
@@ -75,7 +84,7 @@ public class Board {
 		String[] side2 = new String[] {"field", "road", "field"};
 		String[] side3 = new String[] {"field", "field", "field"};
 		String[] side4 = new String[] {"field", "road", "field"};
-		String inside = null;
+		String inside = "road";
 		ImageIcon img = new ImageIcon("resources/11.png");
 		Tile startingTile = new Tile(side1,side2,side3,side4, inside, false, img, 9);
 		_board[71][71] = startingTile;
@@ -85,6 +94,8 @@ public class Board {
 		_yup = 0;
 		_ydown = 0;
 		_temp = 0;
+		_xplaced =0;
+		_yplaced = 0;
 		_placements = 0;
 		_tileTypes = new TileTypes();
 		_tileTypes.createTiles();
@@ -134,6 +145,9 @@ public class Board {
 					} else {
 						_view.update(t,x,y);
 					}
+					_xplaced = x;
+					_yplaced = y;
+					
 					_placements++;
 					return true;
 				}
@@ -173,7 +187,8 @@ public class Board {
 	 * @param y	The y coordinate of the tile being placed
 	 * @return	 If the ArrayList<String> of adjacent given tiles are the same, the method returns true. If they are different, the method returns false and a tile is not placed. 
 	 */
-	private boolean matchingSide(Tile t, int x, int y) {		
+	private boolean matchingSide(Tile t, int x, int y) {
+		System.out.println("tile placed on "+ x+" and "+y);
 		if(_board[x-1][y] != null) {
 			String[] placed = _board[x-1][y].accessSides(2);	
 			String[] possible = t.accessSides(4);
@@ -264,11 +279,66 @@ public class Board {
 	 * the position of the follower on the tile.
 	 * 
 	 * @param i		Takes in an int that represents a follower position on a Tile
+	 * @return placed 	The boolean value indicated if the follower was placed or not.
 	 */
-	public void followerOnTile(int i){
-		_tile.getFollower(i);
+	public boolean followerOnTile(int i, String type){
+	//	System.out.println(type);
+		boolean allowed=false;
+		
+		if(type.equals("road")){
+			allowed = checkFollowerRoad(_xplaced, _yplaced, i);
+			if(allowed)_tile.putFollower(i);
+			_tileChecked.clear();
+		}
+		else{
+			_tile.putFollower(i);
+			return true;
+		}
+		return allowed;
+		
+		
+	
 	}
 	
+
+	
+	/**
+	 * 
+	 * @param x  the x value of location of the tile being checked.
+	 * @param y	 the y value of the location of the tile being checked.
+	 * @param entry  	the value from 0 to 8 of where on the tile the follower is being placed.  
+	 * 		When the method is called recursively, this value will indicate on which side the check needs to occur. 	 
+	 * @return		returns if it can be legally placed.
+	 */
+	private boolean checkFollowerRoad(int x, int y, int entry) {
+		String point = new String();
+		point = "" +x;
+		point = point +y;
+		boolean check = false;
+		System.out.println("tile at "+x+", "+y);
+		if(_board[x][y] == null) return true;
+		if(_tileChecked.contains(point)) return true;
+		Tile t = _board[x][y];
+		int follower = t.getFollowerSpot();
+		//if a follower was found at the entrance point, should return false.
+		if(entry == follower) return false;
+		//Since no follower was found, returns true if the road ends in the middle. 
+		if(t.accessCenter().equals("road end")||t.accessCenter().equals("river cloister")) return true;
+		
+		if(Arrays.asList(t.accessSides(1)).contains("road")&& follower==1) return false;
+		if(Arrays.asList(t.accessSides(2)).contains("road")&& follower==5) return false;
+		if(Arrays.asList(t.accessSides(3)).contains("road")&& follower==7) return false;
+		if(Arrays.asList(t.accessSides(4)).contains("road")&& follower==3) return false;
+		_tileChecked.add(point);
+		if(Arrays.asList(t.accessSides(1)).contains("road")) check= checkFollowerRoad(x, y+1,7);
+		else if(Arrays.asList(t.accessSides(2)).contains("road")) check= checkFollowerRoad(x+1, y,3);
+		else if(Arrays.asList(t.accessSides(3)).contains("road")) check= checkFollowerRoad(x, y-1,1);
+		else if(Arrays.asList(t.accessSides(4)).contains("road")) check= checkFollowerRoad(x-1, y,5);
+
+		
+		
+		return check;
+	}
 	/**
 	 * This is a getter for the ArrayList of players names.
 	 * 

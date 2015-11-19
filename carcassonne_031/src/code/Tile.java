@@ -115,8 +115,13 @@ public class Tile {
 	 * @param f		The int representing the position of the follower
 	 * @return		The int representing the position of the follower
 	 */
-	public int getFollower(int f){
+	public int putFollower(int f){
 		_followerSpot = f;
+		return _followerSpot;
+	}
+	
+	public int getFollowerSpot(){
+		
 		return _followerSpot;
 	}
 }

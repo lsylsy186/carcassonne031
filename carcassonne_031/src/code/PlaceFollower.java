@@ -50,14 +50,17 @@ public class PlaceFollower implements ActionListener {
 	}
 	
 	/**
-	 * This method is run whenever a button that this ActionListener is added to is clicked. It should overlay the appropriate
-	 * image of a follower onto the image of the tile that was just placed. However, it simply places a follower on the Tile in 
-	 * the Board and closes the JFrame of the button that was just clicked.
+	 * This method is run whenever a button that this ActionListener is added to is clicked. Overlays the appropriate
+	 * image of a follower onto the image of the tile that was just placed. Unless followerPlaced returns false, in which case the button click does nothing.
+	 * 
+	 * 
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		int i = _view.getFollowerPosition((JButton) e.getSource());
-		_board.followerOnTile(i);
+		String type = _view.getFollowerType((JButton)e.getSource());
+		boolean followerPlaced = _board.followerOnTile(i, type);
+		if(followerPlaced){
 		ImageIcon img = new ImageIcon(getClass().getResource("/resources/follower"+i+".png"));
 		ImageIcon tile = (ImageIcon) _button.getIcon();
 		BufferedImage result = new BufferedImage(80, 80,BufferedImage.TYPE_3BYTE_BGR );
@@ -69,5 +72,10 @@ public class PlaceFollower implements ActionListener {
 		ImageIcon image = new ImageIcon(result);
 		_button.setIcon(image);
 		_frame.setVisible(false);
+		
+		}
+		else{
+			System.out.println("the follower cannot legally be placed here");
+		}
 	}
 }

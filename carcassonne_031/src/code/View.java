@@ -533,6 +533,15 @@ public class View {
 	public int getFollowerPosition(JButton b){
 		return _followerList.indexOf(b);
 	}
+	/**
+	 * This method returns a String that defines where the follower is being placed.
+	 * @param b 	The JButton on which the user clicks.
+	 * 
+	 * @return  	The text at the location of the button click. 
+	 */
+	public String getFollowerType(JButton b) {
+		return b.getText();
+	}
 	
 	/**
 	 * This method returns the tile that can be placed next.
@@ -588,4 +597,6 @@ public class View {
 		window.pack();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 	}
+
+	
 }
