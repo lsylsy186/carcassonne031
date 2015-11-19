@@ -1,6 +1,7 @@
 package code;
 
 import java.awt.AlphaComposite;
+import java.awt.Composite;
 import java.awt.Graphics2D;
 import java.awt.Transparency;
 import java.awt.event.ActionEvent;
@@ -57,26 +58,16 @@ public class PlaceFollower implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		int i = _view.getFollowerPosition((JButton) e.getSource());
 		_board.followerOnTile(i);
-		/*ImageIcon img = new ImageIcon(getClass().getResource("/resources/follower"+i+".png"));
-		BufferedImage buffFollower = new BufferedImage(img.getIconWidth(),img.getIconHeight(), Transparency.BITMASK);
-		Graphics2D g = (Graphics2D) buffFollower.getGraphics();
-		g.setComposite(AlphaComposite.Src);
-		g.drawImage(buffFollower, 0, 0, null);
-		g.dispose();
+		ImageIcon img = new ImageIcon(getClass().getResource("/resources/follower"+i+".png"));
 		ImageIcon tile = (ImageIcon) _button.getIcon();
-		BufferedImage buffTile = new BufferedImage(tile.getIconWidth(), tile.getIconHeight(), Transparency.BITMASK);
-		g = (Graphics2D) buffTile.getGraphics();
-		g.setComposite(AlphaComposite.Src);
-		g.drawImage(buffTile, 0, 0, null);
-		g.dispose();
-		BufferedImage buffImage = new BufferedImage(tile.getIconWidth(), tile.getIconHeight(), Transparency.BITMASK);
-		g = (Graphics2D) buffImage.getGraphics();
-		g.setComposite(AlphaComposite.Src);
-		g.drawImage(buffTile, 0, 0, null);
-		g.drawImage(buffFollower, 0, 0, null);
-		g.dispose();
-		ImageIcon image = new ImageIcon(buffImage);
-		_button.setIcon(image);*/
+		BufferedImage result = new BufferedImage(80, 80,BufferedImage.TYPE_3BYTE_BGR );
+		Graphics2D g = (Graphics2D) result.getGraphics();
+		Composite composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);
+		g.setComposite(composite);
+		g.drawImage(tile.getImage(), 0, 0, null);
+		g.drawImage(img.getImage(), 0, 0, null);
+		ImageIcon image = new ImageIcon(result);
+		_button.setIcon(image);
 		_frame.setVisible(false);
 	}
 }
