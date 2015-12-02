@@ -188,6 +188,7 @@ public class Board {
 	 * @return	 If the ArrayList<String> of adjacent given tiles are the same, the method returns true. If they are different, the method returns false and a tile is not placed. 
 	 */
 	private boolean matchingSide(Tile t, int x, int y) {
+				
 		System.out.println("tile placed on "+ x+" and "+y);
 		if(_board[x-1][y] != null) {
 			String[] placed = _board[x-1][y].accessSides(2);	
@@ -198,13 +199,13 @@ public class Board {
 			
 			//Checks immediate U-Turns of the river
 			String[] testArray={"field", "river","field"};
-			if((Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(1), testArray))||
-					(Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(3), testArray))){
-				
-				if((Arrays.equals(placed, testArray) && Arrays.equals(_board[x-1][y].accessSides(1), testArray))||
+			if((Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(1), testArray)) &&
+					(Arrays.equals(placed, testArray) && Arrays.equals(_board[x-1][y].accessSides(1), testArray))
+					
+					||(Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(3), testArray)) &&
 					(Arrays.equals(placed, testArray) && Arrays.equals(_board[x-1][y].accessSides(3), testArray))){
+				
 				return false;
-				}
 			}
 		}
 		if(_board[x+1][y] != null) {
@@ -216,13 +217,13 @@ public class Board {
 			
 			//Checks immediate U-Turns of the river
 			String[] testArray={"field", "river","field"};
-			if((Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(1), testArray))||
-					(Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(3), testArray))){
-				
-				if((Arrays.equals(placed, testArray) && Arrays.equals(_board[x+1][y].accessSides(1), testArray))||
+			if((Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(1), testArray)) &&
+					(Arrays.equals(placed, testArray) && Arrays.equals(_board[x+1][y].accessSides(1), testArray))
+					
+					||(Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(3), testArray)) &&
 					(Arrays.equals(placed, testArray) && Arrays.equals(_board[x+1][y].accessSides(3), testArray))){
+				
 				return false;
-				}
 			}
 			
 		}
@@ -235,13 +236,13 @@ public class Board {
 			
 			//Checks immediate U-Turns of the river
 			String[] testArray={"field", "river","field"};
-			if((Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(2), testArray))||
-					(Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(4), testArray))){
-				
-				if((Arrays.equals(placed, testArray) && Arrays.equals(_board[x][y-1].accessSides(2), testArray))||
+			if((Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(2), testArray)) &&
+					(Arrays.equals(placed, testArray) && Arrays.equals(_board[x][y-1].accessSides(2), testArray))
+					
+					||(Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(4), testArray)) &&
 					(Arrays.equals(placed, testArray) && Arrays.equals(_board[x][y-1].accessSides(4), testArray))){
+				
 				return false;
-				}
 			}
 		}
 		if(_board[x][y+1] != null) {
@@ -253,13 +254,13 @@ public class Board {
 			
 			//Checks immediate U-Turns of the river
 			String[] testArray={"field", "river","field"};
-			if((Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(2), testArray))||
-					(Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(4), testArray))){
-				
-				if((Arrays.equals(placed, testArray) && Arrays.equals(_board[x][y+1].accessSides(2), testArray))||
+			if((Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(2), testArray)) &&
+					(Arrays.equals(placed, testArray) && Arrays.equals(_board[x][y+1].accessSides(2), testArray))
+					
+					||(Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(4), testArray)) &&
 					(Arrays.equals(placed, testArray) && Arrays.equals(_board[x][y+1].accessSides(4), testArray))){
+				
 				return false;
-				}
 			}
 		}
 		return true;
