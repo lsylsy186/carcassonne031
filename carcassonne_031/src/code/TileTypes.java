@@ -343,7 +343,7 @@ public class TileTypes {
 					String[] s2 = {"field", "river","field"};
 					String[] s3 = {"field", "field","field"};
 					String inside = "river";
-					ImageIcon img = new ImageIcon(getClass().getResource("/resources/24.png"));
+					ImageIcon img = new ImageIcon(getClass().getResource("/resources/25.png"));
 					Tile t = new Tile(s0,s1,s2,s3, inside, false, img, 9);
 					_riverTileList.add(t);
 				}
@@ -356,7 +356,7 @@ public class TileTypes {
 					String[] s2 = {"field", "river","field"};
 					String[] s3 = {"field", "field","field"};
 					String inside = "river";
-					ImageIcon img = new ImageIcon(getClass().getResource("/resources/24.png"));
+					ImageIcon img = new ImageIcon(getClass().getResource("/resources/26.png"));
 					Tile t = new Tile(s0,s1,s2,s3, inside, false, img, 9);
 					_riverTileList.add(t);
 				}
@@ -369,7 +369,7 @@ public class TileTypes {
 					String[] s2 = {"field", "field","field"};
 					String[] s3 = {"field", "field","field"};
 					String inside = "river";
-					ImageIcon img = new ImageIcon(getClass().getResource("/resources/24.png"));
+					ImageIcon img = new ImageIcon(getClass().getResource("/resources/27.png"));
 					Tile t = new Tile(s0,s1,s2,s3, inside, false, img, 9);
 					_riverTileList.add(t);
 				}
@@ -382,7 +382,7 @@ public class TileTypes {
 					String[] s2 = {"field", "road","field"};
 					String[] s3 = {"field", "river","field"};
 					String inside = "river cloister";
-					ImageIcon img = new ImageIcon(getClass().getResource("/resources/24.png"));
+					ImageIcon img = new ImageIcon(getClass().getResource("/resources/28.png"));
 					Tile t = new Tile(s0,s1,s2,s3, inside, false, img, 9);
 					_riverTileList.add(t);
 				}
@@ -395,7 +395,7 @@ public class TileTypes {
 					String[] s2 = {"city", "city","city"};
 					String[] s3 = {"city", "city","city"};
 					String inside = "river city";
-					ImageIcon img = new ImageIcon(getClass().getResource("/resources/24.png"));
+					ImageIcon img = new ImageIcon(getClass().getResource("/resources/29.png"));
 					Tile t = new Tile(s0,s1,s2,s3, inside, false, img, 9);
 					_riverTileList.add(t);
 				}
@@ -408,7 +408,7 @@ public class TileTypes {
 					String[] s2 = {"field", "road","field"};
 					String[] s3 = {"field", "river","field"};
 					String inside = "river road";
-					ImageIcon img = new ImageIcon(getClass().getResource("/resources/24.png"));
+					ImageIcon img = new ImageIcon(getClass().getResource("/resources/30.png"));
 					Tile t = new Tile(s0,s1,s2,s3, inside, false, img, 9);
 					_riverTileList.add(t);
 				}
@@ -421,7 +421,7 @@ public class TileTypes {
 					String[] s2 = {"field", "river","field"};
 					String[] s3 = {"city", "city","city"};
 					String inside = "river";
-					ImageIcon img = new ImageIcon(getClass().getResource("/resources/24.png"));
+					ImageIcon img = new ImageIcon(getClass().getResource("/resources/31.png"));
 					Tile t = new Tile(s0,s1,s2,s3, inside, false, img, 9);
 					_riverTileList.add(t);
 				}
@@ -434,7 +434,7 @@ public class TileTypes {
 					String[] s2 = {"field", "road","field"};
 					String[] s3 = {"field", "road","field"};
 					String inside = "river";
-					ImageIcon img = new ImageIcon(getClass().getResource("/resources/24.png"));
+					ImageIcon img = new ImageIcon(getClass().getResource("/resources/32.png"));
 					Tile t = new Tile(s0,s1,s2,s3, inside, false, img, 9);
 					_riverTileList.add(t);
 				}
@@ -447,7 +447,7 @@ public class TileTypes {
 					String[] s2 = {"field", "river","field"};
 					String[] s3 = {"city", "city","city"};
 					String inside = "river road";
-					ImageIcon img = new ImageIcon(getClass().getResource("/resources/24.png"));
+					ImageIcon img = new ImageIcon(getClass().getResource("/resources/33.png"));
 					Tile t = new Tile(s0,s1,s2,s3, inside, false, img, 9);
 					_riverTileList.add(t);
 				}

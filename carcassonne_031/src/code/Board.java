@@ -195,6 +195,17 @@ public class Board {
 			if (! Arrays.equals(placed, possible)) {
 				return false;
 			}
+			
+			//Checks immediate U-Turns of the river
+			String[] testArray={"field", "river","field"};
+			if((Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(1), testArray))||
+					(Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(3), testArray))){
+				
+				if((Arrays.equals(placed, testArray) && Arrays.equals(_board[x-1][y].accessSides(1), testArray))||
+					(Arrays.equals(placed, testArray) && Arrays.equals(_board[x-1][y].accessSides(3), testArray))){
+				return false;
+				}
+			}
 		}
 		if(_board[x+1][y] != null) {
 			String[] placed = _board[x+1][y].accessSides(4);
@@ -202,12 +213,35 @@ public class Board {
 			if (! Arrays.equals(placed, possible)) {
 				return false;
 			}
+			
+			//Checks immediate U-Turns of the river
+			String[] testArray={"field", "river","field"};
+			if((Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(1), testArray))||
+					(Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(3), testArray))){
+				
+				if((Arrays.equals(placed, testArray) && Arrays.equals(_board[x+1][y].accessSides(1), testArray))||
+					(Arrays.equals(placed, testArray) && Arrays.equals(_board[x+1][y].accessSides(3), testArray))){
+				return false;
+				}
+			}
+			
 		}
 		if(_board[x][y-1] != null) {
 			String[] placed = _board[x][y-1].accessSides(1);
 			String[] possible = t.accessSides(3);
 			if (! Arrays.equals(placed, possible)) {
 				return false;
+			}
+			
+			//Checks immediate U-Turns of the river
+			String[] testArray={"field", "river","field"};
+			if((Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(2), testArray))||
+					(Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(4), testArray))){
+				
+				if((Arrays.equals(placed, testArray) && Arrays.equals(_board[x][y-1].accessSides(2), testArray))||
+					(Arrays.equals(placed, testArray) && Arrays.equals(_board[x][y-1].accessSides(4), testArray))){
+				return false;
+				}
 			}
 		}
 		if(_board[x][y+1] != null) {
@@ -216,21 +250,43 @@ public class Board {
 			if (! Arrays.equals(placed, possible)) {
 				return false;
 			}
+			
+			//Checks immediate U-Turns of the river
+			String[] testArray={"field", "river","field"};
+			if((Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(2), testArray))||
+					(Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(4), testArray))){
+				
+				if((Arrays.equals(placed, testArray) && Arrays.equals(_board[x][y+1].accessSides(2), testArray))||
+					(Arrays.equals(placed, testArray) && Arrays.equals(_board[x][y+1].accessSides(4), testArray))){
+				return false;
+				}
+			}
 		}
 		return true;
 	}
 	
 	/**
-	 * This method takes the ArrayList<Tile> that holds all 72 tiles used during gameplay and shuffles them so that a random tile is pulled each time this method is called.
+	 * This method takes the ArrayList<Tile> that holds all of the tiles used during gameplay and shuffles them so that a random tile is pulled each time this method is called.
+	 * The river tiles are used first and when the array is empty, the regular Carcassone tile are used.
 	 * 
 	 * @return	Returns the tile that is displayed to the user as the tile which can be placed
 	 */
 	public Tile pickTile(){
+		ArrayList<Tile> riverList = _tileTypes.getRiverTileList();
 		ArrayList<Tile> tileList = _tileTypes.getTileList();
+		Collections.shuffle(riverList);
 		Collections.shuffle(tileList);
+		
 		Tile tile = tileList.get(0);
+		if(riverList.isEmpty()){
+		tile = tileList.get(0);
 		tileList.remove(0);
-		return tile;	
+		}
+		else{
+			tile = riverList.get(0);
+			riverList.remove(0);
+		}
+		return tile;
 	}
 	
 	/**
