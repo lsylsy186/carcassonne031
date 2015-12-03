@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,6 +23,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 
 /**
  * View creates the GUI for the game and updates it as changes are made in the underlying data model. 
@@ -117,6 +120,7 @@ public class View {
 	private Color Purple = new Color(126,73,133);//Mauve:¡¡R124 G80 B157, Lavender: R166 G136 B177, Amethyst: R126 G73 B133, Purple: R146 G61 B146, Mineral violet: R197 G175 B192
 	private Color Red = new Color(220,91,111);//Rose-red: R230 G28 B100, Camellia: R220 G91 B111, Ruby: R200 G8 B82, Carmine: R215 G0 B64
 	private Color Blue = new Color(177,212,219);//Baby-blue:R177 G212, B219 Saxe-blue: R139 G176 B205, Aquamarine: R41 G131 B177, Sky-blue: R148 G198 B221
+	private Color borderColor = new Color(205,51,51);
 	private Color[] _colors = {Red, Color.YELLOW, Color.GREEN, Blue, Purple};
 	
 	private PlayerTurns _playerTurns;
@@ -163,6 +167,8 @@ public class View {
 				_buttons.put(a, new Point(j+70,72-i));
 			}
 		}
+		
+		
 		_turn = new JPanel();
 		
 		_allPlayers = new JPanel();
@@ -216,7 +222,7 @@ public class View {
 		gbc.gridheight = 1;	
 		gbc.weightx = 1;
 		gbc.weighty = 1;
-		titleInsets = new Insets(10, 0, 3, 0) ; // top, left, bottom, right
+		titleInsets = new Insets(40, 40, 40, 40) ; // top, left, bottom, right
 		gbc.insets = titleInsets;
 		whole.add(_gameplay,gbc);
 		
@@ -226,6 +232,9 @@ public class View {
 		gbc.gridheight = 1;
 		//gbc.weightx = 1;
 		//gbc.weighty = 1;
+		gbc.anchor = GridBagConstraints.CENTER;
+		titleInsets = new Insets(10, 5, 5, 40) ; // top, left, bottom, right
+		gbc.insets = titleInsets;
 		whole.add(_turn,gbc);
 		
 		gbc.gridx = 0;
@@ -236,7 +245,7 @@ public class View {
 		gbc.weighty = 1;
 		gbc.fill = GridBagConstraints.BOTH;
 		//gbc.anchor = GridBagConstraints.EAST;
-		titleInsets = new Insets(3, 3, 3, 3) ; // top, left, bottom, right
+		titleInsets = new Insets(5, 40, 10, 40) ; // top, left, bottom, right
 		gbc.insets = titleInsets;
 		whole.add(_allPlayers,gbc);
 		
@@ -528,18 +537,25 @@ public class View {
 			JLabel label3 = new JLabel("Score: 0");
 			button.add(label3);
 			button.setBackground(_colors[i]); 
+			button.setBorderPainted(false);
+			
+			button.setBorder(BorderFactory.createLineBorder(borderColor,3));
+			if(i == (_playerTurns.getTimesOfGame()-1) % _board.getPlayers().size()){
+				button.setBorderPainted(true);
+			}
+//			button.setBorder(thickBorder);
+			
 			gbt.gridx = i;
 			gbt.gridy = 1;
 			gbt.weightx = 1;
 			gbt.weighty = 1;
 			gbt.gridwidth = 1;
 			gbt.gridheight = 1;
-			Insets titleInsets = new Insets(1, 1, 1, 1) ; // top, left, bottom, right
+			Insets titleInsets = new Insets(2, 2, 2, 2) ; // top, left, bottom, right
 			gbt.insets = titleInsets;
-			//gbt.fill = GridBagConstraints.HORIZONTAL;
+			gbt.fill = GridBagConstraints.HORIZONTAL;
 			gbt.anchor = GridBagConstraints.WEST;
-			
-			
+
 			_allPlayers.add(button,gbt);
 		}
 		gbt.gridx = 0;
@@ -552,7 +568,7 @@ public class View {
 		gbt.anchor = GridBagConstraints.WEST;
 		Insets titleInsets = new Insets(5, 1, 1, 1) ; // top, left, bottom, right
 		gbt.insets = titleInsets;
-		JLabel titleOfPlayersArea1 = new JLabel("Carcassonne    -");
+		JLabel titleOfPlayersArea1 = new JLabel("Carcassonne -");
 		JLabel titleOfPlayersArea2 = new JLabel("Players : ");
 		_allPlayers.add(titleOfPlayersArea1,gbt);
 		gbt.gridx = 1;
@@ -725,6 +741,7 @@ public class View {
 		window.pack();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 	}
+	
 	public void setBColorOfCurrentTile(int i){
 		i = i %_board.getPlayers().size();
 		if(_board.getPlayers().size() == 2){
