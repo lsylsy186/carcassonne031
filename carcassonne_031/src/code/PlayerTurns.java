@@ -93,22 +93,18 @@ public class PlayerTurns implements Runnable{
 				state = 1;
 				break;
 			case 1:
-				if (JOptionPane.showConfirmDialog(null, "Would you like to save the game?") == 0){
-					state = 2;
-				}else{
-					state = 3;
-				}
-				break;
-			case 2:
-				Board.saveCurrentState();
+				View.saveMenuItem.setEnabled(true);
+				
 				state = 3;
 				break;
+			
 			case 3:
 				//does not move on until a tile is placed legally in the board
 				if(!_board.tilePlaced()){
 					
 					state = 3;
 				}else{
+					View.saveMenuItem.setEnabled(false);
 					state = 4;
 				}
 				break;

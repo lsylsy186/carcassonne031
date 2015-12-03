@@ -8,6 +8,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,6 +18,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 /**
@@ -107,6 +112,7 @@ public class View {
 	private JLabel _player;
 	private JFrame _followerFrame;
 	private Boolean pressed;
+	private Boolean savePressed;
 	
 	private Color Purple = new Color(126,73,133);//Mauve:¡¡R124 G80 B157, Lavender: R166 G136 B177, Amethyst: R126 G73 B133, Purple: R146 G61 B146, Mineral violet: R197 G175 B192
 	private Color Red = new Color(220,91,111);//Rose-red: R230 G28 B100, Camellia: R220 G91 B111, Ruby: R200 G8 B82, Carmine: R215 G0 B64
@@ -114,6 +120,9 @@ public class View {
 	private Color[] _colors = {Red, Color.YELLOW, Color.GREEN, Blue, Purple};
 	
 	private PlayerTurns _playerTurns;
+	public static JMenuItem newMenuItem;
+	public static JMenuItem saveMenuItem;
+	public static JMenuItem loadMenuItem;
 	/**
 	 * When the View is instantiated, it creates a JFram that holds two JPanels. The _gameplay JPanel has a GridLayout and holds 9 JButtons, one of which displays the image of 
 	 * the starting tile. The _turn JPanel has a BorderLayout that holds 3 JLabels that show the current player's name, followers and score, the _button JButton and the _players
@@ -231,7 +240,21 @@ public class View {
 		gbc.insets = titleInsets;
 		whole.add(_allPlayers,gbc);
 		
+		//menu bar
+		JMenuBar menuBar = new JMenuBar();
+		JMenu fileMenu = new JMenu("File");
+		newMenuItem = new JMenuItem("New");
+		saveMenuItem = new JMenuItem("Save");
+		loadMenuItem = new JMenuItem("load");
+		//add action...
+		saveMenuItem.addActionListener(new SaveMenuListner());
+		//
+		fileMenu.add(newMenuItem);
+		fileMenu.add(saveMenuItem);
+		fileMenu.add(loadMenuItem);
+		menuBar.add(fileMenu);
 		_window.add(whole);
+		_window.setJMenuBar(menuBar);
 		_window.pack();
 		_window.setLocationRelativeTo(null);
 		_window.setVisible(true);
@@ -739,5 +762,24 @@ public class View {
 	}
 	public void setPlayersTurn(PlayerTurns a){
 		_playerTurns = a;
+	}
+
+	public boolean getSavePressed() {
+		// TODO Auto-generated method stub
+		return savePressed;
+	}
+
+	public void setSavePressed(Boolean savePressed) {
+		this.savePressed = savePressed;
+	}
+	
+	public class SaveMenuListner implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Board.saveCurrentState();
+			setSavePressed(true);
+		}
+		
 	}
 }
