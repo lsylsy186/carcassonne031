@@ -61,7 +61,7 @@ public class PlaceFollower implements ActionListener {
 		String type = _view.getFollowerType((JButton)e.getSource());
 		boolean followerPlaced = _board.followerOnTile(i, type);
 		if(followerPlaced){
-		ImageIcon img = new ImageIcon(getClass().getResource("/resources/follower"+PlayerTurns.pre_color+".png"));
+		ImageIcon img = new ImageIcon(getClass().getResource("/resources/follower"+PlayerTurns.color+".png"));
 		ImageIcon tile = (ImageIcon) _button.getIcon();
 		BufferedImage result = new BufferedImage(80, 80,BufferedImage.TYPE_3BYTE_BGR );
 		Graphics2D g = (Graphics2D) result.getGraphics();
@@ -77,6 +77,7 @@ public class PlaceFollower implements ActionListener {
 		else{
 			System.out.println("the follower cannot legally be placed here");
 		}
+		_view.setPressed(true);
 		
 
 	}

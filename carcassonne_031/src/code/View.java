@@ -99,6 +99,8 @@ public class View {
 	private JLabel _followers;
 	private JLabel _score;
 	private JLabel _player;
+	private JFrame _followerFrame;
+	private Boolean pressed;
 	
 	/**
 	 * When the View is instantiated, it creates a JFram that holds two JPanels. The _gameplay JPanel has a GridLayout and holds 9 JButtons, one of which displays the image of 
@@ -170,8 +172,12 @@ public class View {
 		_window.pack();
 		_window.setLocationRelativeTo(null);
 		_window.setVisible(true);
-		_window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
-	}
+		_window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		_followerFrame = new JFrame("Follower Placement");
+		_followerFrame.setLocationRelativeTo(null);	
+		_followerFrame.pack();
+		_followerFrame.setVisible(false);
+		}
 	
 	/**
 	 * This method updates the View if a tile is placed on a JButton located on the right most edge of the _gameplay JPanel. When it updates it, it adds
@@ -419,7 +425,9 @@ public class View {
 	public void updateTurn(String player){
 		_player.setHorizontalAlignment(JLabel.CENTER);
 		_player.setVerticalAlignment(JLabel.CENTER);
+		ImageIcon img = new ImageIcon(getClass().getResource("/resources/follower"+PlayerTurns.color+".png"));
 		_player.setText(player);
+		_player.setIcon(img);
 		_followers.setText("Followers: "+_board.getHash(player));
 		_players.removeAll();
 		for(int i = 0; i < _board.getPlayers().size(); i++){
@@ -462,11 +470,10 @@ public class View {
 	 * these buttons to place a follower in that area of the tile. When the player clicks on a button it closes the JFrame.  
 	 */
 	public void followerFrame(){
-		JFrame frame = new JFrame("Follower Placement");
-		frame.setLocationRelativeTo(null);
+		
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(3,3));
-		PlaceFollower handler = new PlaceFollower(this, _button, frame, _board);
+		PlaceFollower handler = new PlaceFollower(this, _button, _followerFrame, _board);
 		_followerList = new ArrayList<JButton>();
 		for(int i = 0; i < 9; i++){
 			JButton b = new JButton();
@@ -521,9 +528,11 @@ public class View {
 			}
 			panel.add(b);
 		}
-		frame.add(panel);
-		frame.pack();
-		frame.setVisible(true);
+		_followerFrame.getContentPane().removeAll();
+		_followerFrame.add(panel);
+		_followerFrame.pack();
+		_followerFrame.setVisible(true);
+		
 	}
 	
 	/**
@@ -600,6 +609,12 @@ public class View {
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 	}
 
+	public void setPressed(Boolean b){
+		pressed = b;
+	}
 	
+	public Boolean getPressed(){
+		return pressed;
+	}
 	
 }
