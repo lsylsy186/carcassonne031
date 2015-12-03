@@ -77,22 +77,33 @@ public class PlayerTurns implements Runnable{
 				state = 1;
 				break;
 			case 1:
-				//does not move on until a tile is placed legally in the board
-				if(!_board.tilePlaced()){
-					
-					state = 1;
-				}else{
+				if (JOptionPane.showConfirmDialog(null, "Would you like to save the game?") == 0){
 					state = 2;
+				}else{
+					state = 3;
 				}
 				break;
 			case 2:
+				Board.saveCurrentState();
+				state = 3;
+				break;
+			case 3:
+				//does not move on until a tile is placed legally in the board
+				if(!_board.tilePlaced()){
+					
+					state = 3;
+				}else{
+					state = 4;
+				}
+				break;
+			case 4:
 				//checks that the player has at least 1 follower, if not returns to case 0
 				//asks user if they want to place a follower on the board
 				//'yes' --> the state changes so follower code can run
 				//'no' --> returns to case 0 for next turn
 				if(_board.getHash(_players.get(_p)) > 0){
 					if (JOptionPane.showConfirmDialog(null, "Would you like to place a follower?") == 0){
-						state = 3;
+						state = 5;
 					} else {
 						i++;
 						state = 0;
@@ -102,19 +113,19 @@ public class PlayerTurns implements Runnable{
 					state = 0;
 				}
 					break;
-			case 3:
+			case 5:
 				//shows player where they can place follower and waits for JButton click
 				_view.followerFrame();
 				_board.placeFollower(_p);
-				state  = 4;
+				state  = 6;
 				break;
-			case 4:
+			case 6:
 				if(_view.getPressed()){
 					i++;
 					_view.setPressed(false);
 					state = 0;
 				}else{
-				state = 4;
+				state = 6;
 				}
 				break;
 			}

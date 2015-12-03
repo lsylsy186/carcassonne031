@@ -1,11 +1,13 @@
 package code;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 
 /**
  * Carcassonne is a board game involving the placement of 72 square tiles. The game begins with the "starting tile." A tile can be made up of a 
@@ -413,5 +415,14 @@ public class Board {
 	 */
 	public int getHash(String s){
 		return _meeple.get(s);
+	}
+	public static void saveCurrentState() {
+		JFileChooser fileSave = new JFileChooser();
+		fileSave.showSaveDialog(fileSave);
+		saveFile(fileSave.getSelectedFile());
+	}
+	private static void saveFile(File selectedFile) {
+		// TODO Auto-generated method stub
+		
 	}
 }
