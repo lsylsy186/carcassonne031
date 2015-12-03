@@ -22,7 +22,7 @@ public class PlayerTurns implements Runnable{
 	static String pre_color;
 	private String[] colors= {"Red", "Yellow", "Green", "Blue", "Purple"};
 	public static String player;
-	
+	private int _timesOfGame = 0;
 	/**
 	 * Variable for the ArrayList which holds the player names from the main method in the Driver
 	 */
@@ -45,6 +45,7 @@ public class PlayerTurns implements Runnable{
 		_board = new Board(_players);
 		_view = new View(_board);
 		_board.setView(_view); //makes sure the same View is used consistently throughout
+		_view.setPlayersTurn(this);
 	}
 
 	/**
@@ -56,17 +57,16 @@ public class PlayerTurns implements Runnable{
 	@Override
 	public void run(){
 		int state = 0; //initializes the state to 0
-		int i = 0; //int used to determine the player for the turn
 		_view.setPressed(false);
 		while(_board.getTileList()>=0) {
 			switch(state) {
 			case 0:
 				//gets the player name and places it on the view
-				_p = i%_players.size();
+				_p = _timesOfGame%_players.size();
 				player = _players.get(_p);
 				
 				color = colors[_p];
-				
+				_timesOfGame++; 
 				 //increments the player number
 				
 				_view.updateTurn(player);
@@ -105,11 +105,11 @@ public class PlayerTurns implements Runnable{
 					if (JOptionPane.showConfirmDialog(null, "Would you like to place a follower?") == 0){
 						state = 5;
 					} else {
-						i++;
+						_timesOfGame++;
 						state = 0;
 					}
 				}else{
-					i++;
+					_timesOfGame++;
 					state = 0;
 				}
 					break;
@@ -121,7 +121,7 @@ public class PlayerTurns implements Runnable{
 				break;
 			case 6:
 				if(_view.getPressed()){
-					i++;
+					_timesOfGame++;
 					_view.setPressed(false);
 					state = 0;
 				}else{
@@ -133,5 +133,8 @@ public class PlayerTurns implements Runnable{
 		
 		//once the while exits after all tiles placed gameOver() tells the player game is done
 		_view.gameOver();
+	}
+	public int getTimesOfGame(){
+		return _timesOfGame;
 	}
 }

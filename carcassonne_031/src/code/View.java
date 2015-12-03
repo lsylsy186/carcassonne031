@@ -3,8 +3,10 @@ package code;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +35,10 @@ public class View {
 	 */
 	private JPanel _gameplay;
 	private JPanel _turn;
+	/**
+	 * Variables that hold references to the panel that hold the name, score and followers of currentPlayer
+	 */
+	private JPanel _allPlayers;
 	/**
 	 * Variable that holds a reference to the Board that is passed into the View
 	 */
@@ -102,6 +108,12 @@ public class View {
 	private JFrame _followerFrame;
 	private Boolean pressed;
 	
+	private Color Purple = new Color(126,73,133);//Mauve:¡¡R124 G80 B157, Lavender: R166 G136 B177, Amethyst: R126 G73 B133, Purple: R146 G61 B146, Mineral violet: R197 G175 B192
+	private Color Red = new Color(220,91,111);//Rose-red: R230 G28 B100, Camellia: R220 G91 B111, Ruby: R200 G8 B82, Carmine: R215 G0 B64
+	private Color Blue = new Color(177,212,219);//Baby-blue:R177 G212, B219 Saxe-blue: R139 G176 B205, Aquamarine: R41 G131 B177, Sky-blue: R148 G198 B221
+	private Color[] _colors = {Red, Color.YELLOW, Color.GREEN, Blue, Purple};
+	
+	private PlayerTurns _playerTurns;
 	/**
 	 * When the View is instantiated, it creates a JFram that holds two JPanels. The _gameplay JPanel has a GridLayout and holds 9 JButtons, one of which displays the image of 
 	 * the starting tile. The _turn JPanel has a BorderLayout that holds 3 JLabels that show the current player's name, followers and score, the _button JButton and the _players
@@ -143,36 +155,87 @@ public class View {
 			}
 		}
 		_turn = new JPanel();
+		
+		_allPlayers = new JPanel();
 		BorderLayout border = new BorderLayout();
 		border.setHgap(20);
-		_turn.setLayout(border);
+		_turn.setLayout(gridbag);
+		
+		_allPlayers.setLayout(gridbag);
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		
 		_newTile = _board.pickTile();
 		_image = _newTile.getImage();
 		_nextTileButton = new JButton(_image);
-		_nextTileButton.setPreferredSize(new Dimension(80,80));
+		
+		_nextTileButton.setPreferredSize(new Dimension(120,120));
 		_nextTileButton.addActionListener(new Rotate(this, _nextTileButton));
-		_turn.add(_nextTileButton, BorderLayout.WEST);
-		_followers = new JLabel("Followers");
-		_turn.add(_followers, BorderLayout.CENTER);
-		_score = new JLabel("Score: 0");
-		_score.setHorizontalAlignment(JLabel.CENTER);
-		_turn.add(_score, BorderLayout.EAST);
-		_player = new JLabel();
-		_turn.add(_player, BorderLayout.NORTH);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+
+		gbc.anchor = GridBagConstraints.CENTER;
+		Insets titleInsets = new Insets(3, 3, 6, 3) ; // top, left, bottom, right
+		gbc.insets = titleInsets;
+		
+		_turn.add(_nextTileButton, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+
+		gbc.anchor = GridBagConstraints.CENTER;
+		titleInsets = new Insets(3, 3, 1, 1) ; // top, left, bottom, right
+		gbc.insets = titleInsets;
+		_turn.add(new JLabel("CURRENT TILE"),gbc);
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		_turn.add(new JLabel("Click tile to rotate."), gbc);
+
 		ArrayList<String> playerList = _board.getPlayers();
-		_players = new JPanel();
+		//_players = new JPanel();
 		GridLayout grid = new GridLayout(1, playerList.size());
 		grid.setHgap(10);
-		_players.setLayout(grid);
-		_turn.add(_players, BorderLayout.SOUTH);
-		//this.updateTurn(playerList.get(0));
-		whole.add(_gameplay);
-		whole.add(_turn);
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;	
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		titleInsets = new Insets(10, 0, 3, 0) ; // top, left, bottom, right
+		gbc.insets = titleInsets;
+		whole.add(_gameplay,gbc);
+		
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+		//gbc.weightx = 1;
+		//gbc.weighty = 1;
+		whole.add(_turn,gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.gridwidth = 2;
+		gbc.gridheight = 1;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.anchor = GridBagConstraints.EAST;
+		titleInsets = new Insets(3, 3, 3, 3) ; // top, left, bottom, right
+		gbc.insets = titleInsets;
+		whole.add(_allPlayers,gbc);
+		
 		_window.add(whole);
 		_window.pack();
 		_window.setLocationRelativeTo(null);
 		_window.setVisible(true);
-		_window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		_window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 		_followerFrame = new JFrame("Follower Placement");
 		_followerFrame.setLocationRelativeTo(null);	
 		_followerFrame.pack();
@@ -423,24 +486,48 @@ public class View {
 	 * @param player	A reference to the name of the player whose turn it is currently
 	 */
 	public void updateTurn(String player){
-		_player.setHorizontalAlignment(JLabel.CENTER);
-		_player.setVerticalAlignment(JLabel.CENTER);
-		ImageIcon img = new ImageIcon(getClass().getResource("/resources/follower"+PlayerTurns.color+".png"));
-		_player.setText(player);
-		_player.setIcon(img);
-		_followers.setText("Followers: "+_board.getHash(player));
-		_players.removeAll();
+//		_player.setHorizontalAlignment(JLabel.CENTER);
+//		_player.setVerticalAlignment(JLabel.CENTER);
+//		_player.setText(player);
+		System.out.println("Player:  "+ player);
+		setBColorOfCurrentTile(_playerTurns.getTimesOfGame());
+		_allPlayers.removeAll();
+		GridBagConstraints gbt = new GridBagConstraints();
 		for(int i = 0; i < _board.getPlayers().size(); i++){
-			JPanel panel = new JPanel();
-			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+			JButton button = new JButton();
+			button.setLayout(new BoxLayout(button, BoxLayout.Y_AXIS));
+//			JPanel panel = new JPanel();
+//			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 			JLabel label1 = new JLabel(""+_board.getPlayers().get(i));
-			panel.add(label1);
+			button.add(label1);
 			JLabel label2 = new JLabel("Followers: "+_board.getHash(_board.getPlayers().get(i)));
-			panel.add(label2);
+			button.add(label2);
 			JLabel label3 = new JLabel("Score: 0");
-			panel.add(label3);
-			_players.add(panel);
+			button.add(label3);
+			button.setBackground(_colors[i]); 
+			gbt.gridx = i;
+			gbt.gridy = 1;
+			gbt.weightx = 1;
+			gbt.weighty = 1;
+			gbt.gridwidth = 1;
+			gbt.gridheight = 1;
+			gbt.fill = GridBagConstraints.HORIZONTAL;
+			gbt.anchor = GridBagConstraints.EAST;
+			_allPlayers.add(button,gbt);
 		}
+		gbt.gridx = 0;
+		gbt.gridy = 0;
+		gbt.weightx = 1;
+		gbt.weighty = 1;
+		gbt.gridwidth = 1;
+		gbt.gridheight = 1;
+		gbt.fill = GridBagConstraints.HORIZONTAL;
+		gbt.anchor = GridBagConstraints.EAST;
+		Insets titleInsets = new Insets(5, 1, 1, 1) ; // top, left, bottom, right
+		gbt.insets = titleInsets;
+		JLabel titleOfPlayersArea = new JLabel("Carcassonne - Players : ");
+		_allPlayers.add(titleOfPlayersArea,gbt);
+		
 		_window.pack();
 	}
 	/**
@@ -608,7 +695,41 @@ public class View {
 		window.pack();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 	}
-
+	public void setBColorOfCurrentTile(int i){
+		i = i %_board.getPlayers().size();
+		if(_board.getPlayers().size() == 2){
+			switch(i){
+			case 0:_nextTileButton.setBackground(_colors[1]);break;
+			case 1:_nextTileButton.setBackground(_colors[0]);break;
+			}
+		}
+		if(_board.getPlayers().size() == 3){
+			switch(i){
+			case 0:_nextTileButton.setBackground(_colors[2]);break;
+			case 1:_nextTileButton.setBackground(_colors[0]);break;
+			case 2:_nextTileButton.setBackground(_colors[1]);break;
+			}
+		}
+		if(_board.getPlayers().size() == 4){
+			switch(i){
+			case 0:_nextTileButton.setBackground(_colors[3]);break;
+			case 1:_nextTileButton.setBackground(_colors[0]);break;
+			case 2:_nextTileButton.setBackground(_colors[1]);break;
+			case 3:_nextTileButton.setBackground(_colors[2]);break;
+			}
+		}
+		if(_board.getPlayers().size() == 5){
+			switch(i){
+			case 0:_nextTileButton.setBackground(_colors[4]);break;
+			case 1:_nextTileButton.setBackground(_colors[0]);break;
+			case 2:_nextTileButton.setBackground(_colors[1]);break;
+			case 3:_nextTileButton.setBackground(_colors[2]);break;
+			case 4:_nextTileButton.setBackground(_colors[3]);break;
+		}
+		}
+		
+		
+	}
 	public void setPressed(Boolean b){
 		pressed = b;
 	}
@@ -616,5 +737,7 @@ public class View {
 	public Boolean getPressed(){
 		return pressed;
 	}
-	
+	public void setPlayersTurn(PlayerTurns a){
+		_playerTurns = a;
+	}
 }
