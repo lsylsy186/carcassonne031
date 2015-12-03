@@ -3,6 +3,7 @@ package code;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -302,25 +303,64 @@ public class View {
 		whole.add(_allPlayers,gbc);
 		
 		//start window initialization
-		java.net.URL imgURL = getClass().getResource("/resources/startWindow.png");
+		java.net.URL imgURL = getClass().getResource("/resources/startWindow3.png");
 		ImageIcon icon = new ImageIcon(imgURL);
 		JLabel temp = new JLabel();
 		JLabel startText = new JLabel("New Game");
-		_font = new Font("Segoe Print", Font.BOLD, 30);
-		startText.setFont(_font);
-		startText.setForeground(DarkGoldenrod);
-		JButton start = new JButton();
-		start.add(startText);
+		JLabel loadText = new JLabel("Load Game");
+		JLabel titleText = new JLabel("Carcassonne");
 		
-		temp.setIcon(icon);
-		_startWindow.getLayeredPane().add(temp, new Integer(Integer.MIN_VALUE));
-		temp.setBounds(0,0,1024,768);
+		_font = new Font("Segoe Print", Font.BOLD, 40);
+		startText.setFont(_font);
+		loadText.setFont(_font);
+		_font = new Font("hakuyoxingshu7000", Font.BOLD, 140);
+		titleText.setFont(_font);
+		
+		ImageIcon image = new ImageIcon(getClass().getResource("/resources/gameButton2.png"));
+		JButton start = new JButton(image);
+		JButton load = new JButton(image);
+		JButton title = new JButton();
+		start.add(startText);
+		start.addActionListener(new ActionListener(){
+			@Override public void actionPerformed(ActionEvent e){
+				_startWindow.setVisible(false);
+				_window.setVisible(true);
+			}
+		});
+		load.add(loadText);
+		load.addActionListener(new ActionListener(){
+			@Override public void actionPerformed(ActionEvent e){
+/**
+ *  Add load method
+ */
+			}
+		});
+		title.add(titleText);
+		start.setBounds(525, 570, 240, 100);
+		load.setBounds(525, 370, 240, 100);
+		title.setBounds(200,80,900,200);
+		start.setMargin(new Insets(0,0,0,0));
+		load.setMargin(new Insets(0,0,0,0));
+		title.setContentAreaFilled(false);
+		start.setContentAreaFilled(false);
+		load.setContentAreaFilled(false);
+		title.setBorderPainted(false);
+		
+		temp.setIcon(icon);	
+		temp.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight());
 		JPanel content = new JPanel();
 		content=(JPanel) _startWindow.getContentPane(); 
 		content.setOpaque(false);
+		content.setLayout(null);
+		_startWindow.getLayeredPane().setLayout(null);
+		_startWindow.getLayeredPane().add(temp, new Integer(Integer.MIN_VALUE));
+		_startWindow.setSize(icon.getIconWidth(), icon.getIconHeight());
+		_startWindow.setResizable(false);
 		content.add(start);
+		content.add(load);
+		content.add(title);
 		_startWindow.setLocationRelativeTo(null);
-		_startWindow.setVisible(false);
+		_startWindow.setVisible(true);
 		_startWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		
@@ -341,7 +381,7 @@ public class View {
 		_window.setJMenuBar(menuBar);
 		_window.pack();
 		_window.setLocationRelativeTo(null);
-		_window.setVisible(true);
+		_window.setVisible(false);
 		_window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 		_followerFrame = new JFrame("Follower Placement");
 		_followerFrame.setLocationRelativeTo(null);	
