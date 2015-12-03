@@ -165,7 +165,7 @@ public class PlayerTurns implements Runnable{
 	}
 
 	public int getTimesOfGame(){
-		return _gameTurn;
+		return gameTurnIndex + 1;
 
 	}
 }
