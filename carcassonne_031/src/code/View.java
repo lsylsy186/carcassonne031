@@ -1,6 +1,7 @@
 package code;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -98,6 +99,7 @@ public class View {
 	private JLabel _followers;
 	private JLabel _score;
 	private JLabel _player;
+	
 	/**
 	 * When the View is instantiated, it creates a JFram that holds two JPanels. The _gameplay JPanel has a GridLayout and holds 9 JButtons, one of which displays the image of 
 	 * the starting tile. The _turn JPanel has a BorderLayout that holds 3 JLabels that show the current player's name, followers and score, the _button JButton and the _players
@@ -598,5 +600,6 @@ public class View {
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 	}
 
+	
 	
 }
