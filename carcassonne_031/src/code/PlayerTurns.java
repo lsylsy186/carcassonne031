@@ -23,6 +23,7 @@ public class PlayerTurns implements Runnable{
 	private String[] colors= {"Red", "Yellow", "Green", "Blue", "Purple"};
 	public static String player;
 	private int _timesOfGame = 0;
+	private int _turnOfGame = 0;
 	/**
 	 * Variable for the ArrayList which holds the player names from the main method in the Driver
 	 */
@@ -64,9 +65,9 @@ public class PlayerTurns implements Runnable{
 				//gets the player name and places it on the view
 				_p = _timesOfGame%_players.size();
 				player = _players.get(_p);
-				
+				_turnOfGame++;
 				color = colors[_p];
-				_timesOfGame++; 
+			
 				 //increments the player number
 				
 				_view.updateTurn(player);
@@ -136,5 +137,8 @@ public class PlayerTurns implements Runnable{
 	}
 	public int getTimesOfGame(){
 		return _timesOfGame;
+	}
+	public int getTurnOfGame(){
+		return _turnOfGame;
 	}
 }

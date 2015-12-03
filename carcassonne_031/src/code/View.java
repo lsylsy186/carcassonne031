@@ -490,7 +490,7 @@ public class View {
 //		_player.setVerticalAlignment(JLabel.CENTER);
 //		_player.setText(player);
 		System.out.println("Player:  "+ player);
-		setBColorOfCurrentTile(_playerTurns.getTimesOfGame());
+		setBColorOfCurrentTile(_playerTurns.getTurnOfGame());
 		_allPlayers.removeAll();
 		GridBagConstraints gbt = new GridBagConstraints();
 		for(int i = 0; i < _board.getPlayers().size(); i++){
