@@ -3,6 +3,7 @@ package code;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -23,8 +24,13 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.TitledBorder;
 
 /**
  * View creates the GUI for the game and updates it as changes are made in the underlying data model. 
@@ -41,7 +47,7 @@ public class View {
 	/**
 	 * Variables that hold references to the panel that hold the Tile buttons, and the panel that hold the turn information
 	 */
-	private JPanel _gameplay;
+	private GameboardView _gameplay;
 	private JPanel _turn;
 	/**
 	 * Variables that hold references to the panel that hold the name, score and followers of currentPlayer
@@ -117,10 +123,14 @@ public class View {
 	private Boolean pressed;
 	private Boolean savePressed;
 	
+	private Font _font;
 	private Color Purple = new Color(126,73,133);//Mauve:¡¡R124 G80 B157, Lavender: R166 G136 B177, Amethyst: R126 G73 B133, Purple: R146 G61 B146, Mineral violet: R197 G175 B192
 	private Color Red = new Color(220,91,111);//Rose-red: R230 G28 B100, Camellia: R220 G91 B111, Ruby: R200 G8 B82, Carmine: R215 G0 B64
 	private Color Blue = new Color(177,212,219);//Baby-blue:R177 G212, B219 Saxe-blue: R139 G176 B205, Aquamarine: R41 G131 B177, Sky-blue: R148 G198 B221
+	private Color DarkGoldenrod = new Color(184,134,11);
+	private Color MidnightBlue = new Color(25,25,112);
 	private Color borderColor = new Color(205,51,51);
+	
 	private Color[] _colors = {Red, Color.YELLOW, Color.GREEN, Blue, Purple};
 	
 	private PlayerTurns _playerTurns;
@@ -138,12 +148,14 @@ public class View {
 		_board = b;
 		_window = new JFrame("Carcassonne");
 		JPanel whole = new JPanel();
+		
 		GridBagLayout gridbag = new GridBagLayout();
 		//GridBagConstraints c = new GridBagConstraints();
 		whole.setLayout(gridbag);
-		_gameplay = new JPanel();
+		_gameplay = new GameboardView();
 		_grid = new GridLayout(3,3);
 		_gameplay.setLayout(_grid);
+		_gameplay.setBorder(new LineBorder(Color.DARK_GRAY, 5));
 		_buttons = new HashMap<JButton, Point>();
 		_list = new ArrayList<JButton>();
 		_minX = 70;
@@ -158,6 +170,9 @@ public class View {
 				JButton a = new JButton();
 				a.setPreferredSize(new Dimension(80,80));
 				a.addActionListener(_event);
+				a.setOpaque(false);
+				a.setBackground(Color.CYAN); 
+				a.setBorder(BorderFactory.createRaisedBevelBorder());
 				if((i==1) && (j==1)){
 					ImageIcon img = new ImageIcon(getClass().getResource("/resources/11.png"));
 					a.setIcon(img);
@@ -170,8 +185,10 @@ public class View {
 		
 		
 		_turn = new JPanel();
+		_turn.setBorder(new BevelBorder(BevelBorder.LOWERED));
 		
 		_allPlayers = new JPanel();
+		_allPlayers.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
 		BorderLayout border = new BorderLayout();
 		border.setHgap(20);
 		_turn.setLayout(gridbag);
@@ -193,7 +210,7 @@ public class View {
 		gbc.gridheight = 1;
 
 		gbc.anchor = GridBagConstraints.CENTER;
-		Insets titleInsets = new Insets(3, 3, 6, 3) ; // top, left, bottom, right
+		Insets titleInsets = new Insets(3, 10, 6, 10) ; // top, left, bottom, right
 		gbc.insets = titleInsets;
 		
 		_turn.add(_nextTileButton, gbc);
@@ -202,50 +219,82 @@ public class View {
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
-
+		
+//		gbc.ipady = 3;
+//		gbc.ipadx = 30;
 		gbc.anchor = GridBagConstraints.CENTER;
-		titleInsets = new Insets(3, 3, 1, 1) ; // top, left, bottom, right
+		titleInsets = new Insets(3, 20, 1, 20) ; // top, left, bottom, right
 		gbc.insets = titleInsets;
-		_turn.add(new JLabel("CURRENT TILE"),gbc);
+		_font = new Font("Segoe Print",Font.BOLD,16);
+		JLabel a = new JLabel("CURRENT TILE");
+		a.setForeground(DarkGoldenrod);
+		a.setFont(_font);
+		_turn.add(a,gbc);
 		gbc.gridx = 0;
 		gbc.gridy = 2;
-		_turn.add(new JLabel("Click tile to rotate."), gbc);
+		a = new JLabel("Click tile to rotate.");
+		_font = new Font("Georgia",Font.PLAIN,12);
+		a.setFont(_font);
+		a.setForeground(Color.BLACK);
+		titleInsets = new Insets(2, 1, 5, 1) ; // top, left, bottom, right
+		gbc.insets = titleInsets;
+		_turn.add(a, gbc);
 
 		ArrayList<String> playerList = _board.getPlayers();
 		//_players = new JPanel();
 		GridLayout grid = new GridLayout(1, playerList.size());
 		grid.setHgap(10);
-
+		JLabel gameboardTitle = new JLabel("GAME BOARD");
+		_font = new Font("Segoe Print", Font.BOLD, 20);
+		gameboardTitle.setFont(_font);
+		gameboardTitle.setForeground(MidnightBlue);
 		gbc.gridx = 0;
 		gbc.gridy = 0;
+		gbc.ipady = 0;
+		gbc.ipadx = 0;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;	
 		gbc.weightx = 1;
 		gbc.weighty = 1;
-		titleInsets = new Insets(40, 40, 40, 40) ; // top, left, bottom, right
+		titleInsets = new Insets(20, 30, 10, 30) ; // top, left, bottom, right
+		gbc.insets = titleInsets;
+		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.fill = GridBagConstraints.BOTH;
+		whole.add(gameboardTitle,gbc);
+		
+		gbc.ipady = 0;
+		gbc.ipadx = 0;
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;	
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.fill = GridBagConstraints.NONE;
+		titleInsets = new Insets(5, 30, 30, 30) ; // top, left, bottom, right
 		gbc.insets = titleInsets;
 		whole.add(_gameplay,gbc);
 		
 		gbc.gridx = 1;
-		gbc.gridy = 0;
+		gbc.gridy = 1;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
-		//gbc.weightx = 1;
-		//gbc.weighty = 1;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
 		gbc.anchor = GridBagConstraints.CENTER;
-		titleInsets = new Insets(10, 5, 5, 40) ; // top, left, bottom, right
+		titleInsets = new Insets(0, 5, 5, 40) ; // top, left, bottom, right
 		gbc.insets = titleInsets;
 		whole.add(_turn,gbc);
 		
 		gbc.gridx = 0;
-		gbc.gridy = 1;
+		gbc.gridy = 2;
 		gbc.gridwidth = 2;
 		gbc.gridheight = 1;
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		gbc.fill = GridBagConstraints.BOTH;
 		//gbc.anchor = GridBagConstraints.EAST;
-		titleInsets = new Insets(5, 40, 10, 40) ; // top, left, bottom, right
+		titleInsets = new Insets(5, 30, 20, 30) ; // top, left, bottom, right
 		gbc.insets = titleInsets;
 		whole.add(_allPlayers,gbc);
 		
@@ -275,6 +324,76 @@ public class View {
 		}
 	
 	/**
+	 * This method updates the _turn JPanel. In the NORTH position of the BorderLayout of _turn is the player's name whose turn it currently is. In the CENTER position
+	 * is the number of followers the current player has and in the EAST position is the score of the current player. The SOUTH position holds the _players JPanel that has
+	 * a JPanel for each player which holds three JLabels, one for the player name, the followers the player has and their current score. All of these values are updated
+	 * in this method at the beginning of each turn.
+	 * 
+	 * @param player	A reference to the name of the player whose turn it is currently
+	 */
+	public void updateTurn(String player){
+//		_player.setHorizontalAlignment(JLabel.CENTER);
+//		_player.setVerticalAlignment(JLabel.CENTER);
+//		_player.setText(player);
+		System.out.println("Player:  "+ player);
+		setBColorOfCurrentTile(_playerTurns.getTimesOfGame());
+		_allPlayers.removeAll();
+		GridBagConstraints gbt = new GridBagConstraints();
+		for(int i = 0; i < _board.getPlayers().size(); i++){
+			JButton button = new JButton();
+			button.setLayout(new BoxLayout(button, BoxLayout.Y_AXIS));
+//			JPanel panel = new JPanel();
+//			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+			JLabel label1 = new JLabel(""+_board.getPlayers().get(i));
+			button.add(label1);
+			JLabel label2 = new JLabel("Followers: "+_board.getHash(_board.getPlayers().get(i)));
+			button.add(label2);
+			JLabel label3 = new JLabel("Score: 0");
+			button.add(label3);
+			button.setBackground(_colors[i]); 
+			button.setBorderPainted(false);
+			
+			button.setBorder(BorderFactory.createLineBorder(borderColor,3));
+			if(i == (_playerTurns.getTimesOfGame()-1) % _board.getPlayers().size()){
+				button.setBorderPainted(true);
+			}
+//			button.setBorder(thickBorder);
+			
+			gbt.gridx = i;
+			gbt.gridy = 1;
+			gbt.weightx = 1;
+			gbt.weighty = 1;
+			gbt.gridwidth = 1;
+			gbt.gridheight = 1;
+			Insets titleInsets = new Insets(2, 2, 2, 2) ; // top, left, bottom, right
+			gbt.insets = titleInsets;
+			gbt.fill = GridBagConstraints.HORIZONTAL;
+			gbt.anchor = GridBagConstraints.WEST;
+
+			_allPlayers.add(button,gbt);
+		}
+		gbt.gridx = 0;
+		gbt.gridy = 0;
+		gbt.weightx = 1;
+		gbt.weighty = 1;
+		gbt.gridwidth = 1;
+		gbt.gridheight = 1;
+		//gbt.fill = GridBagConstraints.HORIZONTAL;
+		gbt.anchor = GridBagConstraints.WEST;
+		Insets titleInsets = new Insets(5, 1, 1, 1) ; // top, left, bottom, right
+		gbt.insets = titleInsets;
+		JLabel titleOfPlayersArea1 = new JLabel("Carcassonne-");
+		JLabel titleOfPlayersArea2 = new JLabel("Players : ");
+		_font = new Font("Segoe Print",Font.BOLD,16);
+		titleOfPlayersArea1.setFont(_font);
+		titleOfPlayersArea2.setFont(_font);
+		_allPlayers.add(titleOfPlayersArea1,gbt);
+		gbt.gridx = 1;
+		gbt.gridy = 0;
+		_allPlayers.add(titleOfPlayersArea2,gbt);
+		_window.pack();
+	}
+	/**
 	 * This method updates the View if a tile is placed on a JButton located on the right most edge of the _gameplay JPanel. When it updates it, it adds
 	 * another column of JButtons on the right side of the _gameplay JPanel. It also sets the image of the placed tile onto the JButton that was clicked.
 	 * 
@@ -302,6 +421,9 @@ public class View {
 				JButton a = new JButton();
 				a.setPreferredSize(new Dimension(80,80));
 				a.addActionListener(_event);
+				a.setOpaque(false);
+				a.setBackground(Color.CYAN); 
+				a.setBorder(BorderFactory.createRaisedBevelBorder());
 				_buttons.put(a,  new Point(_maxX + 1, ytemp));
 				ytemp--;
 				if(j < _list.size()-counter){
@@ -374,6 +496,9 @@ public class View {
 				JButton a = new JButton();
 				a.setPreferredSize(new Dimension(80,80));
 				a.addActionListener(_event);
+				a.setOpaque(false);
+				a.setBackground(Color.CYAN); 
+				a.setBorder(BorderFactory.createRaisedBevelBorder());
 				_buttons.put(a,  new Point(_minX - 1, ytemp));
 				ytemp--;
 				if(j < _list.size()-counter){
@@ -437,6 +562,9 @@ public class View {
 			JButton a = new JButton();
 			a.setPreferredSize(new Dimension(80,80));
 			a.addActionListener(_event);
+			a.setOpaque(false);
+			a.setBackground(Color.CYAN); 
+			a.setBorder(BorderFactory.createRaisedBevelBorder());
 			_buttons.put(a, new Point(j+_minX, _maxY+1));
 			temporary.add(j,a);
 		}
@@ -476,6 +604,9 @@ public class View {
 			JButton a = new JButton();
 			a.setPreferredSize(new Dimension(80,80));
 			a.addActionListener(_event);
+			a.setOpaque(false);
+			a.setBackground(Color.CYAN); 
+			a.setBorder(BorderFactory.createRaisedBevelBorder());
 			_buttons.put(a, new Point(j+_minX, _minY-1));
 			temporary.add(j+_list.size(),a);
 		}
@@ -509,73 +640,7 @@ public class View {
 		_window.pack();
 	}
 	
-	/**
-	 * This method updates the _turn JPanel. In the NORTH position of the BorderLayout of _turn is the player's name whose turn it currently is. In the CENTER position
-	 * is the number of followers the current player has and in the EAST position is the score of the current player. The SOUTH position holds the _players JPanel that has
-	 * a JPanel for each player which holds three JLabels, one for the player name, the followers the player has and their current score. All of these values are updated
-	 * in this method at the beginning of each turn.
-	 * 
-	 * @param player	A reference to the name of the player whose turn it is currently
-	 */
-	public void updateTurn(String player){
-//		_player.setHorizontalAlignment(JLabel.CENTER);
-//		_player.setVerticalAlignment(JLabel.CENTER);
-//		_player.setText(player);
-		System.out.println("Player:  "+ player);
-		setBColorOfCurrentTile(_playerTurns.getTimesOfGame());
-		_allPlayers.removeAll();
-		GridBagConstraints gbt = new GridBagConstraints();
-		for(int i = 0; i < _board.getPlayers().size(); i++){
-			JButton button = new JButton();
-			button.setLayout(new BoxLayout(button, BoxLayout.Y_AXIS));
-//			JPanel panel = new JPanel();
-//			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-			JLabel label1 = new JLabel(""+_board.getPlayers().get(i));
-			button.add(label1);
-			JLabel label2 = new JLabel("Followers: "+_board.getHash(_board.getPlayers().get(i)));
-			button.add(label2);
-			JLabel label3 = new JLabel("Score: 0");
-			button.add(label3);
-			button.setBackground(_colors[i]); 
-			button.setBorderPainted(false);
-			
-			button.setBorder(BorderFactory.createLineBorder(borderColor,3));
-			if(i == (_playerTurns.getTimesOfGame()-1) % _board.getPlayers().size()){
-				button.setBorderPainted(true);
-			}
-//			button.setBorder(thickBorder);
-			
-			gbt.gridx = i;
-			gbt.gridy = 1;
-			gbt.weightx = 1;
-			gbt.weighty = 1;
-			gbt.gridwidth = 1;
-			gbt.gridheight = 1;
-			Insets titleInsets = new Insets(2, 2, 2, 2) ; // top, left, bottom, right
-			gbt.insets = titleInsets;
-			gbt.fill = GridBagConstraints.HORIZONTAL;
-			gbt.anchor = GridBagConstraints.WEST;
-
-			_allPlayers.add(button,gbt);
-		}
-		gbt.gridx = 0;
-		gbt.gridy = 0;
-		gbt.weightx = 1;
-		gbt.weighty = 1;
-		gbt.gridwidth = 1;
-		gbt.gridheight = 1;
-		//gbt.fill = GridBagConstraints.HORIZONTAL;
-		gbt.anchor = GridBagConstraints.WEST;
-		Insets titleInsets = new Insets(5, 1, 1, 1) ; // top, left, bottom, right
-		gbt.insets = titleInsets;
-		JLabel titleOfPlayersArea1 = new JLabel("Carcassonne -");
-		JLabel titleOfPlayersArea2 = new JLabel("Players : ");
-		_allPlayers.add(titleOfPlayersArea1,gbt);
-		gbt.gridx = 1;
-		gbt.gridy = 0;
-		_allPlayers.add(titleOfPlayersArea2,gbt);
-		_window.pack();
-	}
+	
 	/**
 	 * This method picks a new tile from the ArrayList in TileTypes and places that tile's image on the JButton in the WEST position of _turns.
 	 */
