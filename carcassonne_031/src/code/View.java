@@ -44,6 +44,7 @@ public class View {
 	 * Variable that holds a reference to the JFrame that the GUI is in
 	 */
 	private JFrame _window;
+	private JFrame _startWindow;
 	/**
 	 * Variables that hold references to the panel that hold the Tile buttons, and the panel that hold the turn information
 	 */
@@ -147,11 +148,13 @@ public class View {
 	public View(Board b){
 		_board = b;
 		_window = new JFrame("Carcassonne");
-		JPanel whole = new JPanel();
+		_startWindow = new JFrame("Carcassonne");
 		
+		JPanel whole = new JPanel();
 		GridBagLayout gridbag = new GridBagLayout();
 		//GridBagConstraints c = new GridBagConstraints();
 		whole.setLayout(gridbag);
+		
 		_gameplay = new GameboardView();
 		_grid = new GridLayout(3,3);
 		_gameplay.setLayout(_grid);
@@ -297,6 +300,29 @@ public class View {
 		titleInsets = new Insets(5, 30, 20, 30) ; // top, left, bottom, right
 		gbc.insets = titleInsets;
 		whole.add(_allPlayers,gbc);
+		
+		//start window initialization
+		java.net.URL imgURL = getClass().getResource("/resources/startWindow.png");
+		ImageIcon icon = new ImageIcon(imgURL);
+		JLabel temp = new JLabel();
+		JLabel startText = new JLabel("New Game");
+		_font = new Font("Segoe Print", Font.BOLD, 30);
+		startText.setFont(_font);
+		startText.setForeground(DarkGoldenrod);
+		JButton start = new JButton();
+		start.add(startText);
+		
+		temp.setIcon(icon);
+		_startWindow.getLayeredPane().add(temp, new Integer(Integer.MIN_VALUE));
+		temp.setBounds(0,0,1024,768);
+		JPanel content = new JPanel();
+		content=(JPanel) _startWindow.getContentPane(); 
+		content.setOpaque(false);
+		content.add(start);
+		_startWindow.setLocationRelativeTo(null);
+		_startWindow.setVisible(false);
+		_startWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		
 		//menu bar
 		JMenuBar menuBar = new JMenuBar();
