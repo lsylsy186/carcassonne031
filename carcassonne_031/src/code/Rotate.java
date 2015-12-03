@@ -52,12 +52,15 @@ public class Rotate implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Tile tile = _view.getTile();
+		int rotationTimes = tile.get_rotateTimes();
 		_tileImage = _view.getImage();
 		rotateIcon(_tileImage, _button);
 		_button.setIcon(_tileImage);
 		_view.updateImage(_tileImage);
 		_view.updateTile(tile);
-		tile.rotate(1); //A 1 specifies the number of times the rotate method runs
+		tile.rotate(1); 
+		rotationTimes++;
+		tile.set_rotateTimes(rotationTimes);//A 1 specifies the number of times the rotate method runs
 	}
 	
 	/**

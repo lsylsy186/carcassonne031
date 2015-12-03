@@ -19,11 +19,14 @@ public class PlayerTurns implements Runnable{
 	private View _view;
 	private Board _board;
 	static String color;
-	static String pre_color;
-	private String[] colors= {"Red", "Yellow", "Green", "Blue", "Purple"};
+	public static String[] colors= {"Red", "Yellow", "Green", "Blue", "Purple"};
 	public static String player;
+
+	public static int[] scores = new int[5];
+	public static String firstline;
+
 	private int _timesOfGame = 0;
-	private int _turnOfGame = 0;
+
 	/**
 	 * Variable for the ArrayList which holds the player names from the main method in the Driver
 	 */
@@ -32,8 +35,8 @@ public class PlayerTurns implements Runnable{
 	/**
 	 * Used inside of the state machine to reference the player whose turn is currently happening
 	 */
-	private int _p;
-	
+	public static int _gameTurn;
+	public static int gameTurnIndex;
 	/**
 	 * PlayerTurns constructor which initializes the instance variables and passes in a reference to
 	 * the ArrayList<String> from the Driver.
@@ -58,23 +61,35 @@ public class PlayerTurns implements Runnable{
 	@Override
 	public void run(){
 		int state = 0; //initializes the state to 0
+
+		gameTurnIndex = 0; //int used to determine the player for the turn
+
 		_view.setPressed(false);
+		
 		while(_board.getTileList()>=0) {
 			switch(state) {
 			case 0:
 				//gets the player name and places it on the view
-				_p = _timesOfGame%_players.size();
-				player = _players.get(_p);
-				_turnOfGame++;
-				color = colors[_p];
-			
+
+				_gameTurn = gameTurnIndex %_players.size();
+				player = _players.get(_gameTurn);
+				//first line for saving 
+				firstline = "";
+				firstline = firstline + "[" + _players.get(_gameTurn) +"," + colors[_gameTurn] + "," + scores[_gameTurn] + "]";
+				for(int i = 1 ; i < _players.size(); i++){
+					int index = (_gameTurn +i) % _players.size(); 
+					firstline =firstline + "," + "[" + _players.get(index) +"," + colors[index] + "," + scores[index] + "]";
+				}
+				color = colors[_gameTurn];
+				
+
 				 //increments the player number
 				
 				_view.updateTurn(player);
 				
 				//displays the tile which the player can place
 				_view.nextTile();
-
+				
 				state = 1;
 				break;
 			case 1:
@@ -102,32 +117,40 @@ public class PlayerTurns implements Runnable{
 				//asks user if they want to place a follower on the board
 				//'yes' --> the state changes so follower code can run
 				//'no' --> returns to case 0 for next turn
-				if(_board.getHash(_players.get(_p)) > 0){
+				if(_board.getHash(_players.get(_gameTurn)) > 0){
 					if (JOptionPane.showConfirmDialog(null, "Would you like to place a follower?") == 0){
 						state = 5;
 					} else {
-						_timesOfGame++;
-						state = 0;
+
+						state = 7;
+
 					}
 				}else{
-					_timesOfGame++;
-					state = 0;
+
+						state = 7;
+
 				}
 					break;
 			case 5:
 				//shows player where they can place follower and waits for JButton click
 				_view.followerFrame();
-				_board.placeFollower(_p);
+				_board.placeFollower(_gameTurn);
 				state  = 6;
 				break;
 			case 6:
 				if(_view.getPressed()){
-					_timesOfGame++;
+
 					_view.setPressed(false);
-					state = 0;
+					state = 7;
 				}else{
 				state = 6;
 				}
+				break;
+			case 7:
+				calculateScores();
+				
+				gameTurnIndex++;
+				state = 0;
 				break;
 			}
 		}
@@ -135,10 +158,14 @@ public class PlayerTurns implements Runnable{
 		//once the while exits after all tiles placed gameOver() tells the player game is done
 		_view.gameOver();
 	}
-	public int getTimesOfGame(){
-		return _timesOfGame;
+
+
+	private void calculateScores() {
+		scores[_gameTurn] = _board.getScore();
 	}
-	public int getTurnOfGame(){
-		return _turnOfGame;
+
+	public int getTimesOfGame(){
+		return _gameTurn;
+
 	}
 }

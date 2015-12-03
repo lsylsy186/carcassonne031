@@ -36,6 +36,7 @@ public class Tile {
 	 * The image of the tile
 	 */
 	private ImageIcon _image;
+	private int _rotateTimes = 0;
 	
 	/**
 	 * The constructor initializes all of the instance variables to values that are specified when a tile is created
@@ -123,5 +124,13 @@ public class Tile {
 	public int getFollowerSpot(){
 		
 		return _followerSpot;
+	}
+
+	public int get_rotateTimes() {
+		return _rotateTimes;
+	}
+
+	public void set_rotateTimes(int _rotateTimes) {
+		this._rotateTimes = _rotateTimes;
 	}
 }

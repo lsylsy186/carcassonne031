@@ -1,6 +1,9 @@
 package code;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -421,8 +424,20 @@ public class Board {
 		fileSave.showSaveDialog(fileSave);
 		saveFile(fileSave.getSelectedFile());
 	}
-	private static void saveFile(File selectedFile) {
-		// TODO Auto-generated method stub
+	private static void saveFile(File file) {
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+			writer.write(PlayerTurns.firstline);
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		
+	}
+	public int getScore() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
