@@ -235,7 +235,7 @@ public class View {
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		gbc.fill = GridBagConstraints.BOTH;
-		gbc.anchor = GridBagConstraints.EAST;
+		//gbc.anchor = GridBagConstraints.EAST;
 		titleInsets = new Insets(3, 3, 3, 3) ; // top, left, bottom, right
 		gbc.insets = titleInsets;
 		whole.add(_allPlayers,gbc);
@@ -534,8 +534,12 @@ public class View {
 			gbt.weighty = 1;
 			gbt.gridwidth = 1;
 			gbt.gridheight = 1;
-			gbt.fill = GridBagConstraints.HORIZONTAL;
-			gbt.anchor = GridBagConstraints.EAST;
+			Insets titleInsets = new Insets(1, 1, 1, 1) ; // top, left, bottom, right
+			gbt.insets = titleInsets;
+			//gbt.fill = GridBagConstraints.HORIZONTAL;
+			gbt.anchor = GridBagConstraints.WEST;
+			
+			
 			_allPlayers.add(button,gbt);
 		}
 		gbt.gridx = 0;
@@ -544,13 +548,16 @@ public class View {
 		gbt.weighty = 1;
 		gbt.gridwidth = 1;
 		gbt.gridheight = 1;
-		gbt.fill = GridBagConstraints.HORIZONTAL;
-		gbt.anchor = GridBagConstraints.EAST;
+		//gbt.fill = GridBagConstraints.HORIZONTAL;
+		gbt.anchor = GridBagConstraints.WEST;
 		Insets titleInsets = new Insets(5, 1, 1, 1) ; // top, left, bottom, right
 		gbt.insets = titleInsets;
-		JLabel titleOfPlayersArea = new JLabel("Carcassonne - Players : ");
-		_allPlayers.add(titleOfPlayersArea,gbt);
-		
+		JLabel titleOfPlayersArea1 = new JLabel("Carcassonne    -");
+		JLabel titleOfPlayersArea2 = new JLabel("Players : ");
+		_allPlayers.add(titleOfPlayersArea1,gbt);
+		gbt.gridx = 1;
+		gbt.gridy = 0;
+		_allPlayers.add(titleOfPlayersArea2,gbt);
 		_window.pack();
 	}
 	/**
