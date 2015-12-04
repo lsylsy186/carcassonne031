@@ -267,7 +267,7 @@ public class StartView implements Runnable{
 						_acceptPlayerName = _name.getText();
 						//System.out.println(_acceptPlayerName);
 						_players.add(_acceptPlayerName);
-						System.out.println(_players);
+						System.out.println(_players.get(_numCounts-1));
 						_numCounts++;
 						_name.setText(" ");
 			}
