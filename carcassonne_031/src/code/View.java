@@ -25,7 +25,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -42,7 +41,6 @@ import javax.swing.border.TitledBorder;
  */
 public class View {
 	
-	private StartView _sV;
 	/**
 	 * Variable that holds a reference to the JFrame that the GUI is in
 	 */
@@ -126,8 +124,6 @@ public class View {
 	private JFrame _followerFrame;
 	private Boolean pressed;
 	private Boolean savePressed;
-
-	
 	
 	private Font _font;
 	private Color Purple = new Color(126,73,133);//Mauve:¡¡R124 G80 B157, Lavender: R166 G136 B177, Amethyst: R126 G73 B133, Purple: R146 G61 B146, Mineral violet: R197 G175 B192
@@ -139,7 +135,7 @@ public class View {
 	
 	private Color[] _colors = {Red, Color.YELLOW, Color.GREEN, Blue, Purple};
 	
-	private StartView _startView;
+	private PlayerTurns _playerTurns;
 	public static JMenuItem newMenuItem;
 	public static JMenuItem saveMenuItem;
 	public static JMenuItem loadMenuItem;
@@ -153,7 +149,7 @@ public class View {
 	public View(Board b){
 		_board = b;
 		_window = new JFrame("Carcassonne");
-		
+		_startWindow = new JFrame("Carcassonne");
 		
 		JPanel whole = new JPanel();
 		GridBagLayout gridbag = new GridBagLayout();
@@ -307,6 +303,65 @@ public class View {
 		whole.add(_allPlayers,gbc);
 		
 		//start window initialization
+//		java.net.URL imgURL = getClass().getResource("/resources/startWindow3.png");
+//		ImageIcon icon = new ImageIcon(imgURL);
+//		JLabel temp = new JLabel();
+//		JLabel startText = new JLabel("New Game");
+//		JLabel loadText = new JLabel("Load Game");
+//		JLabel titleText = new JLabel("Carcassonne");
+//		
+//		_font = new Font("Segoe Print", Font.BOLD, 40);
+//		startText.setFont(_font);
+//		loadText.setFont(_font);
+//		_font = new Font("hakuyoxingshu7000", Font.BOLD, 140);
+//		titleText.setFont(_font);
+//		
+//		ImageIcon image = new ImageIcon(getClass().getResource("/resources/gameButton2.png"));
+//		JButton start = new JButton(image);
+//		JButton load = new JButton(image);
+//		JButton title = new JButton();
+//		start.add(startText);
+//		start.addActionListener(new ActionListener(){
+//			@Override public void actionPerformed(ActionEvent e){
+//				_startWindow.setVisible(false);
+//				_window.setVisible(true);
+//			}
+//		});
+//		load.add(loadText);
+//		load.addActionListener(new ActionListener(){
+//			@Override public void actionPerformed(ActionEvent e){
+///**
+// *  Add load method
+// */
+//			}
+//		});
+//		title.add(titleText);
+//		start.setBounds(525, 570, 240, 100);
+//		load.setBounds(525, 370, 240, 100);
+//		title.setBounds(200,80,900,200);
+//		start.setMargin(new Insets(0,0,0,0));
+//		load.setMargin(new Insets(0,0,0,0));
+//		title.setContentAreaFilled(false);
+//		start.setContentAreaFilled(false);
+//		load.setContentAreaFilled(false);
+//		title.setBorderPainted(false);
+//		
+//		temp.setIcon(icon);	
+//		temp.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight());
+//		JPanel content = new JPanel();
+//		content=(JPanel) _startWindow.getContentPane(); 
+//		content.setOpaque(false);
+//		content.setLayout(null);
+//		_startWindow.getLayeredPane().setLayout(null);
+//		_startWindow.getLayeredPane().add(temp, new Integer(Integer.MIN_VALUE));
+//		_startWindow.setSize(icon.getIconWidth(), icon.getIconHeight());
+//		_startWindow.setResizable(false);
+//		content.add(start);
+//		content.add(load);
+//		content.add(title);
+//		_startWindow.setLocationRelativeTo(null);
+//		_startWindow.setVisible(true);
+//		_startWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		
 		//menu bar
@@ -334,7 +389,6 @@ public class View {
 		_followerFrame.setVisible(false);
 		}
 	
-	
 	/**
 	 * This method updates the _turn JPanel. In the NORTH position of the BorderLayout of _turn is the player's name whose turn it currently is. In the CENTER position
 	 * is the number of followers the current player has and in the EAST position is the score of the current player. The SOUTH position holds the _players JPanel that has
@@ -348,7 +402,7 @@ public class View {
 //		_player.setVerticalAlignment(JLabel.CENTER);
 //		_player.setText(player);
 		System.out.println("Player:  "+ player);
-		setBColorOfCurrentTile(_startView.getTimesOfGame());
+		setBColorOfCurrentTile(_playerTurns.getTimesOfGame());
 		_allPlayers.removeAll();
 		GridBagConstraints gbt = new GridBagConstraints();
 		for(int i = 0; i < _board.getPlayers().size(); i++){
@@ -366,7 +420,7 @@ public class View {
 			button.setBorderPainted(false);
 			
 			button.setBorder(BorderFactory.createLineBorder(borderColor,3));
-			if(i == (_startView.getTimesOfGame()-1) % _board.getPlayers().size()){
+			if(i == (_playerTurns.getTimesOfGame()-1) % _board.getPlayers().size()){
 				button.setBorderPainted(true);
 			}
 //			button.setBorder(thickBorder);
@@ -861,9 +915,9 @@ public class View {
 	public Boolean getPressed(){
 		return pressed;
 	}
-//	public void setPlayersTurn(PlayerTurns a){
-//		_startView = a;
-//	}
+	public void setPlayersTurn(PlayerTurns a){
+		_playerTurns = a;
+	}
 
 	public boolean getSavePressed() {
 		// TODO Auto-generated method stub
@@ -883,11 +937,4 @@ public class View {
 		}
 		
 	}
-	public JFrame getWindow(){
-		return _window;
-	}
-	public void setStartView(StartView sv){
-		_sV = sv;
-	}
-	
 }
