@@ -36,8 +36,9 @@ public class Tile {
 	 * The image of the tile
 	 */
 	private ImageIcon _image;
-	private int _rotateTimes = 0;
-	
+	private int _rotateTimes;
+	private String _name;
+	private String _playerPlayed;
 	/**
 	 * The constructor initializes all of the instance variables to values that are specified when a tile is created
 	 * 
@@ -50,7 +51,7 @@ public class Tile {
 	 * @param img	The ImageIcon of the tile
 	 * @param f		The int that describes the location of a follower. It is initialized to 9 because that is not a valid follower position
 	 */
-	public Tile(String[] a,String[] b,String[] c,String[] d, String inside, boolean s, ImageIcon img, int f) {
+	public Tile(String[] a,String[] b,String[] c,String[] d, String inside, boolean s, ImageIcon img, int f, String name) {
 		
 		//this puts the four String arrays in the correct configuration on a Tile
 		//this also puts the String (the extra feature) onto the Tile configuration 
@@ -63,6 +64,8 @@ public class Tile {
 		_image = img;
 		_sides = new String[][] {_side1, _side2, _side3, _side4};
 		_followerSpot = 9;
+		this.set_name(name);
+		this.set_rotateTimes(0);
 	}
 	
 	/**
@@ -132,5 +135,21 @@ public class Tile {
 
 	public void set_rotateTimes(int _rotateTimes) {
 		this._rotateTimes = _rotateTimes;
+	}
+
+	public String get_name() {
+		return _name;
+	}
+
+	public void set_name(String _name) {
+		this._name = _name;
+	}
+
+	public String get_playerPlayed() {
+		return _playerPlayed;
+	}
+
+	public void set_playerPlayed(String _playerPlayed) {
+		this._playerPlayed = _playerPlayed;
 	}
 }

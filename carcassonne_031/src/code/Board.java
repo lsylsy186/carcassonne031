@@ -52,6 +52,11 @@ public class Board {
 	private int _xplaced;
 	private int _yplaced;
 	
+	ArrayList<Tile> riverList ;
+	ArrayList<Tile> tileList ;
+	ArrayList<Tile> riverListOriginal;
+	ArrayList<Tile> tileListOriginal ;
+	
 	
 	private ArrayList<String> _tileChecked = new ArrayList<String>();
 	
@@ -85,13 +90,13 @@ public class Board {
 		_players = players;
 		
 		//this creates and places the pre-determined "starting tile"
-		String[] side1 = new String[] {"city", "city", "city"};
-		String[] side2 = new String[] {"field", "road", "field"};
-		String[] side3 = new String[] {"field", "field", "field"};
-		String[] side4 = new String[] {"field", "road", "field"};
-		String inside = "road";
-		ImageIcon img = new ImageIcon("resources/11.png");
-		Tile startingTile = new Tile(side1,side2,side3,side4, inside, false, img, 9);
+		String[] side1 = new String[] {"field", "field", "field"};
+		String[] side2 = new String[] {"field", "field", "field"};
+		String[] side3 = new String[] {"field", "river", "field"};
+		String[] side4 = new String[] {"field", "field", "field"};
+		String inside = "river";
+		ImageIcon img = new ImageIcon("resources/25.png");
+		Tile startingTile = new Tile(side1,side2,side3,side4, inside, false, img, 9, "RA");
 		_board[71][71] = startingTile;
 		
 		_xright = 0;
@@ -108,6 +113,10 @@ public class Board {
 		for(int i=0; i<_players.size(); i++) {
 			_meeple.put(_players.get(i), 7);
 		}
+		 riverList = _tileTypes.getRiverTileList();
+		 tileList = _tileTypes.getTileList();
+		 riverListOriginal = _tileTypes.getRiverTileList();
+		 tileListOriginal = _tileTypes.getTileList();
 	}
 	/**
 	 * Gives the board a reference to a View object.
@@ -129,6 +138,7 @@ public class Board {
 	 */
 	public boolean placeTile(Tile t, int x, int y) {
 		_tile = t;
+		t.set_playerPlayed(PlayerTurns.player);
 		if (_board[x][y] == null) {
 			if (isAdjacent(x,y)) {
 				if(matchingSide(t,x,y)) {
@@ -158,6 +168,7 @@ public class Board {
 				}
 			}
 		}
+		
 		return false;
 	}
 	
@@ -278,8 +289,7 @@ public class Board {
 	 * @return	Returns the tile that is displayed to the user as the tile which can be placed
 	 */
 	public Tile pickTile(){
-		ArrayList<Tile> riverList = _tileTypes.getRiverTileList();
-		ArrayList<Tile> tileList = _tileTypes.getTileList();
+		
 		Collections.shuffle(riverList);
 		Collections.shuffle(tileList);
 		
@@ -287,10 +297,12 @@ public class Board {
 		if(riverList.isEmpty()){
 		tile = tileList.get(0);
 		tileList.remove(0);
+		tileListOriginal.remove(tile);
 		}
 		else{
 			tile = riverList.get(0);
 			riverList.remove(0);
+			riverListOriginal.remove(tile);
 		}
 		return tile;
 	}
@@ -419,15 +431,19 @@ public class Board {
 	public int getHash(String s){
 		return _meeple.get(s);
 	}
-	public static void saveCurrentState() {
+	public void saveCurrentState() {
 		JFileChooser fileSave = new JFileChooser();
 		fileSave.showSaveDialog(fileSave);
 		saveFile(fileSave.getSelectedFile());
 	}
-	private static void saveFile(File file) {
+	private  void saveFile(File file) {
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 			writer.write(PlayerTurns.firstline);
+			writer.write("\n");
+			writer.write(getBoard());
+			writer.write("\n");
+			writer.write(getTileUnplayed());
 			writer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -439,5 +455,49 @@ public class Board {
 	public int getScore() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public String getBoard(){
+		String result = "";
+		int xloc = 0;
+		int yloc = 0;
+		for(int i = 71 + _yup; i >= 71 + _ydown; i-- ){
+			xloc = 0;
+			for(int j = 71+ _xleft; j <= 71 + _xright; j++){
+				Tile currentTile = _board[j][i];
+				if(currentTile != null){
+					result = result + currentTile.get_name() + currentTile.get_rotateTimes() + "(" + xloc 
+							+ "," + yloc +")" ;
+					if(currentTile.getFollowerSpot() != 9){		
+					result = result	+ "[" + currentTile.get_playerPlayed() + "," + currentTile.getFollowerSpot()
+							+ "]";
+					}
+				}
+				xloc++;
+				System.out.println(j +"," + i);
+			}
+			yloc++;
+		}
+		System.out.println(result);
+		return result;
+	}
+	public String getTileUnplayed(){
+		String result = "";
+		for(int i = 0; i< tileListOriginal.size() - 1; i++){
+			Tile t = tileListOriginal.get(i);
+			result = result + t.get_name() + ",";
+		}
+		if(riverListOriginal.isEmpty()){
+			result = result + tileListOriginal.get(tileListOriginal.size() -1 ).get_name();
+		}else{
+			result = result + tileListOriginal.get(tileListOriginal.size() -1 ).get_name() + ",";
+		
+			for(int i = 0; i< riverListOriginal.size() - 1; i++){
+				Tile t = riverListOriginal.get(i);
+				result = result + t.get_name() + ",";
+			}
+			result = result + riverListOriginal.get(riverListOriginal.size() -1 ).get_name();
+		}
+		return result;
 	}
 }

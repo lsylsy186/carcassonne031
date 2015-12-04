@@ -932,7 +932,7 @@ public class View {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Board.saveCurrentState();
+			_board.saveCurrentState();
 			setSavePressed(true);
 		}
 		
