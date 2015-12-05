@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
  * contols all other code functionality. It implements Runnable, and uses a state machine in 
  * the run() method to determine what happens for each player's turn.
  * 
- * @author Maggie
+ * 
  */
 public class PlayerTurns implements Runnable{
 	

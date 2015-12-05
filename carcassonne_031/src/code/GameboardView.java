@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
  /**
   * This class used to draw background image in the JPanel
-  * @author Administrator
+  * 
   *
   */
 public class GameboardView extends JPanel{

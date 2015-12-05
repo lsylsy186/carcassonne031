@@ -14,7 +14,7 @@ import javax.swing.JButton;
  * both the String[] sides as well as the .png image every time the JButton on the player view is clicked. Each 
  * rotation is 90 degrees clockwise. This ActionListener will not work outside of the JButton in the player frame.
  * 
- * @author Maggie
+ * 
  */
 public class Rotate implements ActionListener {
 	

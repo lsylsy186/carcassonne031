@@ -21,7 +21,7 @@ import javax.swing.JFrame;
  * BufferedImag.TYPE_INT_RGB we get different results, but none of them overlay any images successfully. With this 
  * code commented out, this ActionListener simply closes the JFrame when a button is clicked.
  * 
- * @author Katie
+ * 
  *
  */
 public class PlaceFollower implements ActionListener {

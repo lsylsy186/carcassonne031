@@ -36,7 +36,7 @@ import javax.swing.border.TitledBorder;
 /**
  * View creates the GUI for the game and updates it as changes are made in the underlying data model. 
  * 
- * @author Katie
+ * 
  *
  */
 public class View {
@@ -178,7 +178,7 @@ public class View {
 				a.setBackground(Color.CYAN); 
 				a.setBorder(BorderFactory.createRaisedBevelBorder());
 				if((i==1) && (j==1)){
-					ImageIcon img = new ImageIcon(getClass().getResource("/resources/11.png"));
+					ImageIcon img = new ImageIcon(getClass().getResource("/resources/25.png"));
 					a.setIcon(img);
 				}
 				_gameplay.add(a);

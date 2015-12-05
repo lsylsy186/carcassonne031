@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
  * Tile objects in the ArrayList<Tile> named _tileList. The starting tile is not included in this
  * list because it is initialized in the Board constructor.
  * 
- * @author Maggie
+ * 
  */
 public class TileTypes {
 	
@@ -163,8 +163,9 @@ public class TileTypes {
 					_tileList.add(t);
 				}
 			}
+			
 			if (type == 11) {
-				for (int i=0; i<3; i++) {
+				for (int i=0; i<4; i++) {
 					String[] s0 = {"city", "city", "city"};
 					String[] s1 = {"field", "road", "field"};
 					String[] s2 = {"field", "field","field"};
@@ -175,6 +176,7 @@ public class TileTypes {
 					_tileList.add(t);
 				}
 			}
+
 			if (type == 12) {
 				for (int i=0; i<3; i++) {
 					String[] s0 = {"city", "city", "city"};
@@ -336,18 +338,19 @@ public class TileTypes {
 			
 			for (int typeRiver = 1; typeRiver<10; typeRiver++) {
 			
-			if (typeRiver == 1) {
-				for (int i=0; i<2; i++) {
-					String[] s0 = {"field", "field","field"};
-					String[] s1 = {"field", "field","field"};
-					String[] s2 = {"field", "river","field"};
-					String[] s3 = {"field", "field","field"};
-					String inside = "river";
-					ImageIcon img = new ImageIcon(getClass().getResource("/resources/25.png"));
-					Tile t = new Tile(s0,s1,s2,s3, inside, false, img, 9,"RA");
-					_riverTileList.add(t);
+				if (typeRiver == 9) {
+					for (int i=0; i<1; i++) {
+						String[] s0 = {"field", "field","field"};
+						String[] s1 = {"field", "field","field"};
+						String[] s2 = {"field", "river","field"};
+						String[] s3 = {"field", "field","field"};
+						String inside = "river";
+						ImageIcon img = new ImageIcon(getClass().getResource("/resources/25.png"));
+						Tile t = new Tile(s0,s1,s2,s3, inside, false, img, 9, "RA");
+						_riverTileList.add(t);
+					}
 				}
-			}
+
 			
 			if (typeRiver == 2) {
 				for (int i=0; i<2; i++) {
@@ -428,7 +431,7 @@ public class TileTypes {
 			}
 			
 			if (typeRiver ==8) {
-				for (int i=0; i<1; i++) {
+				for (int i=0; i<2; i++) {
 					String[] s0 = {"field", "river","field"};
 					String[] s1 = {"field", "river","field"};
 					String[] s2 = {"field", "road","field"};
@@ -440,7 +443,7 @@ public class TileTypes {
 				}
 			}
 			
-			if (typeRiver == 9) {
+			if (typeRiver == 1) {
 				for (int i=0; i<1; i++) {
 					String[] s0 = {"field", "river","field"};
 					String[] s1 = {"field", "road","field"};

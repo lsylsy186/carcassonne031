@@ -21,7 +21,7 @@ import javax.swing.JFileChooser;
  * The board is a two-dimensional array of size [144,144]. It is created with the starting tile already in place at (71,71). It has the ability
  * to hold any combination of the remaining 71 tiles with the implementation of several different methods: placeTile, isAdjacent, and matchingSide.
  * 
- * @author Katie
+ * 
  *
  */
 public class Board {
@@ -90,13 +90,14 @@ public class Board {
 		_players = players;
 		
 		//this creates and places the pre-determined "starting tile"
-		String[] side1 = new String[] {"field", "field", "field"};
-		String[] side2 = new String[] {"field", "field", "field"};
-		String[] side3 = new String[] {"field", "river", "field"};
-		String[] side4 = new String[] {"field", "field", "field"};
+		String[] side1 = {"field", "field","field"};
+		String[] side2 = {"field", "field","field"};
+		String[] side3 = {"field", "river","field"};
+		String[] side4 = {"field", "field","field"};
 		String inside = "river";
-		ImageIcon img = new ImageIcon("resources/25.png");
-		Tile startingTile = new Tile(side1,side2,side3,side4, inside, false, img, 9, "RA");
+		ImageIcon img = new ImageIcon(getClass().getResource("/resources/25.png"));
+		Tile startingTile = new Tile(side1, side2, side3, side4, inside, false, img, 9,"RA");
+
 		_board[71][71] = startingTile;
 		
 		_xright = 0;
@@ -203,9 +204,11 @@ public class Board {
 	 * @param y	The y coordinate of the tile being placed
 	 * @return	 If the ArrayList<String> of adjacent given tiles are the same, the method returns true. If they are different, the method returns false and a tile is not placed. 
 	 */
+	
 	private boolean matchingSide(Tile t, int x, int y) {
-				
+		String[] fieldRiverField = {"field", "river","field"};
 		System.out.println("tile placed on "+ x+" and "+y);
+		
 		if(_board[x-1][y] != null) {
 			String[] placed = _board[x-1][y].accessSides(2);	
 			String[] possible = t.accessSides(4);
@@ -213,17 +216,24 @@ public class Board {
 				return false;
 			}
 			
-			//Checks immediate U-Turns of the river
-			String[] testArray={"field", "river","field"};
-			if((Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(1), testArray)) &&
-					(Arrays.equals(placed, testArray) && Arrays.equals(_board[x-1][y].accessSides(1), testArray))
-					
-					||(Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(3), testArray)) &&
-					(Arrays.equals(placed, testArray) && Arrays.equals(_board[x-1][y].accessSides(3), testArray))){
+			//Guarantees that river tiles are always placed to continue the stream of the river
+			if((Arrays.equals(t.accessSides(1), fieldRiverField) || Arrays.equals(t.accessSides(2), fieldRiverField) || 
+					Arrays.equals(t.accessSides(3), fieldRiverField) || Arrays.equals(t.accessSides(4), fieldRiverField)) 
+					&& !Arrays.equals(placed, fieldRiverField)){
 				
 				return false;
 			}
-		}
+			
+			//Checks immediate U-Turns of the river
+			if((Arrays.equals(possible, fieldRiverField) && Arrays.equals(t.accessSides(1), fieldRiverField)) &&
+					(Arrays.equals(placed, fieldRiverField) && Arrays.equals(_board[x-1][y].accessSides(1), fieldRiverField))
+					
+					||(Arrays.equals(possible, fieldRiverField) && Arrays.equals(t.accessSides(3), fieldRiverField)) &&
+					(Arrays.equals(placed, fieldRiverField) && Arrays.equals(_board[x-1][y].accessSides(3), fieldRiverField))){
+				
+				return false;
+				}
+			}
 		if(_board[x+1][y] != null) {
 			String[] placed = _board[x+1][y].accessSides(4);
 			String[] possible = t.accessSides(2);
@@ -231,17 +241,23 @@ public class Board {
 				return false;
 			}
 			
-			//Checks immediate U-Turns of the river
-			String[] testArray={"field", "river","field"};
-			if((Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(1), testArray)) &&
-					(Arrays.equals(placed, testArray) && Arrays.equals(_board[x+1][y].accessSides(1), testArray))
-					
-					||(Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(3), testArray)) &&
-					(Arrays.equals(placed, testArray) && Arrays.equals(_board[x+1][y].accessSides(3), testArray))){
+			//Guarantees that river tiles are always placed to continue the stream of the river
+			if((Arrays.equals(t.accessSides(1), fieldRiverField) || Arrays.equals(t.accessSides(2), fieldRiverField) || 
+					Arrays.equals(t.accessSides(3), fieldRiverField) || Arrays.equals(t.accessSides(4), fieldRiverField)) 
+					&& !Arrays.equals(placed, fieldRiverField)){
 				
 				return false;
 			}
 			
+			//Checks immediate U-Turns of the river
+			if((Arrays.equals(possible, fieldRiverField) && Arrays.equals(t.accessSides(1), fieldRiverField)) &&
+					(Arrays.equals(placed, fieldRiverField) && Arrays.equals(_board[x+1][y].accessSides(1), fieldRiverField))
+					
+					||(Arrays.equals(possible, fieldRiverField) && Arrays.equals(t.accessSides(3), fieldRiverField)) &&
+					(Arrays.equals(placed, fieldRiverField) && Arrays.equals(_board[x+1][y].accessSides(3), fieldRiverField))){
+				
+				return false;
+			}
 		}
 		if(_board[x][y-1] != null) {
 			String[] placed = _board[x][y-1].accessSides(1);
@@ -250,13 +266,20 @@ public class Board {
 				return false;
 			}
 			
+			//Guarantees that river tiles are always placed to continue the stream of the river
+			if((Arrays.equals(t.accessSides(1), fieldRiverField) || Arrays.equals(t.accessSides(2), fieldRiverField) || 
+					Arrays.equals(t.accessSides(3), fieldRiverField) || Arrays.equals(t.accessSides(4), fieldRiverField)) 
+					&& !Arrays.equals(placed, fieldRiverField)){
+				
+				return false;
+			}
+			
 			//Checks immediate U-Turns of the river
-			String[] testArray={"field", "river","field"};
-			if((Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(2), testArray)) &&
-					(Arrays.equals(placed, testArray) && Arrays.equals(_board[x][y-1].accessSides(2), testArray))
+			if((Arrays.equals(possible, fieldRiverField) && Arrays.equals(t.accessSides(2), fieldRiverField)) &&
+					(Arrays.equals(placed, fieldRiverField) && Arrays.equals(_board[x][y-1].accessSides(2), fieldRiverField))
 					
-					||(Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(4), testArray)) &&
-					(Arrays.equals(placed, testArray) && Arrays.equals(_board[x][y-1].accessSides(4), testArray))){
+					||(Arrays.equals(possible, fieldRiverField) && Arrays.equals(t.accessSides(4), fieldRiverField)) &&
+					(Arrays.equals(placed, fieldRiverField) && Arrays.equals(_board[x][y-1].accessSides(4), fieldRiverField))){
 				
 				return false;
 			}
@@ -267,43 +290,58 @@ public class Board {
 			if (! Arrays.equals(placed, possible)) {
 				return false;
 			}
-			
-			//Checks immediate U-Turns of the river
-			String[] testArray={"field", "river","field"};
-			if((Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(2), testArray)) &&
-					(Arrays.equals(placed, testArray) && Arrays.equals(_board[x][y+1].accessSides(2), testArray))
-					
-					||(Arrays.equals(possible, testArray) && Arrays.equals(t.accessSides(4), testArray)) &&
-					(Arrays.equals(placed, testArray) && Arrays.equals(_board[x][y+1].accessSides(4), testArray))){
+			//Guarantees that river tiles are always placed to continue the stream of the river
+			if((Arrays.equals(t.accessSides(1), fieldRiverField) || Arrays.equals(t.accessSides(2), fieldRiverField) || 
+					Arrays.equals(t.accessSides(3), fieldRiverField) || Arrays.equals(t.accessSides(4), fieldRiverField)) 
+					&& !Arrays.equals(placed, fieldRiverField)){
 				
 				return false;
 			}
+			
+			//Checks immediate U-Turns of the river
+			if((Arrays.equals(possible, fieldRiverField) && Arrays.equals(t.accessSides(2), fieldRiverField)) &&
+					(Arrays.equals(placed, fieldRiverField) && Arrays.equals(_board[x][y+1].accessSides(2), fieldRiverField))
+					
+					||(Arrays.equals(possible, fieldRiverField) && Arrays.equals(t.accessSides(4), fieldRiverField)) &&
+					(Arrays.equals(placed, fieldRiverField) && Arrays.equals(_board[x][y+1].accessSides(4), fieldRiverField))){
+			
+				return false;
+			}
 		}
-		return true;
+			return true;
 	}
-	
-	/**
-	 * This method takes the ArrayList<Tile> that holds all of the tiles used during gameplay and shuffles them so that a random tile is pulled each time this method is called.
-	 * The river tiles are used first and when the array is empty, the regular Carcassone tile are used.
-	 * 
-	 * @return	Returns the tile that is displayed to the user as the tile which can be placed
-	 */
+		
+		/**
+		 * This method takes the ArrayList<Tile> that holds all of the tiles used during gameplay and shuffles them so that a random tile is pulled each time this method is called.
+		 * The river tiles are used first and after the array is emptied, the regular Carcassone tiles are used.
+		 * 
+		 * @return	Returns the tile that is displayed to the user as the tile which can be placed
+		 */
+		
 	public Tile pickTile(){
+		ArrayList<Tile> riverList = _tileTypes.getRiverTileList();
+		ArrayList<Tile> tileList = _tileTypes.getTileList();
+		ArrayList<Tile> temp = new ArrayList<Tile>();
+		Tile tile = new Tile(null, null, null, null, null, false, null, _placements, null);
 		
-		Collections.shuffle(riverList);
-		Collections.shuffle(tileList);
-		
-		Tile tile = tileList.get(0);
 		if(riverList.isEmpty()){
-		tile = tileList.get(0);
-		tileList.remove(0);
-		tileListOriginal.remove(tile);
+			//Returns a regular tile
+			Collections.shuffle(tileList);
+			tile = tileList.get(0);
+			tileList.remove(0);
 		}
 		else{
+			//Shuffles the tiles and adds the end tile as the last
+			temp.add(riverList.get(riverList.size()-1));
+			riverList.remove(riverList.size()-1);
+			Collections.shuffle(riverList);
+			riverList.add(temp.get(0));
+			
+			//Returns a river tile
 			tile = riverList.get(0);
 			riverList.remove(0);
-			riverListOriginal.remove(tile);
 		}
+		
 		return tile;
 	}
 	

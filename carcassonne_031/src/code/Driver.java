@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * The Driver initiates the program by running the command line inputs and creating the Board class.
  * 
- * @author Maggie
+ * 
  */
 public class Driver {
 	

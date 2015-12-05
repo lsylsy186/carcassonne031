@@ -5,7 +5,7 @@ import javax.swing.ImageIcon;
  * Tile is an array of size four that holds String arrays of size three. The four String arrays hold the combination of types (city, road, or 
  * field) on each side of the Tile as well as a series of other properties. A tile can be manipulated by the rotate method.
  * 
- * @author knjames
+ * 
  *
  */
 public class Tile {

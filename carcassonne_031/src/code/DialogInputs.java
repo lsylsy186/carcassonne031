@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
  * This class is meant to be used in place of command line inputs through the run configurations.
  * It is not utilized in the current code.
  * 
- * @author Maggie
+ * 
  */
 public class DialogInputs {
 	

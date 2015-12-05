@@ -11,7 +11,7 @@ import javax.swing.JButton;
  * the Tile the player is attempting to place will be put on that JButton's spot in the View and its coordinates will be
  * stored in the Board, so that no other Tile can be placed in the same spot.
  * 
- * @author Maggie
+ * 
  */
 public class EventHandler implements ActionListener {
 
