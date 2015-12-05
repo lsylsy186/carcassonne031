@@ -46,7 +46,7 @@ public class PlayerTurns implements Runnable{
 	 */
 	public PlayerTurns(ArrayList<String> a){
 		_players = a;
-		_board = new Board(_players);
+		_board = new Board(_players,this);
 		_view = new View(_board);
 		_board.setView(_view); //makes sure the same View is used consistently throughout
 		_view.setPlayersTurn(this);
@@ -164,4 +164,9 @@ public class PlayerTurns implements Runnable{
 		return gameTurnIndex + 1;
 
 	}
+	public int getPlayerTurn(){
+		return _gameTurn;
+		
+	}
+	
 }

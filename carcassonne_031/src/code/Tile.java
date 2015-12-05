@@ -39,6 +39,8 @@ public class Tile {
 	private int _rotateTimes;
 	private String _name;
 	private String _playerPlayed;
+	private String _followerType;
+	private int _placedBy=0;
 	/**
 	 * The constructor initializes all of the instance variables to values that are specified when a tile is created
 	 * 
@@ -64,7 +66,8 @@ public class Tile {
 		_image = img;
 		_sides = new String[][] {_side1, _side2, _side3, _side4};
 		_followerSpot = 9;
-		this.set_name(name);
+		_followerType="none";
+		_name = name;
 		this.set_rotateTimes(0);
 	}
 	
@@ -124,6 +127,15 @@ public class Tile {
 		return _followerSpot;
 	}
 	
+	public String getFollowerType(){
+			
+			return _followerType;
+	}
+	
+	public void setFollowerType(String type){
+		_followerType = type;
+		
+	}
 	public int getFollowerSpot(){
 		
 		return _followerSpot;
@@ -137,19 +149,41 @@ public class Tile {
 		this._rotateTimes = _rotateTimes;
 	}
 
-	public String get_name() {
+	public String getTileName() {
 		return _name;
 	}
 
-	public void set_name(String _name) {
-		this._name = _name;
+//	public void set_name(String _name) {
+//		this._name = _name;
+//	}
+	
+	public boolean getRoadEnd(){
+		if(_inside.equals("road end")|| _inside.equals("cloister")||_name.equals("RI")||_name.equals("S")||_name.equals("Q")) return true;
+		else return false;
+	}
+	
+	public boolean containsRoad(){
+		return(_side1[1].equals("road")||_side2[1].equals("road")||_side3[1].equals("road")||_side4[1].equals("road"));
+		
+		
 	}
 
-	public String get_playerPlayed() {
+	public String getPlayerString() {
 		return _playerPlayed;
 	}
 
 	public void set_playerPlayed(String _playerPlayed) {
 		this._playerPlayed = _playerPlayed;
 	}
+	
+	public int getPlayerNumber() {
+		
+		return _placedBy;
+	}
+
+	
+	public void setPlayerPlaced(int playerTurn) {
+		_placedBy = playerTurn;	
+	}
+	
 }

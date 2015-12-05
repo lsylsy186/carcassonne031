@@ -52,13 +52,13 @@ public class Board {
 	private int _xplaced;
 	private int _yplaced;
 	
-	ArrayList<Tile> riverList ;
-	ArrayList<Tile> tileList ;
-	ArrayList<Tile> riverListOriginal;
-	ArrayList<Tile> tileListOriginal ;
+	private ArrayList<Tile> riverList ;
+	private ArrayList<Tile> tileList ;
+	private ArrayList<Tile> riverListOriginal;
+	private ArrayList<Tile> tileListOriginal ;
 	
 	
-	private ArrayList<String> _tileChecked = new ArrayList<String>();
+	private ArrayList<Tile> _tileChecked = new ArrayList<Tile>();
 	
 	/**
 	 * Variable of type TileTypes that allows the board to pick a random tile from the ArrayList of tiles
@@ -77,6 +77,15 @@ public class Board {
 	 */
 	private Tile _tile;
 	
+	private boolean _roadScore = false;
+	
+	private int _roadEndNum = 0;
+	
+	private int[] _followerCheck = new int [5];
+	
+	private boolean[] _playerScored = new boolean[5];
+	private PlayerTurns _pt;
+	
 	/**
 	 * The constructor of the Board class creates a 2D tile array of size [144][144], which is the maximum size the board may get if all of the tiles were 
 	 * placed in one line. Whenever the board is initialized at the start of a new game the starting tile is placed automatically in the center of the board. 
@@ -84,10 +93,12 @@ public class Board {
 	 * 
 	 * @param players	The ArrayList<String> which holds the names of the players created by the command line input component of the Driver
 	 */
-	public Board(ArrayList<String> players){
+	public Board(ArrayList<String> players, PlayerTurns playerTurns){
 		_board = new Tile[144][144];
 		
 		_players = players;
+		
+		_pt = playerTurns;
 		
 		//this creates and places the pre-determined "starting tile"
 		String[] side1 = {"field", "field","field"};
@@ -97,6 +108,7 @@ public class Board {
 		String inside = "river";
 		ImageIcon img = new ImageIcon(getClass().getResource("/resources/25.png"));
 		Tile startingTile = new Tile(side1, side2, side3, side4, inside, false, img, 9,"RA");
+	
 
 		_board[71][71] = startingTile;
 		
@@ -139,7 +151,7 @@ public class Board {
 	 */
 	public boolean placeTile(Tile t, int x, int y) {
 		_tile = t;
-		t.set_playerPlayed(PlayerTurns.player);
+		
 		if (_board[x][y] == null) {
 			if (isAdjacent(x,y)) {
 				if(matchingSide(t,x,y)) {
@@ -165,6 +177,9 @@ public class Board {
 					_yplaced = y;
 					
 					_placements++;
+					
+					
+					_tile.setPlayerPlaced(_pt.getPlayerTurn());
 					return true;
 				}
 			}
@@ -317,6 +332,80 @@ public class Board {
 		 * 
 		 * @return	Returns the tile that is displayed to the user as the tile which can be placed
 		 */
+	
+	public void score(){
+		if(_tile.containsRoad()){
+			if(checkRoadScore(_xplaced,_yplaced, 4)) scoreRoad();
+			if(_roadScore) scoreRoad();
+			
+			_roadScore=false;
+			_tileChecked.clear();
+			
+		}
+		
+		
+	}
+	
+	private void scoreRoad() {
+		for(Tile t : _tileChecked)
+		if(t.getFollowerType().equals("road")){
+			addFollowerCheck(t);
+			int temp = _meeple.get(_players.get((t.getPlayerNumber())));
+			_meeple.put(_players.get((t.getPlayerNumber())),temp+1);
+		};
+		
+		for(int j = 0; j<5;j++){
+			for(int i = 0;i<5;i++){
+				if((_followerCheck[i]>=_followerCheck[j])&&(_followerCheck[j]>0||_followerCheck[i]>0)){
+					_playerScored[i] = true;
+				}
+				else _playerScored[i] = false;
+		}	
+		}
+			for(int i = 0;i<5;i++){
+					_followerCheck[i] = 0;
+				}
+	
+		
+		
+		
+		
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void addFollowerCheck(Tile t) {
+		int n = t.getPlayerNumber();
+		_followerCheck[n-1]++; 
+	}
+	private boolean checkRoadScore(int x, int y, int entry) {
+		if(_board[x][y] == null) return false;
+		
+		Tile t = _board[x][y];
+		if(_tileChecked.contains(t)) return true;
+		_tileChecked.add(t);
+		
+		boolean check = true;
+		
+		if(t.getRoadEnd()) _roadEndNum++;
+		if(_roadEndNum>1) _roadScore = true;
+		
+		
+			if(Arrays.asList(t.accessSides(1)).contains("road") && check) check= checkFollowerRoad(x, y+1,7);
+			if(Arrays.asList(t.accessSides(2)).contains("road")&& check) check= checkFollowerRoad(x+1, y,3);
+			if(Arrays.asList(t.accessSides(3)).contains("road")&& check) check= checkFollowerRoad(x, y-1,1);
+			if(Arrays.asList(t.accessSides(4)).contains("road") && check) check= checkFollowerRoad(x-1, y,5);
+
+		
+		return check;
+	}
+	
+	/**
+	 * This method takes the ArrayList<Tile> that holds all 72 tiles used during gameplay and shuffles them so that a random tile is pulled each time this method is called.
+	 * 
+	 * @return	Returns the tile that is displayed to the user as the tile which can be placed
+	 */
+	
 		
 	public Tile pickTile(){
 		ArrayList<Tile> riverList = _tileTypes.getRiverTileList();
@@ -394,26 +483,590 @@ public class Board {
 	 * @return placed 	The boolean value indicated if the follower was placed or not.
 	 */
 	public boolean followerOnTile(int i, String type){
-	//	System.out.println(type);
-		boolean allowed=false;
-		
-		if(type.equals("road")){
-			allowed = checkFollowerRoad(_xplaced, _yplaced, i);
-			if(allowed)_tile.putFollower(i);
+		//	System.out.println(type);
+			boolean allowed=false;
 			_tileChecked.clear();
+			
+			if(type.equals("road")){
+				_tileChecked.clear();
+				allowed = checkFollowerRoad(_xplaced, _yplaced, i);
+				if(allowed)_tile.putFollower(i);
+				if(allowed) _tile.setFollowerType("road");
+			}
+			else if (type.equals("field")){
+				_tileChecked.clear();
+				allowed = checkFollowerField(_xplaced, _yplaced, i);
+				if(allowed) _tile.setFollowerType("field");
+				if(allowed)_tile.putFollower(i);
+				if(allowed) System.out.println("a field follower has been placed");
+			}
+			else if(type.equals("city")){
+				if(_tile.getTileName().equals("B")&&(i == 0||i ==2 ||i ==8 || i ==6)){
+					System.out.println("Sorry, you cannot place a follower there because it is ambiguous");
+					return false;
+				}
+				_tileChecked.clear();
+				allowed = checkFollowerCity(_xplaced, _yplaced, i);
+				if(allowed) _tile.setFollowerType("city");
+				if(allowed)_tile.putFollower(i);
+				if(allowed) System.out.println("a city follower has been placed");	
+			}
+			else if(type.equals("cloister")||type.equals("river cloister")){
+				_tile.setFollowerType(type);
+				_tile.putFollower(i);
+				System.out.println("a cloister follower has been placed");
+				return true;
+			}
+			
+				
+			else{
+				System.out.println("Sorry, please choose a different location to place the follower");
+				return false;
+			}
+			return allowed;
+
 		}
-		else{
-			_tile.putFollower(i);
-			return true;
-		}
-		return allowed;
-		
-		
-	
-	}
 	
 
 	
+
+	/**
+	 * 
+	 * @param x  the x value of location of the tile being checked.
+	 * @param y	 the y value of the location of the tile being checked.
+	 * @param entry  	the value from 0 to 8 of where on the tile the follower is being placed.  
+	 * 		When the method is called recursively, this value will indicate on which side the check needs to occur. 	 
+	 * @return		returns if it can be legally placed.
+	 */
+	private boolean checkFollowerCity(int x, int y, int entry) {
+		boolean checkDown = true;
+		boolean checkUp = true;
+		boolean checkLeft = true;
+		boolean checkRight = true;
+		
+		boolean tCity;
+		boolean rCity;
+		boolean bCity;
+		boolean lCity;
+		
+		boolean lrCity = false;
+		boolean tbCity = false;
+		
+		
+		
+		if(_board[x][y] == null) return true;
+	
+		Tile t = _board[x][y];
+		if(_tileChecked.contains(t)) return true;
+		int follower = t.getFollowerSpot();
+		String followerType = t.getFollowerType();
+		
+		tCity = t.accessSides(1)[1].equals("city");
+		rCity = t.accessSides(2)[1].equals("city");
+		bCity = t.accessSides(3)[1].equals("city");
+		lCity = t.accessSides(4)[1].equals("city");
+		
+		boolean checkEntrySide = false;
+		
+		
+		if(rCity&&lCity&&!t.accessCenter().equals("city")) lrCity = true;
+		if(tCity&&bCity&&!t.accessCenter().equals("city")) tbCity = true;
+		boolean b = false;
+		if(t.getTileName().equals("B")) b = true;
+		
+		if(((entry ==0)||(entry == 1)||(entry ==2))&&(tbCity||b)&& (follower ==0||follower==1||follower==2)&& followerType.equals("city")) checkEntrySide = true;
+		if(((entry ==2)||(entry == 5)||(entry ==8))&&(lrCity||b)&& (follower ==2||follower==5||follower==8)&& followerType.equals("city")) checkEntrySide = true;
+		if(((entry ==6)||(entry == 7)||(entry ==8))&&(tbCity||b)&& (follower ==6||follower==7||follower==8)&& followerType.equals("city")) checkEntrySide = true;
+		if(((entry ==0)||(entry == 3)||(entry ==6))&&(lrCity||b)&& (follower ==0||follower==3||follower==6)&& followerType.equals("city")) checkEntrySide = true;
+		
+		if(!checkEntrySide&&(tbCity||lrCity||b)){
+			_tileChecked.add(t);
+			if((entry ==0)||(entry == 1)||(entry ==2)&&(tbCity)) return checkFollowerCity(x,y+1,7);
+			if((entry ==2)||(entry == 5)||(entry ==8)&&(lrCity)) return checkFollowerCity(x+1,y,3);
+			if((entry ==6)||(entry == 7)||(entry ==8)&&(tbCity)) return checkFollowerCity(x,y-1,1);
+			if((entry ==0)||(entry == 3)||(entry ==6)&&(lrCity)) return checkFollowerCity(x-1,y,5);
+		}
+		
+		
+		if(followerType.equals("city")) return false;
+		else{
+			_tileChecked.add(t);
+			if(tCity) checkUp = checkFollowerCity(x,y+1,7);
+			if(rCity) checkRight = checkFollowerCity(x+1,y,3);
+			if(bCity) checkDown = checkFollowerCity(x,y-1,1);
+			if(lCity) checkLeft = checkFollowerCity(x-1,y,5);
+			
+		}
+		
+		if(entry == follower&& followerType.equals("city")){
+			System.out.println("tile returns false since entry== follower");
+			return false;
+		}
+		
+		boolean check = checkUp&&checkRight&&checkDown&&checkLeft;
+		
+		
+		return check;
+	}
+	/**
+	 * 
+	 * @param x  the x value of location of the tile being checked.
+	 * @param y	 the y value of the location of the tile being checked.
+	 * @param entry  	the value from 0 to 8 of where on the tile the follower is being placed.  
+	 * 		When the method is called recursively, this value will indicate on which side the check needs to occur. 	 
+	 * @return		returns if it can be legally placed.
+	 */
+	private boolean checkFollowerField(int x, int y, int entry) {
+		//top, right, bottom, and left boolean variables indicated if the path is blocked or not
+		boolean tmBlocked;
+		boolean rmBlocked;
+		boolean bmBlocked;
+		boolean lmBlocked;
+		
+		//each corner indicating if the path is open
+		//(top left, top right, bottom left, bottom right, et cetera)
+	
+		
+		boolean tOpen;
+		boolean lOpen;
+		boolean rOpen;
+		boolean bOpen;
+		
+		boolean rFullOpen;
+		boolean lFullOpen;
+		boolean tFullOpen;
+		boolean bFullOpen;
+		
+		boolean checkDown = true;
+		boolean checkUp = true;
+		boolean checkLeft = true;
+		boolean checkRight = true;
+		
+		boolean lrCity = false;
+		boolean tbCity = false;
+		
+	
+		
+		
+		
+
+		if(_board[x][y] == null) return true;
+
+		Tile t = _board[x][y];
+		if(_tileChecked.contains(t)) return true;
+		int follower = t.getFollowerSpot();
+		
+		boolean checkEntrySide = false;
+		
+		
+		String followerType = t.getFollowerType();
+		//if a follower was found at the entrance point, should return false.
+		
+		
+		System.out.println("tile at "+x+", "+y+ "  and entry ="+ entry  +"  and Follower ="+follower + "and type= " + followerType);
+		
+		if(entry == follower&& followerType.equals("field")){
+			System.out.println("tile returns false since Entry== follower");
+			return false;
+		}
+		
+		lrCity = (t.accessSides(2)[1].equals(t.accessSides(4)[1]));
+		tbCity = (t.accessSides(1)[1].equals(t.accessSides(3)[1]));		
+		
+		tmBlocked = (t.accessSides(1)[1].equals("road")||t.accessSides(1)[1].equals("river")&&!t.accessCenter().equals("river city road"));
+		rmBlocked = (t.accessSides(2)[1].equals("road")||t.accessSides(2)[1].equals("river")&&!t.accessCenter().equals("river city road"));
+		bmBlocked = (t.accessSides(3)[1].equals("road")||t.accessSides(3)[1].equals("river")&&!t.accessCenter().equals("river city road"));
+		lmBlocked = (t.accessSides(4)[1].equals("road")||t.accessSides(4)[1].equals("river")&&!t.accessCenter().equals("river city road"));
+		
+		tOpen = (t.accessSides(1)[0].equals("field")&&!t.accessCenter().equals("river city road"));
+		rOpen = (t.accessSides(2)[0].equals("field")&&!t.accessCenter().equals("river city road"));
+		bOpen = (t.accessSides(3)[0].equals("field")&&!t.accessCenter().equals("river city road"));
+		lOpen = (t.accessSides(4)[0].equals("field")&&!t.accessCenter().equals("river city road"));
+		
+		tFullOpen = (t.accessSides(1)[0].equals("field")&&t.accessSides(1)[1].equals("field")&&t.accessSides(1)[2].equals("field"));
+		rFullOpen = (t.accessSides(2)[0].equals("field")&&t.accessSides(2)[1].equals("field")&&t.accessSides(2)[2].equals("field"));
+		bFullOpen = (t.accessSides(3)[0].equals("field")&&t.accessSides(3)[1].equals("field")&&t.accessSides(3)[2].equals("field"));
+		lFullOpen = (t.accessSides(4)[0].equals("field")&&t.accessSides(4)[1].equals("field")&&t.accessSides(4)[2].equals("field"));
+		
+		if(((entry ==0)||(entry == 1)||(entry ==2))&&lrCity&&!tmBlocked&& (follower ==0||follower==1||follower==2)&& followerType.equals("field")) checkEntrySide = true;
+		if(((entry ==2)||(entry == 5)||(entry ==8))&&tbCity&&!rmBlocked&& (follower ==2||follower==5||follower==8)&& followerType.equals("field")) checkEntrySide = true;
+		if(((entry ==6)||(entry == 7)||(entry ==8))&&lrCity&&!bmBlocked&& (follower ==6||follower==7||follower==8)&& followerType.equals("field")) checkEntrySide = true;
+		if(((entry ==0)||(entry == 3)||(entry ==6))&&tbCity&&!lmBlocked&& (follower ==0||follower==3||follower==6)&& followerType.equals("field")) checkEntrySide = true;
+
+		
+		if(t.accessCenter().equals("city")){
+			if(checkEntrySide) return false;
+			if(!_tileChecked.isEmpty()&&!checkEntrySide){
+				return true;
+			}
+			else if(entry == 0){
+				_tileChecked.add(t);
+				if(tbCity) return checkFollowerField (x-1,y,2);
+				else if(lrCity) return checkFollowerField(x,y+1,6);
+			}
+			
+			else if(entry == 1){
+				_tileChecked.add(t);
+				return checkFollowerField(x,y+1,6);
+			}
+			else if(entry == 2){
+				_tileChecked.add(t);
+				if(tbCity)return checkFollowerField (x+1,y,0);
+				else if(lrCity) return checkFollowerField(x,y+1,8);
+			}
+			else if(entry == 5){
+				_tileChecked.add(t);
+				return checkFollowerField(x+1,y,3);
+			}
+			
+			else if(entry == 8){
+				_tileChecked.add(t);
+				if(tbCity)return checkFollowerField (x+1,y,6);
+				else if(lrCity) return checkFollowerField(x,y-1,2);
+			}
+			
+			else if(entry == 7){
+				_tileChecked.add(t);
+				return checkFollowerField(x,y-1,1);
+			}
+			
+			
+			
+			else if(entry ==6){
+				_tileChecked.add(t);
+				if(tbCity)return checkFollowerField (x-1,y,8);
+				else if(lrCity) return checkFollowerField(x,y-1,0);
+			}
+			
+			else if(entry == 3){
+				_tileChecked.add(t);
+				return checkFollowerField(x-1,y,5);
+			}
+			
+		}
+		
+		else if(t.getTileName().equals("RH")){
+			switch(entry){
+			case 0:
+					if(follower ==8) return false;
+					checkLeft = checkFollowerField(x-1,y, 2);
+					checkUp = checkFollowerField(x,y+1,6);
+					checkDown = checkFollowerField(x,y-1,2);
+					checkRight = checkFollowerField(x+1,y,6);
+			break;
+			case 2:
+					if(follower ==6) return false;
+					checkLeft = checkFollowerField(x-1,y, 8);
+					checkUp = checkFollowerField(x,y+1,8);
+					checkDown = checkFollowerField(x,y-1,0);
+					checkRight = checkFollowerField(x+1,y,0);
+			break;
+			case 8:
+					if(follower ==0) return false;
+					checkLeft = checkFollowerField(x-1,y, 2);
+					checkUp = checkFollowerField(x,y+1,6);
+					checkDown = checkFollowerField(x,y-1,2);
+					checkRight = checkFollowerField(x+1,y,6);
+			break;
+			case 6:
+				if(follower ==2) return false;
+				checkLeft = checkFollowerField(x-1,y, 8);
+				checkUp = checkFollowerField(x,y+1,8);
+				checkDown = checkFollowerField(x,y-1,0);
+				checkRight = checkFollowerField(x+1,y,0);
+			}
+			
+			
+			
+			
+		}
+		
+		else if(t.accessCenter().equals("river city road")){
+			
+			if(entry == 0){
+				_tileChecked.add(t);
+				if(tOpen)checkUp = checkFollowerField(x,y+1,6);
+				if(lOpen) checkLeft = checkFollowerField (x-1,y,2);
+			}
+			
+			if(entry == 2){
+				_tileChecked.add(t);
+				if(tOpen)checkUp = checkFollowerField(x,y+1,8);
+				if(rOpen) checkRight = checkFollowerField (x+1,y,0);
+			}
+			
+			if(entry ==6){
+				_tileChecked.add(t);
+				if(lOpen) checkLeft = checkFollowerField (x-1,y,8);
+				if (bOpen) checkDown = checkFollowerField(x,y-1,0);
+			}
+			if(entry == 8){
+				_tileChecked.add(t);
+				if(bOpen) checkDown = checkFollowerField(x,y-1,2);
+				if(rOpen) checkRight = checkFollowerField (x+1,y,6);
+			}
+			
+		}
+		
+		else if(t.accessCenter().equals("cloister")|| t.accessCenter().equals("river end")){
+			if(followerType.equals("field")) return false;
+			_tileChecked.add(t);
+			checkUp = checkFollowerField(x,y+1,6);
+			checkLeft = checkFollowerField (x-1,y,2);
+			checkDown = checkFollowerField(x,y-1,2);
+			checkRight = checkFollowerField (x+1,y,0);
+			
+			if(checkUp) checkUp = checkFollowerField(x,y+1,8);
+			if(checkLeft) checkLeft = checkFollowerField (x-1,y,8);
+			if(checkDown) checkDown = checkFollowerField(x,y-1,0);
+			if(checkRight) checkRight = checkFollowerField (x+1,y,6);
+			
+		}
+		
+		else if  (t.accessCenter().equals("field")){
+			if(followerType.equals("field")) return false;
+			_tileChecked.add(t);
+				if(tFullOpen)checkUp = checkFollowerField(x,y+1,7);
+				if(lFullOpen) checkLeft = checkFollowerField (x-1,y,5);
+				if(bFullOpen) checkDown = checkFollowerField(x,y-1,1);
+				if(rFullOpen) checkRight = checkFollowerField (x+1,y,3);
+		}
+		
+		else{
+			switch(entry){
+			case 0: 
+				if((follower == 1||follower == 3) && followerType.equals("field")) return false;
+				_tileChecked.add(t);
+				if(lOpen) checkLeft = checkFollowerField (x-1,y,2);
+				if(tOpen) checkUp = checkFollowerField(x,y+1,6);
+				if(!tmBlocked){
+					if((follower == 1||follower == 2) && followerType.equals("field")) return false;
+					if (rOpen) checkRight = checkFollowerField (x+1,y,0);
+					if(!rmBlocked){
+						if((follower == 5||follower == 8|| follower == 7) && followerType.equals("field")) return false;
+						if(bOpen)checkDown = checkFollowerField(x,y-1,2);
+						
+						if(!bmBlocked){
+							if(((follower == 6|| follower ==3) && followerType.equals("field"))) return false;
+							if(checkLeft && lOpen) checkLeft = checkFollowerField (x-1,y,8);
+						}
+					}
+					
+				}
+				if(!lmBlocked){
+					if((follower == 3||follower == 6||follower == 7) && followerType.equals("field")) return false;
+					if(bOpen)checkDown = checkFollowerField(x,y-1,0);
+					if(!bmBlocked){
+						if(((follower == 8) && followerType.equals("field"))) return false;
+						if(checkRight && rOpen) checkRight = checkFollowerField (x+1,y,6);
+						
+						if(!rmBlocked){
+							if((follower ==2||follower ==5 || follower ==1)&& followerType.equals("field")) return false;
+							if(checkUp && tOpen) checkUp = checkFollowerField(x,y+1,8);
+						}
+					}			
+				}
+			break;
+			case 1:
+				if((follower == 0||follower == 2) && followerType.equals("field")) return false;
+				_tileChecked.add(t);
+				if(lOpen) checkLeft= checkFollowerField (x-1,y,2);
+				if(rOpen) checkRight = checkFollowerField (x+1,y,0);
+				checkUp = checkFollowerField(x,y+1,7);
+				if(!rmBlocked){
+					if((follower == 5||follower == 8||follower ==7) && followerType.equals("field")) return false;
+					if(bOpen)checkDown = checkFollowerField(x,y-1,2);
+					if(!bmBlocked){
+						if(((follower == 6) && followerType.equals("field"))) return false;
+						if(checkLeft && lOpen) checkLeft = checkFollowerField (x-1,y,8);
+					}
+				}
+				if(!lmBlocked){
+					if((follower == 3||follower == 6||follower ==7) && followerType.equals("field")) return false;
+					if(bOpen)checkDown = checkFollowerField(x,y-1,0);
+					if(!bmBlocked){
+						if(((follower == 8) && followerType.equals("field"))) return false;
+						if(checkRight && rOpen) checkRight = checkFollowerField (x+1,y,6);
+					}
+				}
+			break;
+			case 2:
+				if((follower == 1||follower == 5) && followerType.equals("field")) return false;
+				_tileChecked.add(t);
+				if(rOpen)checkRight = checkFollowerField (x+1,y,0);
+				if(tOpen) checkUp = checkFollowerField(x,y+1,8);
+				if(!rmBlocked){
+					if((follower == 5||follower == 8||follower ==7) && followerType.equals("field")) return false;
+					if(bOpen)checkDown = checkFollowerField(x,y-1,2);
+					if(!bmBlocked){
+						if(((follower == 6) && followerType.equals("field"))) return false;
+						if(checkLeft && lOpen) checkLeft = checkFollowerField (x-1,y,8);
+					}
+				}
+				if(!tmBlocked){
+					if(((follower == 1)||follower == 0) && followerType.equals("field")) return false;
+					if(checkLeft && lOpen) checkLeft = checkFollowerField (x-1,y,2);
+					if(!lmBlocked){
+						if((follower == 3||follower == 6||follower ==7) && followerType.equals("field")) return false;
+						if(bOpen)checkDown = checkFollowerField(x,y-1,0);
+						if(!bmBlocked){
+							if(((follower == 8) && followerType.equals("field"))) return false;
+							if(checkRight && rOpen) checkRight = checkFollowerField (x+1,y,6);
+						}
+					}
+					}
+			break;
+			case 5:
+			
+				if(((follower == 2)||follower == 8) && followerType.equals("field")) return false;
+				_tileChecked.add(t);
+				checkRight = checkFollowerField (x+1,y,3);
+				if(bOpen) checkDown = checkFollowerField(x,y-1,2);
+				if(tOpen) checkUp = checkFollowerField(x,y+1,8);
+				if(!tmBlocked){
+					if((follower == 0||follower == 1||follower ==3) && followerType.equals("field")) return false;
+					if(lOpen)checkLeft = checkFollowerField(x-1,y,2);
+					if(!lmBlocked){
+						if(((follower == 6||follower ==7) && followerType.equals("field"))) return false;
+						if(checkDown && bOpen) checkDown = checkFollowerField (x,y-1,0);
+					}
+				}
+				if(!bmBlocked){
+					if((follower == 7||follower == 6||follower ==3) && followerType.equals("field")) return false;
+					if(lOpen &&checkLeft) checkLeft = checkFollowerField(x-1,y,8);
+					if(!lmBlocked){
+						if(((follower == 0) && followerType.equals("field"))) return false;
+						if(checkUp && tOpen) checkUp = checkFollowerField (x,y+1,6);
+					}
+				}
+			break;
+			case 8:
+				if((follower == 7||follower == 5) && followerType.equals("field")) return false;
+				_tileChecked.add(t);
+				if(rOpen)checkRight = checkFollowerField (x+1,y,6);
+				if(bOpen)checkDown = checkFollowerField(x,y-1,2);
+				if(!rmBlocked){
+					if((follower == 2||follower == 5|| follower == 7 || follower == 1) && followerType.equals("field")) return false;
+					if(tOpen) checkUp = checkFollowerField(x,y+1,8);
+					if(!tmBlocked){
+						if(((follower == 0||follower ==3) && followerType.equals("field"))) return false;
+						if(lOpen) checkLeft = checkFollowerField (x-1,y,2);
+						if(!lmBlocked){
+							if(((follower == 6) && followerType.equals("field"))) return false;
+							if(checkDown && bOpen) checkDown = checkFollowerField(x,y-1,0);
+							
+						}
+					}
+				}
+				if(!bmBlocked){
+					if(((follower == 6)||follower == 7|| follower == 3||follower == 5) && followerType.equals("field")) return false;
+					if(lOpen && checkLeft)checkLeft = checkFollowerField (x-1,y,8);
+					if(!lmBlocked){
+						if((follower == 3||follower == 0||follower ==1) && followerType.equals("field")) return false;
+						if(tOpen)checkUp = checkFollowerField(x,y+1,6);
+						if(!tmBlocked){
+							if(((follower == 2) && followerType.equals("field"))) return false;
+							if(checkRight && rOpen) checkRight = checkFollowerField (x+1,y,0);
+						}
+					}
+					}
+			break;
+			case 7:
+			if((follower == 6||follower == 8) && followerType.equals("field")) return false;
+			_tileChecked.add(t);
+			if(lOpen) checkLeft= checkFollowerField (x-1,y,8);
+			if(rOpen) checkRight = checkFollowerField (x+1,y,6);
+			checkDown = checkFollowerField(x,y-1,1);
+			if(!rmBlocked){
+				if((follower == 5||follower == 8||follower ==2||follower == 1) && followerType.equals("field")) return false;
+				if(tOpen)checkUp = checkFollowerField(x,y+1,8);
+				if(!tmBlocked){
+					if(((follower == 0||follower == 3) && followerType.equals("field"))) return false;
+					if(checkLeft && lOpen) checkLeft = checkFollowerField (x-1,y,2);
+				}
+			}
+			if(!lmBlocked){
+				if((follower == 3||follower == 6||follower ==0||follower == 1) && followerType.equals("field")) return false;
+				if(tOpen)checkUp = checkFollowerField(x,y+1,6);
+				if(!tmBlocked){
+					if(((follower == 2||follower == 5) && followerType.equals("field"))) return false;
+					if(checkRight && rOpen) checkRight = checkFollowerField (x+1,y,0);
+				}
+			}
+			break;
+			case 6:
+				if((follower == 7||follower == 3) && followerType.equals("field")) return false;
+				_tileChecked.add(t);
+				if(lOpen) checkLeft = checkFollowerField (x-1,y,8);
+				if(bOpen)checkDown = checkFollowerField(x,y-1,0);
+				if(!lmBlocked){
+					if((follower == 3||follower == 0||follower ==1) && followerType.equals("field")) return false;
+					if(tOpen) checkUp = checkFollowerField(x,y+1,6);
+					if(!tmBlocked){
+						if(((follower == 2||follower == 5) && followerType.equals("field"))) return false;
+						if(rOpen) checkRight = checkFollowerField (x+1,y,0);
+						if(!rmBlocked){
+							if(((follower == 8||follower == 7) && followerType.equals("field"))) return false;
+							if(checkDown && bOpen) checkDown = checkFollowerField(x,y-1,2);
+						}
+					}
+				}
+				if(!bmBlocked){
+					if(((follower == 8)||follower == 7|| follower == 3) && followerType.equals("field")) return false;
+					if(rOpen) checkRight = checkFollowerField (x+1,y,6);
+					if(!rmBlocked){
+						if((follower == 5||follower == 2||follower ==1) && followerType.equals("field")) return false;
+						if(tOpen && checkUp)checkUp = checkFollowerField(x,y+1,8);
+						if(!tmBlocked){
+							if(((follower == 0) && followerType.equals("field"))) return false;
+							if(checkLeft && lOpen) checkLeft = checkFollowerField (x-1,y,2);
+						}
+					}
+					}
+			break;
+			case 3:
+			if(((follower == 0)||follower == 6) && followerType.equals("field")) return false;
+			_tileChecked.add(t);
+			checkLeft = checkFollowerField (x-1,y,5);
+			if(bOpen) checkDown = checkFollowerField(x,y-1,0);
+			if(tOpen) checkUp = checkFollowerField(x,y+1,6);
+			if(!tmBlocked){
+				if((follower == 1||follower == 2||follower ==5) && followerType.equals("field")) return false;
+				if(rOpen)checkRight = checkFollowerField(x+1,y,0);
+				if(!rmBlocked){
+					if(((follower == 8||follower ==7) && followerType.equals("field"))) return false;
+					if(checkDown && bOpen) checkDown = checkFollowerField (x,y-1,2);
+				}
+			}
+			if(!bmBlocked){
+				if((follower == 7||follower == 8||follower ==5) && followerType.equals("field")) return false;
+				if(rOpen &&checkRight) checkRight = checkFollowerField(x+1,y,6);
+				if(!rmBlocked){
+					if(((follower == 2) && followerType.equals("field"))) return false;
+					if(checkUp && tOpen) checkUp = checkFollowerField (x,y+1,8);
+				}
+			}
+			break;
+				
+				
+			}
+
+		}
+			
+		System.out.println("tile" + x +","+y + "has the following boolean values: up " +checkUp+"  Down "+ checkDown+ " Left " +checkLeft+"  Right " + checkRight+". ");
+		
+		 boolean checkAll = checkUp&&checkDown&&checkLeft&&checkRight;	
+		System.out.println("check all is :"+checkAll) ;
+		
+		if(checkAll){
+			System.out.println("tile" + x +","+y + "has returned as true");
+			return true;
+		}
+		else{
+			System.out.println("tile" + x +","+y + "has returned as false");
+			return false;
+		}
+	}
 	/**
 	 * 
 	 * @param x  the x value of location of the tile being checked.
@@ -423,34 +1076,45 @@ public class Board {
 	 * @return		returns if it can be legally placed.
 	 */
 	private boolean checkFollowerRoad(int x, int y, int entry) {
-		String point = new String();
-		point = "" +x;
-		point = point +y;
-		boolean check = false;
+		
+		boolean check = true;
 		System.out.println("tile at "+x+", "+y);
 		if(_board[x][y] == null) return true;
-		if(_tileChecked.contains(point)) return true;
+		
 		Tile t = _board[x][y];
+		
+		if(_tileChecked.contains(t)) return true;
 		int follower = t.getFollowerSpot();
 		//if a follower was found at the entrance point, should return false.
 		if(entry == follower) return false;
 		//Since no follower was found, returns true if the road ends in the middle. 
-		if(t.accessCenter().equals("road end")||t.accessCenter().equals("river cloister")) return true;
+		if((t.accessCenter().equals("road end")||t.accessCenter().equals("river cloister")||t.accessCenter().equals("cloister"))&&!_tileChecked.isEmpty()) return true;
+		
+		else if((t.accessCenter().equals("road end")||t.accessCenter().equals("river cloister")||t.accessCenter().equals("cloister"))&&_tileChecked.isEmpty()){
+			switch(entry){
+			case 1: return checkFollowerRoad(x, y+1,7);
+			case 5: return checkFollowerRoad(x+1, y,3);
+			case 7: return checkFollowerRoad(x, y-1,1);
+			case 3: return checkFollowerRoad(x-1, y,5);
+			}
+			
+		}
 		
 		if(Arrays.asList(t.accessSides(1)).contains("road")&& follower==1) return false;
 		if(Arrays.asList(t.accessSides(2)).contains("road")&& follower==5) return false;
 		if(Arrays.asList(t.accessSides(3)).contains("road")&& follower==7) return false;
 		if(Arrays.asList(t.accessSides(4)).contains("road")&& follower==3) return false;
-		_tileChecked.add(point);
-		if(Arrays.asList(t.accessSides(1)).contains("road")) check= checkFollowerRoad(x, y+1,7);
-		else if(Arrays.asList(t.accessSides(2)).contains("road")) check= checkFollowerRoad(x+1, y,3);
-		else if(Arrays.asList(t.accessSides(3)).contains("road")) check= checkFollowerRoad(x, y-1,1);
-		else if(Arrays.asList(t.accessSides(4)).contains("road")) check= checkFollowerRoad(x-1, y,5);
+		if(Arrays.asList(t.accessCenter()).contains("road")&& follower ==4) return false;
+		_tileChecked.add(t);
+		if(Arrays.asList(t.accessSides(1)).contains("road") && check) check= checkFollowerRoad(x, y+1,7);
+		if(Arrays.asList(t.accessSides(2)).contains("road")&& check) check= checkFollowerRoad(x+1, y,3);
+		if(Arrays.asList(t.accessSides(3)).contains("road")&& check) check= checkFollowerRoad(x, y-1,1);
+		if(Arrays.asList(t.accessSides(4)).contains("road") && check) check= checkFollowerRoad(x-1, y,5);
 
-		
-		
 		return check;
 	}
+	
+	
 	/**
 	 * This is a getter for the ArrayList of players names.
 	 * 
@@ -504,10 +1168,10 @@ public class Board {
 			for(int j = 71+ _xleft; j <= 71 + _xright; j++){
 				Tile currentTile = _board[j][i];
 				if(currentTile != null){
-					result = result + currentTile.get_name() + currentTile.get_rotateTimes() + "(" + xloc 
+					result = result + currentTile.getTileName() + currentTile.get_rotateTimes() + "(" + xloc 
 							+ "," + yloc +")" ;
 					if(currentTile.getFollowerSpot() != 9){		
-					result = result	+ "[" + currentTile.get_playerPlayed() + "," + currentTile.getFollowerSpot()
+					result = result	+ "[" + currentTile.getPlayerString() + "," + currentTile.getFollowerSpot()
 							+ "]";
 					}
 				}
@@ -523,18 +1187,18 @@ public class Board {
 		String result = "";
 		for(int i = 0; i< tileListOriginal.size() - 1; i++){
 			Tile t = tileListOriginal.get(i);
-			result = result + t.get_name() + ",";
+			result = result + t.getTileName() + ",";
 		}
 		if(riverListOriginal.isEmpty()){
-			result = result + tileListOriginal.get(tileListOriginal.size() -1 ).get_name();
+			result = result + tileListOriginal.get(tileListOriginal.size() -1 ).getTileName();
 		}else{
-			result = result + tileListOriginal.get(tileListOriginal.size() -1 ).get_name() + ",";
+			result = result + tileListOriginal.get(tileListOriginal.size() -1 ).getTileName() + ",";
 		
 			for(int i = 0; i< riverListOriginal.size() - 1; i++){
 				Tile t = riverListOriginal.get(i);
-				result = result + t.get_name() + ",";
+				result = result + t.getTileName() + ",";
 			}
-			result = result + riverListOriginal.get(riverListOriginal.size() -1 ).get_name();
+			result = result + riverListOriginal.get(riverListOriginal.size() -1 ).getTileName();
 		}
 		return result;
 	}
