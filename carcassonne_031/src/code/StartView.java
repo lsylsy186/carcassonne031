@@ -219,7 +219,8 @@ public class StartView extends Thread{
 public void typeInPlayersNameView(int numOfPlayers){
 		
 		_numCounts = 1;
-		_typeText = new JLabel("Type in player's name:...");
+		_typeText = new JLabel("Type in players' name:...");
+		JLabel player = new JLabel("Player 1:");
 		_font = new Font("Georgia",Font.PLAIN,50);
 		_typeText.setFont(_font);
 		_confirm = new JButton("OK");
@@ -228,17 +229,21 @@ public void typeInPlayersNameView(int numOfPlayers){
 		_confirm.setBorder(BorderFactory.createRaisedBevelBorder());
 		_font = new Font("Georgia",Font.BOLD,25);
 		_confirm.setFont(_font);
+		
+		player.setBounds(170,450,120,80);
 		_confirm.setBounds(930,450,80,80);
 		_typeText.setForeground(Color.BLACK);
+		player.setForeground(Color.BLACK);
 		_name=new JTextField(30);
 		_name.setBounds(300, 450, 600, 80);
 		_font = new Font("Georgia",Font.PLAIN,30);
 		_name.setFont(_font);
-		
+		player.setFont(_font);
 		_typeText.setBounds(300,350,900,100);
 		_content.add(_typeText);
 		_content.add(_name);
 		_content.add(_confirm);
+		_content.add(player);
 		_players.add("Tom");
 		_players.add("Tom1");
 		_players.add("Tom2");
@@ -255,6 +260,7 @@ public void typeInPlayersNameView(int numOfPlayers){
 						//System.out.println(_acceptPlayerName);
 						_numCounts++;
 						_name.setText(" ");
+						player.setText("Player " + _numCounts+ ":");
 			}
 		});
 //		while(true){

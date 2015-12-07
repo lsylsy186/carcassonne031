@@ -18,12 +18,14 @@ public class Driver {
 	 */
 	public static ArrayList<String> players;
 	public static void main(String[] args){
+		int i = 0;
 		StartView startView = new StartView();
 		players = new ArrayList<String>();
 		int a = 0;
 		System.out.println("11111");
 		while(a < 7){
 			System.out.println("0");
+			
 			switch(a){
 			case 0 : a = a + 1;break;
 			case 1 : a = a - 1;
